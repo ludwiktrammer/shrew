@@ -10,23 +10,27 @@
 
 ### Installation instructions
 
-1. Create a Pipenv environment and install dependencies:
+1. Create a Pipenv environment and install Python dependencies:
 
         pipenv install
+        
+2. Install JavaScript dependencies:
 
-2. Create and fill out file with local configuration variables:
+        npm install
+
+3. Create and fill out file with local configuration variables:
 
        cp shrew/env.dev.example shrew/.env
     (alternatively you can set those settings as environment variables)
 
-3. Run database migrations:
+4. Run database migrations:
 
         pipenv run ./manage.py migrate
         
-4. Create the admin account:
+5. Create the admin account:
 
         pipenv run ./manage.py createsuperuser
 
-5. Start the development server:
+6. Start the development server:
 
         pipenv run ./manage.py runserver

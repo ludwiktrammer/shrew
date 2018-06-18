@@ -1,3 +1,5 @@
+import tempfile
+
 from .base import *  # noqa
 
 
@@ -10,3 +12,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
 INSTALLED_APPS += ['debug_toolbar', ]
 INTERNAL_IPS = ['127.0.0.1', ]
+
+STATIC_ROOT = tempfile.gettempdir()
