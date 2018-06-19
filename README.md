@@ -12,7 +12,7 @@
 
 1. Create a Pipenv environment and install Python dependencies:
 
-        pipenv install
+        pipenv install --dev
         
 2. Install JavaScript dependencies:
 
