@@ -1,10 +1,15 @@
 {%  extends 'base.html' %}
 
 {% block content %}
-  <h1 class="title">
-    Code Shrew
-  </h1>
-  <p class="subtitle">
-    Learn coding with the Shrew!
-  </p>
+  <div class="field">
+    <textarea class="textarea" id="editor-code"></textarea>
+  </div>
+  <div class="field">
+    <button class="button is-primary" id="editor-run">
+      <span class="icon is-small">
+        <i class="fas fa-play"></i>
+      </span>
+      <span>Run code</span>
+    </button>
+  </div>
 {% endblock %}
