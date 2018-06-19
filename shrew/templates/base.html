@@ -2,26 +2,51 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html>
+<html class="has-navbar-fixed-top">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/icons/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/icons/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/icons/favicon-16x16.png' %}">
     <title>Code Shrew</title>
     {% compress css %}
       <link rel="stylesheet" type="text/x-scss" href="{% static 'sass/main.scss' %}">
     {% endcompress %}
-    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,700&amp;subset=latin-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web:400,700&amp;subset=latin-ext" rel="stylesheet">
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
   </head>
   <body>
-  <nav class="navbar">
+  <nav class="navbar has-shadow is-fixed-top">
     <div class="container">
       <div class="navbar-brand">
         <a class="navbar-item logo" href="/">
-          Code Shrew
+          <img src="{% static 'images/logo.svg' %}" alt="Code Shrew" height="100%">
         </a>
       </div>
+      <div class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="{% url 'todo' %}">
+            Lessons
+          </a>
+          <a class="navbar-item" href="{% url 'todo' %}">
+            Documentation
+          </a>
+          <a class="navbar-item" href="{% url 'todo' %}">
+            About
+          </a>
+        </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <a class="button is-primary is-medium" href="{% url 'todo' %}">
+              <span class="icon">
+                <i class="fas fa-paint-brush"></i>
+              </span>
+              <span>Create new</span>
+            </a>
+          </div>
+        </div>
     </div>
   </nav>
   <section class="section">

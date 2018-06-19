@@ -1,7 +1,9 @@
 .navbar {
   .logo {
-    @extend .has-text-weight-bold;
-    @extend .is-size-4;
-    @extend .has-text-info;
+    padding-right: 2rem;
+  }
+
+  .navbar-item {
+    @extend .is-size-5;
   }
 }

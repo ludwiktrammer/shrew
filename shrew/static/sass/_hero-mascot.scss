@@ -1,0 +1,11 @@
+.hero-mascot {
+  @extend .hero;
+
+  .hero-body {
+    text-align: center;
+  }
+
+  img {
+    max-height: 20rem;
+  }
+}

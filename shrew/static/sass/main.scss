@@ -1,6 +1,10 @@
 @import "../../../node_modules/bulma/sass/utilities/initial-variables";
-$family-sans-serif: 'Quicksand', sans-serif;
+
+$family-sans-serif: 'Titillium Web', sans-serif;
+$navbar-item-img-max-height: 5rem;
+$navbar-height: 7rem;
 
 @import "../../../node_modules/bulma/bulma";
 
 @import "navbar";
+@import "hero-mascot";
