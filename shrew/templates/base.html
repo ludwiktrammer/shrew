@@ -24,8 +24,13 @@
         <a class="navbar-item logo" href="/">
           <img src="{% static 'images/logo.svg' %}" alt="Code Shrew" height="100%">
         </a>
+        <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
       </div>
-      <div class="navbar-menu">
+      <div class="navbar-menu" id="navMenu">
         <div class="navbar-start">
           <a class="navbar-item" href="{% url 'todo' %}">
             Lessons
@@ -58,6 +63,7 @@
   {% compress js %}
     <script src="{% static 'vendor/brython/brython.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+    <script type="module" src="{% static 'js/navbar.js' %}"></script>
   {% endcompress %}
   </body>
 </html>
