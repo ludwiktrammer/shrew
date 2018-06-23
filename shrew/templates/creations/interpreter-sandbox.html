@@ -1,0 +1,14 @@
+{% load compress %}
+{% load static %}
+
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+  <head>
+    <meta charset="utf-8">
+    <title>Code Shrew Interpreter</title>
+    {% compress js %}
+      <script src="{% static 'vendor/brython/brython.js' %}"></script>
+      <script src="{% static 'js/interpreter-sandbox.js' %}"></script>
+    {% endcompress %}
+  </head>
+</html>

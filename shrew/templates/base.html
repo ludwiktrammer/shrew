@@ -61,8 +61,7 @@
   </section>
 
   {% compress js %}
-    <script src="{% static 'vendor/brython/brython.js' %}"></script>
-    <script src="{% static 'js/main.js' %}"></script>
+    <script type="module" src="{% static 'js/editor.js' %}"></script>
     <script type="module" src="{% static 'js/navbar.js' %}"></script>
   {% endcompress %}
   </body>

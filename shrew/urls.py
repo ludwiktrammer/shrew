@@ -22,6 +22,8 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('', TemplateView.as_view(template_name='home.html')),
     path('todo/', TemplateView.as_view(template_name='todo.html'), name='todo'),
+    path('__interpreter_sandbox',
+         TemplateView.as_view(template_name='creations/interpreter-sandbox.html'), name='interpreter-sandbox'),
     path('admin/', admin.site.urls),
 ]
 
