@@ -44,6 +44,8 @@ INSTALLED_APPS = [
 
     'compressor',
     'compressor_toolkit',
+
+    'shrew.apps.creations',
 ]
 
 MIDDLEWARE = [
@@ -135,4 +137,5 @@ STATICFILES_FINDERS = (
 COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'compressor_toolkit.precompilers.SCSSCompiler'),
     ('module', 'compressor_toolkit.precompilers.ES6Compiler'),
+    ('skulpt-module', 'shrew.precompilers.SkulptModuleFilter'),
 )
