@@ -1,17 +1,30 @@
 {%  extends 'base.html' %}
 
 {% block content %}
-  <div class="field">
-    <textarea class="textarea" id="editor-code"></textarea>
+  <div class="columns">
+    <div class="column is-two-thirds">
+      <div class="field">
+        <textarea class="textarea" id="editor-code">Square(color='lightgray')
+Circle(width=90, height=90, color='blue', x=-10, y=-10)
+Circle(width=90, height=90, color='yellow', x=20, y=20)
+t = Text("Hello World", y=75, x=10)</textarea>
+      </div>
+      <div class="field">
+        <button class="button is-primary" id="editor-run">
+          <span class="icon is-small">
+            <i class="fas fa-play"></i>
+          </span>
+          <span>Run code</span>
+        </button>
+      </div>
+      <div id="code-output"></div>
+    </div>
+    <div class="column">
+      <div class="sandbox-wrapper">
+        <iframe id="interpreter-sandbox" src="{% url 'creations:interpreter-sandbox' %}"
+            sandbox="allow-scripts"></iframe>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <button class="button is-primary" id="editor-run">
-      <span class="icon is-small">
-        <i class="fas fa-play"></i>
-      </span>
-      <span>Run code</span>
-    </button>
-  </div>
-  <iframe width="0" height="0" id="interpreter-sandbox" src="{% url 'creations:interpreter-sandbox' %}"
-          sandbox="allow-scripts"></iframe>
+
 {% endblock %}

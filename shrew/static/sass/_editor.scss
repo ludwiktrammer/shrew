@@ -1,0 +1,34 @@
+// square iframe
+.sandbox-wrapper {
+  position: relative;
+  padding-bottom: 100%;
+  height: 0;
+  overflow: hidden;
+}
+
+#interpreter-sandbox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid $light;
+  overflow: hidden;
+}
+
+#editor-code {
+  width: 100%;
+  font-family: $family-monospace;
+}
+
+#code-output {
+  @extend pre;
+
+  pre {
+    padding: 0;
+
+    &.error {
+      @extend .has-text-danger;
+    }
+  }
+}

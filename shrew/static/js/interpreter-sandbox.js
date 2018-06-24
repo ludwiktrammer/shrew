@@ -1,5 +1,7 @@
 import Sk from "skulpt";
 
+import { drawFromActions } from "./drawing.js"
+
 Sk.configure({
     output: output,
     uncaughtException: output,
@@ -9,8 +11,9 @@ Sk.configure({
 window.addEventListener("message", runCode);
 
 
-function output(x) {
-    console.log(`ouput: ${x}`);
+function output(message, error) {
+    error = error || false;
+    window.parent.postMessage({message: message, error: error}, "*");
 }
 
 function runCode(event) {
@@ -20,16 +23,21 @@ function runCode(event) {
         return;
     }
 
-    // ensure the string is never empty (to prevent Sk.importMainWithBody from switching its behavior
-    // to importing a module named
-    let code = event.data.code || " ";
+    // Add the implicit import of shrew functions
+    let code = `from shrew import *\n\n${event.data.code}`;
 
     Sk.misceval.asyncToPromise(function() {
         return Sk.importMainWithBody("shrew-editor", false, code, true);
     }).then((result) => {
-        console.log(result);
+        let actions = actionsSkulptToJs(result.$d._shrew_actions__);
+        drawFromActions(actions);
     }).catch((error) => {
-        console.error(`${error.tp$name}: ${error.args.v[0].v}`);
+        if (error.args) {
+            console.log(error);
+            output(`${error.tp$name}: ${error.args.v[0].v} (line ${error.traceback[0].lineno - 2})`, true);
+        } else {
+            throw error;
+        }
     })
 }
 
@@ -40,4 +48,17 @@ function builtinRead(x) {
         return Sk.builtinFiles["files"][x];
     }
     throw "File not found: '" + x + "'";
+}
+
+
+function actionsSkulptToJs(actions) {
+    let result = [];
+    for (let row of actions.v) {
+        let [shapeID, command, value] = row.v;
+        if (Array.isArray(value.v)) {
+            value.v = value.v.map(e => e.v);
+        }
+        result.push([shapeID.v, command.v, value.v])
+    }
+    return result;
 }

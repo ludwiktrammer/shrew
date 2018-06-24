@@ -6,9 +6,16 @@
   <head>
     <meta charset="utf-8">
     <title>Code Shrew Interpreter</title>
-    {% compress js %}
-      <script type="skulpt-module" src="{% static 'python/shrew.py' %}"></script>
-      <script type="module" src="{% static 'js/interpreter-sandbox.js' %}"></script>
+    {% compress css %}
+      <link rel="stylesheet" type="text/x-scss" href="{% static 'sass/sandbox.scss' %}">
     {% endcompress %}
   </head>
+  <body>
+    <div id="drawing"></div>
+
+    {% compress js %}
+      <script type="skulpt-module" src="{% static 'skulpt-modules/shrew.py' %}"></script>
+      <script type="module" src="{% static 'js/interpreter-sandbox.js' %}"></script>
+    {% endcompress %}
+  </body>
 </html>
