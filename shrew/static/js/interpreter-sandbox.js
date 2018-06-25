@@ -34,7 +34,7 @@ function runCode(event) {
     }).catch((error) => {
         if (error.args) {
             console.log(error);
-            output(`${error.tp$name}: ${error.args.v[0].v} (line ${error.traceback[0].lineno - 2})`, true);
+            output(`${error.tp$name}: ${error.args.v[0].v} (line ${error.traceback[error.traceback.length - 1].lineno - 2})`, true);
         } else {
             throw error;
         }
@@ -52,6 +52,7 @@ function builtinRead(x) {
 
 
 function actionsSkulptToJs(actions) {
+    console.log(actions);
     let result = [];
     for (let row of actions.v) {
         let [shapeID, command, value] = row.v;

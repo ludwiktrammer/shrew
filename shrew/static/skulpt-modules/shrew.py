@@ -1,125 +1,133 @@
+from copy import deepcopy
+
 _shrew_actions__ = []
 
 
 class AbstractShape:
     _shape_count__ = 0
-    shape_type = None
+    _shape_type__ = None
+    _default_arguments__ = {
+        'x': 0,
+        'y': 0,
+        'color': 'black',
+        'width': 100,
+        'height': 100,
+        'transparency': 0,
+        'rotation': 0,
+    }
+    # which properties should be passed to svg.js constructor
+    _svg_constructor_arguments = []
 
-    def __init__(self, x=0, y=0, color='black', width=100, height=100):
+    def __init__(self, copy_from=None, **kwargs):
+        self.__dict__['_properties__'] = {}  # avoid calling __setattr__
+
+        unknow_kwargs = set(kwargs.keys()).difference(set(self._default_arguments__.keys()))
+        if unknow_kwargs:
+            raise TypeError("'{}' got an unexpected keyword argument '{}'"
+                            .format(self.__class__.__name__, unknow_kwargs.pop()))
+
+        # Populate properties
+        for property, default in self._default_arguments__.items():
+            if copy_from is not None:
+                default = deepcopy(copy_from._properties__[property])
+            self._properties__[property] = kwargs.get(property, default)
+
+        self._log__init()
+
+    def _log__init(self):
+        """
+        Logs shape creation and all its properties.
+        """
+        # Get a unique id for the shape
         AbstractShape._shape_count__ += 1
         self.__id = 'shape{}'.format(AbstractShape._shape_count__)
-        self._log_action__('created', self.shape_type)
-        self._x = self._y = self._color = self._width = self._height = None
 
-        self.width = width
-        self.height = height
-        self.x = x
-        self.y = y
-        self.color = color
+        # Gather constructor arguments and log creation
+        log_args = [self._shape_type__]
+        for name in self._svg_constructor_arguments:
+            log_args.append(self._properties__[name])
+        self._log_action__('created', log_args)
+
+        self._log_all_properties__()
+
+    def copy(self, **kwargs):
+        return self.__class__(copy_from=self, **kwargs)
 
     def _log_action__(self, action, value):
+        # Corrections
+        if action == 'color':
+            action = 'fill'
+            self._log_action__('stroke', value)
+        if action == 'transparency':
+            action = 'opacity'
+            value = 1 - value / 100
+        if action == 'rotation':
+            action = 'rotate'
+        if action == 'points':
+            action = 'plot'
         _shrew_actions__.append((self.__id, action, value))
 
-    @property
-    def x(self):
-        return self._x
+    def flipHorizontal(self):
+        _shrew_actions__.append((self.__id, "flip", "y"))
 
-    @x.setter
-    def x(self, val):
-        self._x = val
-        self._log_action__('x', val)
+    def flipVertical(self):
+        _shrew_actions__.append((self.__id, "flip", "x"))
 
-    @property
-    def y(self):
-        return self._y
+    def __getattr__(self, name):
+        try:
+            return self._properties__[name]
+        except KeyError:
+            raise AttributeError("'{}' object has no attribute '{}'".format(self.__class__.__name__, name))
 
-    @y.setter
-    def y(self, val):
-        self._y = val
-        self._log_action__('y', val)
+    def __setattr__(self, name, value):
+        if name in self._properties__:
+            self._properties__[name] = value
+            self._log_action__(name, value)
+        else:
+            self.__dict__[name] = value
 
-    @property
-    def color(self):
-        return self._color
-
-    @color.setter
-    def color(self, val):
-        self._color = val
-        self._log_action__('fill', val)
-        self._log_action__('stroke', val)
-
-    @property
-    def width(self):
-        return self._width
-
-    @width.setter
-    def width(self, val):
-        self._width = val
-        self._log_action__('width', val)
-
-    @property
-    def height(self):
-        return self._height
-
-    @height.setter
-    def height(self, val):
-        self._height = val
-        self._log_action__('height', val)
+    def _log_all_properties__(self):
+        for name, value in self._properties__.items():
+            self._log_action__(name, value)
 
 
 class AbstractShapePoints(AbstractShape):
-    def __init__(self, x=0, y=0, color='black', width=100, height=100, points=None):
-        AbstractShape.__init__(self, x, y, color, width, height)
-        self._points = None
-        if points is None:
-            points = []
-        self.points = points
-
-    @property
-    def points(self):
-        return self._points
-
-    @points.setter
-    def points(self, val):
-        self._points = val
-        self._log_action__('plot', val)
-
+    _default_arguments__ = deepcopy(AbstractShape._default_arguments__)
+    _default_arguments__.update({
+        'points': [0, 0, 100, 100]
+    })
 
 class Rectangle(AbstractShape):
-    shape_type = 'rect'
+    _shape_type__ = 'rect'
+    _svg_constructor_arguments = ['width', 'height']
 
 
 Square = Rectangle
 
 
 class Ellipse(AbstractShape):
-    shape_type = 'ellipse'
+    _shape_type__ = 'ellipse'
+    _svg_constructor_arguments = ['width', 'height']
 
 
 Circle = Ellipse
 
 
 class Line(AbstractShapePoints):
-    shape_type = 'polyline'
+    _shape_type__ = 'polyline'
+    _svg_constructor_arguments = ['points']
 
 
 class Polygon(AbstractShapePoints):
-    shape_type = 'polygon'
+    _shape_type__ = 'polygon'
+    _svg_constructor_arguments = ['points']
 
 
 class Text(AbstractShape):
-    shape_type = 'text'
+    _shape_type__ = 'text'
+    _svg_constructor_arguments = ['text']
 
-    def __init__(self, text="", x=0, y=0, color='black', width=100, height=100):
-        AbstractShape.__init__(self, x, y, color, width, height)
-        self._text = None
-        self.text = text
-
-    @property
-    def text(self):
-        return self._text
-
-    @text.setter
-    def text(self, val):
-        self._text = val
-        self._log_action__('text', val)
+    _default_arguments__ = deepcopy(AbstractShape._default_arguments__)
+    _default_arguments__.update({
+        'text': "Example text",
+    })
