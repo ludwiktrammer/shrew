@@ -48,7 +48,10 @@ class AbstractShape:
             log_args.append(self._properties__[name])
         self._log_action__('created', log_args)
 
-        self._log_all_properties__()
+        # Log the rest of the properties
+        for name, value in self._properties__.items():
+            if name not in self._svg_constructor_arguments:
+                self._log_action__(name, value)
 
     def copy(self, **kwargs):
         return self.__class__(copy_from=self, **kwargs)
@@ -85,10 +88,6 @@ class AbstractShape:
             self._log_action__(name, value)
         else:
             self.__dict__[name] = value
-
-    def _log_all_properties__(self):
-        for name, value in self._properties__.items():
-            self._log_action__(name, value)
 
 
 class AbstractShapePoints(AbstractShape):
