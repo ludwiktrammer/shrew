@@ -17,7 +17,7 @@ hello_shadow.x -= 1
 hello_shadow.y -= 1</textarea>
       </div>
       <div class="field">
-        <button class="button is-primary" id="editor-run">
+        <button class="button is-primary" id="editor-run" disabled>
           <span class="icon is-small">
             <i class="fas fa-play"></i>
           </span>
@@ -28,7 +28,7 @@ hello_shadow.y -= 1</textarea>
     </div>
     <div class="column">
       <div class="sandbox-wrapper">
-        <iframe id="interpreter-sandbox" src="{% url 'creations:interpreter-sandbox' %}"
+        <iframe id="interpreter-sandbox" scrolling="no" src="{% url 'creations:interpreter-sandbox' %}"
             sandbox="allow-scripts"></iframe>
       </div>
     </div>

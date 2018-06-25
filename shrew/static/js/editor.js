@@ -12,6 +12,10 @@ if (editor) {
     });
 
     window.addEventListener("message", (event) => {
+        if (event.data.shrewInterpreterReady === true) {
+            buttonRun.disabled = false;
+        }
+
         if (event.data.message !== undefined) {
             let pre = document.createElement('pre');
             pre.innerText = event.data.message;

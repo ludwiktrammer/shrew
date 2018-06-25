@@ -9,6 +9,7 @@ Sk.configure({
     python3: true,
 });
 window.addEventListener("message", runCode);
+window.parent.postMessage({shrewInterpreterReady: true}, "*");
 
 
 function output(message, error) {
