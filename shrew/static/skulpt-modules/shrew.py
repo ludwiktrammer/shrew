@@ -95,6 +95,8 @@ class AbstractShapePoints(AbstractShape):
         'points': [0, 0, 100, 100],
         'width': None,
         'height': None,
+        'x': None,
+        'y': None,
     })
 
 class Rectangle(AbstractShape):
