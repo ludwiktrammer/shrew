@@ -1,5 +1,4 @@
 import Sk from "skulpt";
-
 import { drawFromActions } from "./drawing.js"
 
 Sk.configure({
@@ -30,7 +29,7 @@ function runCode(event) {
     Sk.misceval.asyncToPromise(function() {
         return Sk.importMainWithBody("shrew-editor", false, code, true);
     }).then((result) => {
-        let actions = actionsSkulptToJs(result.$d._shrew_actions__);
+        let actions = skulptArrayToNativeArray(result.$d._shrew_actions__);
         drawFromActions(actions);
     }).catch((error) => {
         if (error.args) {
@@ -51,16 +50,25 @@ function builtinRead(x) {
     throw "File not found: '" + x + "'";
 }
 
-
-function actionsSkulptToJs(actions) {
-    console.log(actions);
+/**
+ * Recursively change skulpt-style array from Python into a standard array.
+ */
+function skulptArrayToNativeArray(a) {
     let result = [];
-    for (let row of actions.v) {
-        let [shapeID, command, value] = row.v;
-        if (Array.isArray(value.v)) {
-            value.v = value.v.map(e => e.v);
+    if (a && a.v !== undefined) {
+        a = a.v;
+    }
+    for (let element of a) {
+        if (!element || element.v === undefined) {
+            result.push(element)
+        } else {
+            let elementNative = element.v;
+            if (Array.isArray(elementNative)) {
+                result.push(skulptArrayToNativeArray(elementNative));
+            } else {
+                result.push(elementNative);
+            }
         }
-        result.push([shapeID.v, command.v, value.v])
     }
     return result;
 }

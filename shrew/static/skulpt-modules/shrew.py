@@ -60,7 +60,6 @@ class AbstractShape:
         # Corrections
         if action == 'color':
             action = 'fill'
-            self._log_action__('stroke', value)
         if action == 'transparency':
             action = 'opacity'
             value = 1 - value / 100
@@ -93,7 +92,9 @@ class AbstractShape:
 class AbstractShapePoints(AbstractShape):
     _default_arguments__ = deepcopy(AbstractShape._default_arguments__)
     _default_arguments__.update({
-        'points': [0, 0, 100, 100]
+        'points': [0, 0, 100, 100],
+        'width': None,
+        'height': None,
     })
 
 class Rectangle(AbstractShape):
@@ -113,9 +114,13 @@ Circle = Ellipse
 
 
 class Line(AbstractShapePoints):
-    _shape_type__ = 'polyline'
+    _shape_type__ = 'line'
     _svg_constructor_arguments = ['points']
 
+    def _log_action__(self, action, value):
+        if action == 'color':
+            action = 'stroke'
+        AbstractShape._log_action__(self, action, value)
 
 class Polygon(AbstractShapePoints):
     _shape_type__ = 'polygon'
