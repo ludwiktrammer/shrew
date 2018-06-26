@@ -138,4 +138,5 @@ COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'compressor_toolkit.precompilers.SCSSCompiler'),
     ('module', 'compressor_toolkit.precompilers.ES6Compiler'),
     ('skulpt-module', 'shrew.precompilers.SkulptModuleFilter'),
+    ('skulpt-module-es6', 'shrew.precompilers.SkulptModuleES6Filter'),
 )
