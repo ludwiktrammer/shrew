@@ -41,7 +41,7 @@ class AbstractShape:
         for property, default in self._default_arguments__.items():
             if copy_from is not None:
                 default = deepcopy(copy_from._properties__[property])
-            self._properties__[property] = kwargs.get(property, default)
+            self._properties__[property] = deepcopy(kwargs.get(property, default))
 
         self._log__init()
 
@@ -95,6 +95,7 @@ class AbstractShape:
 
     def __setattr__(self, name, value):
         if name in self._properties__:
+            value = deepcopy(value)
             self._properties__[name] = value
             self._log_action__(name, value)
         else:
@@ -110,6 +111,7 @@ class AbstractShapePoints(AbstractShape):
         'x': None,
         'y': None,
     })
+
 
 class Rectangle(AbstractShape):
     _shape_type__ = 'rect'
@@ -131,10 +133,11 @@ class Line(AbstractShapePoints):
     _shape_type__ = 'line'
     _svg_constructor_arguments = ['points']
 
-    def _log_action__(self, action, value):
+    def _log_action__(self, action, value, initial=False):
         if action == 'color':
             action = 'stroke'
-        AbstractShape._log_action__(self, action, value)
+        AbstractShape._log_action__(self, action, value, initial)
+
 
 class Polygon(AbstractShapePoints):
     _shape_type__ = 'polygon'
