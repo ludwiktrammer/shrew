@@ -1,7 +1,7 @@
 from copy import deepcopy
 
 _shrew_actions__ = []
-
+RAINBOW = ['red', 'orange', 'yellow', 'green', 'blue', 'purple']
 
 class animation():
     def __init__(self, duration=1):
