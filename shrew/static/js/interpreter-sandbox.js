@@ -1,4 +1,5 @@
-import Sk from "skulpt";
+import Sk from "@microduino/skulpt";
+
 import { drawFromActions } from "./drawing.js"
 
 Sk.configure({

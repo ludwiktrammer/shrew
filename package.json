@@ -3,6 +3,7 @@
   "private": true,
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^5.1.0",
+    "@microduino/skulpt": "^1.1.4",
     "autoprefixer": "^8.6.2",
     "babel": "^6.23.0",
     "babel-core": "^6.26.3",
@@ -12,7 +13,6 @@
     "bulma": "^0.7.1",
     "node-sass": "^4.9.0",
     "postcss-cli": "^5.0.1",
-    "skulpt": "^0.11.1",
     "svg.js": "^2.6.5"
   }
 }
