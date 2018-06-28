@@ -3,6 +3,17 @@ from copy import deepcopy
 _shrew_actions__ = []
 
 
+class animation():
+    def __init__(self, duration=1):
+        self.duration = duration
+
+    def __enter__(self):
+        _shrew_actions__.append((None, 'animation', [self.duration]))
+
+    def __exit__(self, *args):
+        _shrew_actions__.append((None, 'animation-end', [self.duration]))
+
+
 class AbstractShape:
     _shape_count__ = 0
     _shape_type__ = None
@@ -51,29 +62,30 @@ class AbstractShape:
         # Log the rest of the properties
         for name, value in self._properties__.items():
             if name not in self._svg_constructor_arguments:
-                self._log_action__(name, value)
+                self._log_action__(name, value, initial=True)
 
     def copy(self, **kwargs):
         return self.__class__(copy_from=self, **kwargs)
 
-    def _log_action__(self, action, value):
+    def _log_action__(self, command, value, initial=False):
         # Corrections
-        if action == 'color':
-            action = 'fill'
-        if action == 'transparency':
-            action = 'opacity'
+        if command == 'color':
+            command = 'fill'
+        if command == 'transparency':
+            command = 'opacity'
             value = 1 - value / 100
-        if action == 'rotation':
-            action = 'rotate'
-        if action == 'points':
-            action = 'plot'
-        _shrew_actions__.append((self.__id, action, value))
+        if command == 'rotation':
+            command = 'rotate'
+        if command == 'points':
+            command = 'plot'
+
+        _shrew_actions__.append((self.__id, command, value, initial))
 
     def flip_horizontal(self):
-        _shrew_actions__.append((self.__id, "flip", "y"))
+        self._log_action__("flip", "y")
 
     def flip_vertical(self):
-        _shrew_actions__.append((self.__id, "flip", "x"))
+        self._log_action__("flip", "x")
 
     def __getattr__(self, name):
         try:
