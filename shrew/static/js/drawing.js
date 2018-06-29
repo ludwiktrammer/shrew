@@ -2,28 +2,51 @@ import SVG from "svg.js"
 import cssColors from "css-color-names";
 
 let draw = SVG('drawing').viewbox(0, 0, 100, 100);
+
+// for each element we should only use a single animation object
+// per animation block. So we keep past animation objects here.
+let animationCache = {};
+let timeoutObject;
+
 export function drawFromActions(actions) {
     draw.clear();
+    cancelAnimations();
 
     let animation;
+    let isAnimated = false;
+    processAction(actions, 0);
+    function processAction(actions, index) {
+        if (index >= actions.length) {
+            return;
+        }
+        let [shapeId, command, value, initial] = actions[index];
+        if (command === "animation-end") {
+            let animationObj = Object.values(animationCache)[0];
+            let duration = animation.duration;
 
-    // for each element we should only use a single animation object
-    // per animation block. So we keep past animation objects here.
-    let animationCache = {};
+            function afterAnimationFinished() {
+                animation = undefined;
+                animationCache = {};
+                processAction(actions, ++index);
+            }
 
-    for (let [shapeId, command, value, initial] of actions) {
+            if (animationObj !== undefined) {
+                animationObj.after(afterAnimationFinished);
+            } else {
+                timeoutObject = setTimeout(afterAnimationFinished, duration);
+            }
+            return;
+        }
         if (command === "created") {
             let shape = draw[value[0]](...value.slice(1)).id(shapeId);
             if (animation) {
                 shape.opacity(0);
+                isAnimated = true;
             }
         } else if (command === "animation") {
             animation = {
                 duration: value[0] * 1000,
             };
-        } else if (command === "animation-end") {
-            animation = undefined;
-            animationCache = {};
         } else if(['fill', 'stroke'].includes(command)) {
             // gradient support
             let shape = SVG.get(shapeId);
@@ -49,7 +72,19 @@ export function drawFromActions(actions) {
             }
             shape[command](value);
         }
+        processAction(actions, ++index);
     }
+}
+
+function cancelAnimations() {
+    for (let animation of Object.values(animationCache)) {
+        animation.stop(false, true);
+    }
+    if (timeoutObject !== undefined) {
+        clearTimeout(timeoutObject);
+    }
+    animationCache = {};
+    timeoutObject = undefined;
 }
 
 function createGradient(colors) {
@@ -73,8 +108,13 @@ function updateGradient(colors, gradient, animation) {
             stop = gradient.at(1, color);
         }
         if (animation) {
-            console.log(animation.duration);
-            stop = stop.animate(animation.duration);
+            let stopId = stop.id();
+            if (animationCache[stopId]) {
+                stop = animationCache[stopId];
+            } else {
+                stop = stop.animate(animation.duration);
+                animationCache[stopId] = stop;
+            }
         }
         stop = stop.update(getGradientOffset(colors, i), color);
     }
