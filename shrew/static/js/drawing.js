@@ -24,6 +24,7 @@ export function drawFromActions(actions) {
             return;
         }
         let [shapeId, command, value, initial] = actions[index];
+
         if (command === "animation-end") {
             let animationObj = Object.values(animationCache)[0];
             let duration = animation.duration;
@@ -74,7 +75,11 @@ export function drawFromActions(actions) {
                     animationCache[shapeId] = shape;
                 }
             }
-            shape[command](value);
+            if (['attr', 'font'].includes(command)) {
+                shape[command](...value);
+            } else {
+                shape[command](value);
+            }
         }
         processAction(actions, ++index);
     }
