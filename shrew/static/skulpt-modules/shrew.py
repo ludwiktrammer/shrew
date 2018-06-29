@@ -113,8 +113,10 @@ class AbstractShape:
             value = deepcopy(value)
             self._properties__[name] = value
             self._log_action__(name, value)
-        else:
+        elif name is self.__dict__ or name.startswith('_'):
             self.__dict__[name] = value
+        else:
+            raise AttributeError("'{}' object has no attribute '{}'".format(self.__class__.__name__, name))
 
 
 class AbstractShapePoints(AbstractShape):
