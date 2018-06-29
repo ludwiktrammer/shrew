@@ -3,6 +3,7 @@ import "codemirror-minified/mode/python/python";
 import "codemirror-minified/addon/edit/closebrackets";
 import "codemirror-minified/addon/lint/lint";
 
+import replaceError from "./error-replacements.js";
 
 const textarea = document.getElementById("editor-code");
 
@@ -49,7 +50,7 @@ if (textarea) {
             }
             let errors = [];
             if (event.data.error) {
-                let message = event.data.error.message;
+                let message = replaceError(event.data.error.message);
                 let lineNumber = event.data.error.lineNumber;
 
                 let pre = document.createElement('pre');

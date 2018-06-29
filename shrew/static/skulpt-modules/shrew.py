@@ -40,7 +40,7 @@ class AbstractShape:
         self.__dict__['_properties__'] = {}  # avoid calling __setattr__
 
         if copy_from is not None and not isinstance(copy_from, AbstractShape):
-            raise TypeError("'{}' got an unexpected argument '{}'"
+            raise TypeError("'{}' got an unexpected unnamed argument '{}'"
                             .format(self.__class__.__name__, copy_from))
 
         unknow_kwargs = set(kwargs.keys()).difference(set(self._default_arguments__.keys()))
