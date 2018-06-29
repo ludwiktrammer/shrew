@@ -6,6 +6,9 @@ import "codemirror-minified/addon/edit/closebrackets";
 const textarea = document.getElementById("editor-code");
 
 if (textarea) {
+    const iframe = document.getElementById("interpreter-sandbox");
+    const output = document.getElementById("code-output");
+    const sandbox = iframe.contentWindow;
     let editor = CodeMirror.fromTextArea(textarea, {
         lineNumbers: true,
         theme: "shrew",
@@ -13,21 +16,27 @@ if (textarea) {
         autofocus: true,
         autoCloseBrackets: true,
     });
+    let runTimeout;
 
-
-    const buttonRun = document.getElementById("editor-run");
-    const iframe = document.getElementById("interpreter-sandbox");
-    const output = document.getElementById("code-output");
-    const sandbox = iframe.contentWindow;
-
-    buttonRun.addEventListener("click", () => {
+    function runCode() {
         output.innerHTML = ''; // clear output
         sandbox.postMessage({code: editor.getValue()}, "*");
+    }
+
+    editor.on("changes", (instance, changes) => {
+        // debounce running code
+        if (runTimeout) {
+            clearTimeout(runTimeout);
+        }
+        runTimeout = setTimeout(() => {
+            runCode();
+        }, 750)
+
     });
 
     window.addEventListener("message", (event) => {
         if (event.data.shrewInterpreterReady === true) {
-            buttonRun.disabled = false;
+            runCode();
         }
 
         if (event.data.message !== undefined) {
@@ -40,5 +49,4 @@ if (textarea) {
             console.log(event.data.message);
         }
     });
-
 }
