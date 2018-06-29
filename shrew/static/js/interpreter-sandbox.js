@@ -9,12 +9,11 @@ Sk.configure({
     python3: true,
 });
 window.addEventListener("message", runCode);
-window.parent.postMessage({shrewInterpreterReady: true}, "*");
+window.parent.postMessage({type: "interpreter-ready"}, "*");
 
-
-function output(message, error) {
-    error = error || false;
-    window.parent.postMessage({message: message, error: error}, "*");
+let outLines = [];
+function output(message) {
+    outLines.push(message);
 }
 
 function runCode(event) {
@@ -23,6 +22,7 @@ function runCode(event) {
         // ignore it for security reasons.
         return;
     }
+    outLines = []; // clear previous output
 
     // Add the implicit import of shrew functions
     let code = `from shrew import *\n\n${event.data.code}`;
@@ -31,11 +31,18 @@ function runCode(event) {
         return Sk.importMainWithBody("shrew-editor", false, code, true);
     }).then((result) => {
         let actions = skulptArrayToNativeArray(result.$d._shrew_actions__);
+        window.parent.postMessage({type: "run-result", out: outLines}, "*");
         drawFromActions(actions);
     }).catch((error) => {
         if (error.args) {
-            console.log(error);
-            output(`${error.tp$name}: ${error.args.v[0].v} (line ${error.traceback[error.traceback.length - 1].lineno - 2})`, true);
+            window.parent.postMessage({
+                type: "run-result",
+                out: outLines,
+                error: {
+                    message: `${error.tp$name}: ${error.args.v[0].v}`,
+                    lineNumber: error.traceback[error.traceback.length - 1].lineno - 2,
+                }
+            }, "*");
         } else {
             throw error;
         }

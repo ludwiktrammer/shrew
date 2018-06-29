@@ -76,3 +76,39 @@
 .cm-s-shrew .CodeMirror-selected {
   background-color: rgba($primary, 0.3);
 }
+
+.cm-s-shrew .CodeMirror-lint-marker-error, .CodeMirror-lint-message-error {
+  background-image: none;
+  vertical-align: top;
+  &::before {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 1rem;
+    content: "\f06a";
+    color: $danger;
+  }
+}
+
+.cm-s-shrew .CodeMirror-lint-marker-error {
+  margin-left: 5px;
+}
+
+.CodeMirror-lint-tooltip {
+  background-color: $light;
+  border-color: $grey-lighter;
+  border-radius: 0;
+  font-family: $family-monospace;
+
+  .CodeMirror-lint-message-error {
+    padding-left: 0;
+
+    &::before {
+      padding-right: 5px;
+    }
+  }
+}

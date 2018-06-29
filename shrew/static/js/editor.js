@@ -1,6 +1,7 @@
 import CodeMirror from "codemirror-minified";
 import "codemirror-minified/mode/python/python";
 import "codemirror-minified/addon/edit/closebrackets";
+import "codemirror-minified/addon/lint/lint";
 
 
 const textarea = document.getElementById("editor-code");
@@ -15,38 +16,56 @@ if (textarea) {
         indentUnit: 4,
         autofocus: true,
         autoCloseBrackets: true,
+        lint: {
+            getAnnotations: runLint,
+            async: true,
+        },
+        gutters: ["CodeMirror-lint-markers"],
     });
-    let runTimeout;
+    let lintCallback;
+    let shrewInterpreterReady = false;
 
     function runCode() {
-        output.innerHTML = ''; // clear output
         sandbox.postMessage({code: editor.getValue()}, "*");
     }
 
-    editor.on("changes", (instance, changes) => {
-        // debounce running code
-        if (runTimeout) {
-            clearTimeout(runTimeout);
-        }
-        runTimeout = setTimeout(() => {
+    function runLint(text, callback) {
+        if (shrewInterpreterReady) {
             runCode();
-        }, 750)
-
-    });
+        }
+        lintCallback = callback;
+    }
 
     window.addEventListener("message", (event) => {
-        if (event.data.shrewInterpreterReady === true) {
+        if (event.data.type === "interpreter-ready") {
+            shrewInterpreterReady = true;
             runCode();
-        }
-
-        if (event.data.message !== undefined) {
-            let pre = document.createElement('pre');
-            pre.innerText = event.data.message;
-            if (event.data.error) {
-                pre.classList.add("error");
+        } else if(event.data.type === "run-result") {
+            output.innerHTML = ''; // clear output
+            for (line in event.data.out) {
+                let pre = document.createElement('pre');
+                pre.innerText = line;
+                output.appendChild(pre);
             }
-            output.appendChild(pre);
-            console.log(event.data.message);
+            let errors = [];
+            if (event.data.error) {
+                let message = event.data.error.message;
+                let lineNumber = event.data.error.lineNumber;
+
+                let pre = document.createElement('pre');
+                pre.innerText = `${message} (line ${lineNumber})`;
+                pre.classList.add("error");
+                output.appendChild(pre);
+
+                errors.push({
+                    from: CodeMirror.Pos(lineNumber - 1),
+                    to: CodeMirror.Pos(lineNumber - 1),
+                    message: message,
+                });
+            }
+            if (lintCallback) {
+                lintCallback(errors);
+            }
         }
     });
 }
