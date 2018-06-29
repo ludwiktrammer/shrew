@@ -13,10 +13,14 @@ export function drawFromActions(actions) {
     cancelAnimations();
 
     let animation;
-    let isAnimated = false;
+    let hasAnimation = false;
     processAction(actions, 0);
     function processAction(actions, index) {
         if (index >= actions.length) {
+            if (hasAnimation) {
+                // loop
+                drawFromActions(actions);
+            }
             return;
         }
         let [shapeId, command, value, initial] = actions[index];
@@ -41,9 +45,9 @@ export function drawFromActions(actions) {
             let shape = draw[value[0]](...value.slice(1)).id(shapeId);
             if (animation) {
                 shape.opacity(0);
-                isAnimated = true;
             }
         } else if (command === "animation") {
+            hasAnimation = true;
             animation = {
                 duration: value[0] * 1000,
             };
