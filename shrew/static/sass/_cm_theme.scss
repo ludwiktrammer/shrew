@@ -1,0 +1,78 @@
+.cm-s-shrew .cm-quote { color: #090; }
+.cm-s-shrew .cm-negative { color: #d44; }
+.cm-s-shrew .cm-positive { color: #292; }
+.cm-s-shrew .cm-header, .cm-strong { font-weight: bold; }
+.cm-s-shrew .cm-em { font-style: italic; }
+.cm-s-shrew .cm-link { text-decoration: underline; }
+.cm-s-shrew .cm-strikethrough { text-decoration: line-through; }
+.cm-s-shrew .cm-header { color: #00f; font-weight: bold; }
+
+.cm-s-shrew .cm-atom { color: #219; }
+.cm-s-shrew .cm-attribute { color: #00c; }
+.cm-s-shrew .cm-bracket { color: #997; }
+.cm-s-shrew .cm-comment { color: #333333; }
+.cm-s-shrew .cm-def { color: #00f; }
+.cm-s-shrew .cm-em { font-style: italic; }
+.cm-s-shrew .cm-error { color: #f00; }
+.cm-s-shrew .cm-hr { color: #999; }
+.cm-s-shrew .cm-invalidchar { color: #f00; }
+.cm-s-shrew .cm-keyword { font-weight:bold; }
+.cm-s-shrew .cm-link { color: #00c; text-decoration: underline; }
+.cm-s-shrew .cm-meta { color: #555; }
+.cm-s-shrew .cm-negative { color: #d44; }
+.cm-s-shrew .cm-positive { color: #292; }
+.cm-s-shrew .cm-qualifier { color: #555; }
+.cm-s-shrew .cm-strikethrough { text-decoration: line-through; }
+.cm-s-shrew .cm-string { color: $purple; }
+.cm-s-shrew .cm-string-2 { color: #f50; }
+.cm-s-shrew .cm-strong { font-weight: bold; }
+.cm-s-shrew .cm-tag { color: #170; }
+.cm-s-shrew .cm-variable { color: $blue; }
+.cm-s-shrew .cm-variable-2 { color: #05a; }
+.cm-s-shrew .cm-variable-3, .cm-s-shrew .cm-type { color: #085; }
+
+.cm-s-shrew .cm-invalidchar { color: #f00; }
+
+/* ASN */
+.cm-s-shrew .cm-accessTypes,
+.cm-s-shrew .cm-compareTypes { color: #27408B; }
+.cm-s-shrew .cm-cmipVerbs { color: $blue; }
+.cm-s-shrew .cm-modifier { color:#D2691E; }
+.cm-s-shrew .cm-status { color:#8B4545; }
+.cm-s-shrew .cm-storage { color:#A020F0; }
+.cm-s-shrew .cm-tags { color:$purple; }
+
+/* CFG */
+.cm-s-shrew .cm-externalCommands { color: #8B4545; font-weight:bold; }
+.cm-s-shrew .cm-fileNCtrlMaskOptions,
+.cm-s-shrew .cm-sectionTitle { color: #2E8B57; font-weight:bold; }
+
+/* TTCN */
+.cm-s-shrew .cm-booleanConsts,
+.cm-s-shrew .cm-otherConsts,
+.cm-s-shrew .cm-verdictConsts { color: $purple; }
+.cm-s-shrew .cm-configOps,
+.cm-s-shrew .cm-functionOps,
+.cm-s-shrew .cm-portOps,
+.cm-s-shrew .cm-sutOps,
+.cm-s-shrew .cm-timerOps,
+.cm-s-shrew .cm-verdictOps { color: #0000FF; }
+.cm-s-shrew .cm-preprocessor,
+.cm-s-shrew .cm-templateMatch,
+.cm-s-shrew .cm-ttcn3Macros { color: #27408B; }
+.cm-s-shrew .cm-types { color: #A52A2A; font-weight:bold; }
+.cm-s-shrew .cm-visibilityModifiers { font-weight:bold; }
+
+.cm-s-shrew .CodeMirror-linenumbers {
+  background-color: $light;
+}
+
+.cm-s-shrew .CodeMirror-gutters {
+  border-right: 1px solid $grey-lighter;
+}
+
+.cm-s-shrew .CodeMirror-linenumber { color: $grey-light; }
+
+.cm-s-shrew .CodeMirror-selected {
+  background-color: rgba($primary, 0.3);
+}

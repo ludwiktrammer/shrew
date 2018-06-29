@@ -1,6 +1,20 @@
-const editor = document.getElementById("editor-code");
+import CodeMirror from "codemirror-minified";
+import "codemirror-minified/mode/python/python";
+import "codemirror-minified/addon/edit/closebrackets";
 
-if (editor) {
+
+const textarea = document.getElementById("editor-code");
+
+if (textarea) {
+    let editor = CodeMirror.fromTextArea(textarea, {
+        lineNumbers: true,
+        theme: "shrew",
+        indentUnit: 4,
+        autofocus: true,
+        autoCloseBrackets: true,
+    });
+
+
     const buttonRun = document.getElementById("editor-run");
     const iframe = document.getElementById("interpreter-sandbox");
     const output = document.getElementById("code-output");
@@ -8,7 +22,7 @@ if (editor) {
 
     buttonRun.addEventListener("click", () => {
         output.innerHTML = ''; // clear output
-        sandbox.postMessage({code: editor.value}, "*");
+        sandbox.postMessage({code: editor.getValue()}, "*");
     });
 
     window.addEventListener("message", (event) => {
