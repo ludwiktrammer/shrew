@@ -4,18 +4,20 @@
   <div class="columns">
     <div class="column is-two-thirds">
       <div class="field">
-        <textarea class="textarea" id="editor-code">Square(color='pink')
-blue_circle = Circle(width=90, height=90, color='blue', x=-10, y=-10)
-yellow_circle = Circle(width=90, height=90, color='yellow', x=20, y=20)
-yellow_circle.transparency = 10
-hello = Text(text="Hello World", y=78, x=10)
-hello.rotation = -5
-hello.color = ['red', 'blue']  # gradient
+        <textarea class="textarea" id="editor-code">from icons import Heart
 
-# Text shadow
-hello_shadow = hello.copy(transparency=80)
-hello_shadow.x -= 1
-hello_shadow.y -= 1</textarea>
+heart = Heart(width=60, height=60, color='violet')
+
+rainbow = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet']
+for color in rainbow:
+    with animation(duration=1.5):
+        heart.color = color
+        heart.width = 70
+        heart.height = 70
+
+    with animation(duration=0.3):
+        heart.width = 60
+        heart.height = 60</textarea>
       </div>
       <div class="field">
         <button class="button is-primary" id="editor-run" disabled>

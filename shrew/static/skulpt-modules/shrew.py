@@ -18,8 +18,8 @@ class AbstractShape:
     _shape_count__ = 0
     _shape_type__ = None
     _default_arguments__ = {
-        'x': 0,
-        'y': 0,
+        'x': 50,
+        'y': 50,
         'color': 'black',
         'width': 100,
         'height': 100,
@@ -78,14 +78,29 @@ class AbstractShape:
             command = 'rotate'
         if command == 'points':
             command = 'plot'
+        if command == 'x':
+            command = 'cx'
+        if command == 'y':
+            command = 'cy'
 
         _shrew_actions__.append((self.__id, command, value, initial))
+
+        # Correct cx, cy
+        if command == 'width':
+            self._log_action__('x', self.x, initial)
+        if command == 'height':
+            self._log_action__('y', self.y, initial)
+
 
     def flip_horizontal(self):
         self._log_action__("flip", "y")
 
     def flip_vertical(self):
         self._log_action__("flip", "x")
+
+    def enlarge(self, multiply):
+        self.width *= multiply
+        self.height *= multiply
 
     def __getattr__(self, name):
         try:
