@@ -160,7 +160,7 @@ class Ellipse(AbstractShapeWidthHeight):
 Circle = Ellipse
 
 
-class Line(AbstractShapeWidthHeight):
+class Line(AbstractShapePoints):
     _shape_type__ = 'line'
     _svg_constructor_arguments = ['points']
 
@@ -170,7 +170,7 @@ class Line(AbstractShapeWidthHeight):
         AbstractShapeWidthHeight._log_action__(self, action, value, initial)
 
 
-class Polygon(AbstractShapeWidthHeight):
+class Polygon(AbstractShapePoints):
     _shape_type__ = 'polygon'
     _svg_constructor_arguments = ['points']
 
