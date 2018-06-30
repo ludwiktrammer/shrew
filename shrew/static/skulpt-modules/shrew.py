@@ -85,9 +85,6 @@ class AbstractShape:
         if command == 'transparency':
             command = 'opacity'
             value = 1 - value / 100
-        elif command == 'font_size':
-            command = 'font'
-            value = ['size', value]
 
         _shrew_actions__.append((self.__id, command, value, initial))
 
@@ -123,6 +120,9 @@ class AbstractShape:
             self.__dict__[name] = value
         else:
             raise AttributeError("'{}' object has no attribute '{}'".format(self.__class__.__name__, name))
+
+    def __str__(self):
+        return "A {color} {shape}.".format(color=self.color, shape=self.__class__.__name__.lower())
 
 
 class AbstractShapeWidthHeight(AbstractShape):
@@ -164,10 +164,10 @@ class Line(AbstractShapePoints):
     _shape_type__ = 'line'
     _svg_constructor_arguments = ['points']
 
-    def _log_action__(self, action, value, initial=False):
-        if action == 'color':
-            action = 'stroke'
-        AbstractShapeWidthHeight._log_action__(self, action, value, initial)
+    def _log_action__(self, command, value, initial=False):
+        if command == 'color':
+            command = 'stroke'
+        AbstractShapeWidthHeight._log_action__(self, command, value, initial)
 
 
 class Polygon(AbstractShapePoints):
@@ -193,3 +193,18 @@ class Text(AbstractShape):
         'text': "Example text",
         'font_size': 10,
     })
+
+    def __init__(self, text=None, **kwargs):
+        copy_from = kwargs.pop('copy_from', None)
+        kwargs['text'] = str(text)
+        AbstractShape.__init__(self, copy_from=copy_from, **kwargs)
+
+
+    def _log_action__(self, command, value, initial=False):
+        if command == 'font_size':
+            command = 'font'
+            value = ['size', value]
+        elif command == 'text':
+            value = str(value)
+        AbstractShape._log_action__(self, command, value, initial)
+
