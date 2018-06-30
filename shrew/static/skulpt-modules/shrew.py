@@ -122,7 +122,15 @@ class AbstractShape:
             raise AttributeError("'{}' object has no attribute '{}'".format(self.__class__.__name__, name))
 
     def __str__(self):
-        return "{color} {shape}".format(color=self.color, shape=self.__class__.__name__.lower())
+        color = self.color
+        if not isinstance(self.color, str):
+            if len(color) == 1:
+                color = color[0]
+            elif len(color) == 0:
+                color = ''
+            else:
+                color = " and ".join([", ".join(color[:-1]), color[-1]])
+        return "{color} {shape}".format(color=color, shape=self.__class__.__name__.lower())
 
 
 class AbstractShapeWidthHeight(AbstractShape):
