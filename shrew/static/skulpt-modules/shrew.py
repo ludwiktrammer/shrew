@@ -1,9 +1,11 @@
 from copy import deepcopy
 
+
 _shrew_actions__ = []
 RAINBOW = ['red', 'orange', 'yellow', 'green', 'blue', 'purple']
 
-class animation():
+
+class animation:
     def __init__(self, duration=1):
         self.duration = duration
 
@@ -49,10 +51,10 @@ class AbstractShape:
                             .format(self.__class__.__name__, unknow_kwargs.pop()))
 
         # Populate properties
-        for property, default in self._default_arguments__.items():
+        for property_name, default in self._default_arguments__.items():
             if copy_from is not None:
-                default = deepcopy(copy_from._properties__[property])
-            self._properties__[property] = deepcopy(kwargs.get(property, default))
+                default = deepcopy(copy_from._properties__[property_name])
+            self._properties__[property_name] = deepcopy(kwargs.get(property_name, default))
 
         self._log__init()
 
@@ -93,7 +95,6 @@ class AbstractShape:
             self._log_action__('x', self.x, initial)
         if command in ['height', 'font']:
             self._log_action__('y', self.y, initial)
-
 
     def flip_horizontal(self):
         self._log_action__("flip", "y")
@@ -207,7 +208,6 @@ class Text(AbstractShape):
         kwargs['text'] = str(text)
         AbstractShape.__init__(self, copy_from=copy_from, **kwargs)
 
-
     def _log_action__(self, command, value, initial=False):
         if command == 'font_size':
             command = 'font'
@@ -215,4 +215,3 @@ class Text(AbstractShape):
         elif command == 'text':
             value = str(value)
         AbstractShape._log_action__(self, command, value, initial)
-
