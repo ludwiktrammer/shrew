@@ -1,5 +1,5 @@
 from copy import deepcopy
-
+import re
 
 _shrew_actions__ = []
 RAINBOW = ['red', 'orange', 'yellow', 'green', 'blue', 'purple']
@@ -124,6 +124,8 @@ class AbstractShape:
 
     def __str__(self):
         color = self.color
+        name = " ".join(re.findall('[A-Za-z][^A-Z]*', self.__class__.__name__)).lower()
+
         if not isinstance(self.color, str):
             if len(color) == 1:
                 color = color[0]
@@ -131,7 +133,7 @@ class AbstractShape:
                 color = ''
             else:
                 color = " and ".join([", ".join(color[:-1]), color[-1]])
-        return "{color} {shape}".format(color=color, shape=self.__class__.__name__.lower())
+        return "{color} {shape}".format(color=color, shape=name)
 
 
 class AbstractShapeWidthHeight(AbstractShape):
