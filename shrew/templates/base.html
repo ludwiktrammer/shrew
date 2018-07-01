@@ -32,13 +32,13 @@
       </div>
       <div class="navbar-menu" id="navMenu">
         <div class="navbar-start">
-          <a class="navbar-item" href="{% url 'todo' %}">
+          <a class="navbar-item" href="{% url 'pages:category-detail' slug='lessons' %}">
             Lessons
           </a>
-          <a class="navbar-item" href="{% url 'todo' %}">
+          <a class="navbar-item" href="{% url 'pages:category-detail' slug='documentation' %}">
             Documentation
           </a>
-          <a class="navbar-item" href="{% url 'todo' %}">
+          <a class="navbar-item" href="{% url 'pages:page-detail' slug='about' %}">
             About
           </a>
         </div>
@@ -52,6 +52,7 @@
             </a>
           </div>
         </div>
+      </div>
     </div>
   </nav>
   <section class="section">

@@ -1,0 +1,24 @@
+{%  extends 'base.html' %}
+{% load markup %}
+{% load micawber_tags %}
+
+{% block content %}
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="/">Code Shrew</a></li>
+      {% if page.category %}
+        <li><a href="{% url 'pages:category-detail' slug=page.category.slug %}">{{ page.category }}</a></li>
+      {% endif %}
+      <li class="is-active">
+        <a href="{% url 'pages:page-detail' slug=page.slug category_slug=page.category.slug %}"
+           aria-current="page">{{ page }}</a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="content">
+    <h1>{{ page.name }}</h1>
+
+    {{ page.text|commonmark|oembed_html }}
+  </div>
+{% endblock %}

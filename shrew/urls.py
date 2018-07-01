@@ -18,12 +18,14 @@ from django.urls import path, include
 from django.conf import settings
 from django.views.generic import TemplateView
 
+admin.site.site_header = 'Code Shrew Admin'
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name='home.html')),
     path('todo/', TemplateView.as_view(template_name='todo.html'), name='todo'),
     path('creations/', include('shrew.apps.creations.urls')),
     path('admin/', admin.site.urls),
+    path('', include('shrew.apps.pages.urls')),
 ]
 
 if settings.DEBUG:

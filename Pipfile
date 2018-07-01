@@ -9,6 +9,11 @@ django-environ = "*"
 "psycopg2" = "*"
 django-compressor = "*"
 django-compressor-toolkit = "*"
+commonmark = "*"
+django-markwhat = "*"
+"django-admin-sortable2" = "*"
+micawber = "*"
+"beautifulsoup4" = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"

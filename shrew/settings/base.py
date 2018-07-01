@@ -44,8 +44,12 @@ INSTALLED_APPS = [
 
     'compressor',
     'compressor_toolkit',
+    'django_markwhat',
+    'adminsortable2',
+    'micawber.contrib.mcdjango',
 
     'shrew.apps.creations',
+    'shrew.apps.pages',
 ]
 
 MIDDLEWARE = [

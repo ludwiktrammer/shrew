@@ -1,0 +1,28 @@
+{%  extends 'base.html' %}
+{% load markup %}
+{% load micawber_tags %}
+
+{% block content %}
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="/">Code Shrew</a></li>
+      <li class="is-active">
+        <a href="{% url 'pages:category-detail' slug=category.slug %}" aria-current="page">{{ category }}</a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="content">
+    <h1>{{ category.name }}</h1>
+
+    {{ category.text|commonmark|oembed_html }}
+
+    <h2>Table of contents</h2>
+    <ol>
+      {% for page in pages %}
+        <li><a href="{{ page.get_absolute_url }}">{{ page }}</a></li>
+      {% endfor %}
+    </ol>
+  </div>
+
+{% endblock %}
