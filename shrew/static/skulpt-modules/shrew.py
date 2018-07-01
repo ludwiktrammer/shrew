@@ -102,10 +102,6 @@ class AbstractShape:
     def flip_vertical(self):
         self._log_action__("flip", "x")
 
-    def enlarge(self, multiply):
-        self.width *= multiply
-        self.height *= multiply
-
     def __getattr__(self, name):
         try:
             return self._properties__[name]
@@ -142,6 +138,10 @@ class AbstractShapeWidthHeight(AbstractShape):
         'width': 100,
         'height': 100,
     })
+
+    def enlarge(self, multiply):
+        self.width *= multiply
+        self.height *= multiply
 
 
 class AbstractShapePoints(AbstractShape):
@@ -227,3 +227,6 @@ class Text(AbstractShape):
         elif command == 'text':
             value = str(value)
         AbstractShape._log_action__(self, command, value, initial)
+
+    def enlarge(self, multiply):
+        self.font_size *= multiply
