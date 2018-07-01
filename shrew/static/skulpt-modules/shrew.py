@@ -156,7 +156,8 @@ class AbstractShapePoints(AbstractShape):
 
     def __init__(self, points=None, **kwargs):
         copy_from = kwargs.pop('copy_from', None)
-        kwargs['points'] = points
+        if points is not None:
+            kwargs['points'] = points
         AbstractShape.__init__(self, copy_from=copy_from, **kwargs)
 
 
@@ -217,7 +218,8 @@ class Text(AbstractShape):
 
     def __init__(self, text=None, **kwargs):
         copy_from = kwargs.pop('copy_from', None)
-        kwargs['text'] = str(text)
+        if text is not None:
+            kwargs['text'] = str(text)
         AbstractShape.__init__(self, copy_from=copy_from, **kwargs)
 
     def _log_action__(self, command, value, initial=False):
