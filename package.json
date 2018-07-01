@@ -13,6 +13,7 @@
     "bulma": "^0.7.1",
     "codemirror-minified": "^5.37.0",
     "css-color-names": "0.0.4",
+    "nearley": "^2.13.0",
     "node-sass": "^4.9.0",
     "postcss-cli": "^5.0.1",
     "svg.js": "^2.6.5"

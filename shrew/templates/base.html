@@ -61,6 +61,7 @@
   </section>
 
   {% compress js %}
+    <script type="nearley" src="{% static 'nearley/grammar.ne' %}"></script>
     <script type="module" src="{% static 'js/editor.js' %}"></script>
     <script type="module" src="{% static 'js/navbar.js' %}"></script>
   {% endcompress %}

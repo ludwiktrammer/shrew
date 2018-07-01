@@ -1,7 +1,7 @@
 import json
 
 from compressor.filters import FilterBase
-from compressor_toolkit.precompilers import ES6Compiler
+from compressor_toolkit.precompilers import ES6Compiler, BaseCompiler
 
 class SkulptModuleFilter(FilterBase):
     JS_PREFIX = 'if (window.skulptModules === undefined) {window.skulptModules = {};}\n'
@@ -19,3 +19,9 @@ class SkulptModuleES6Filter(ES6Compiler):
             filename,
             json.dumps(content),
         )
+
+
+class NearleyFilter(BaseCompiler):
+    command = 'node_modules/nearley/bin/nearleyc.js "{infile}" -o "{outfile}"'
+    infile_ext = '.ne'
+

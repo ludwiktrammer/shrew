@@ -2,8 +2,12 @@ import CodeMirror from "codemirror-minified";
 import "codemirror-minified/mode/python/python";
 import "codemirror-minified/addon/edit/closebrackets";
 import "codemirror-minified/addon/lint/lint";
+import "codemirror-minified/addon/hint/show-hint";
+
 
 import replaceError from "./error-replacements.js";
+import autocomplete from "./autocomplete.js";
+
 
 const textarea = document.getElementById("editor-code");
 
@@ -22,6 +26,19 @@ if (textarea) {
             async: true,
         },
         gutters: ["CodeMirror-lint-markers"],
+        hintOptions: {
+            hint: autocomplete,
+            completeSingle: false,
+            extraKeys: {
+                Enter: (cm, menu) => {
+                    menu.close();
+                    CodeMirror.commands.newlineAndIndent();
+                }, // don't accept on enter
+            }
+        },
+    });
+    editor.on('cursorActivity', () => {
+        editor.showHint();
     });
     let lintCallback;
     let shrewInterpreterReady = false;
