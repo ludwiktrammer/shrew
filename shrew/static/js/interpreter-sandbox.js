@@ -34,6 +34,7 @@ function runCode(event) {
         window.parent.postMessage({type: "run-result", out: outLines}, "*");
         drawFromActions(actions);
     }).catch((error) => {
+        console.error(error);
         if (error.args) {
             window.parent.postMessage({
                 type: "run-result",
