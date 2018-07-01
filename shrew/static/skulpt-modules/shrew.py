@@ -97,10 +97,10 @@ class AbstractShape:
             self._log_action__('y', self.y, initial)
 
     def flip_horizontal(self):
-        self._log_action__("flip", "y")
+        self._log_action__("flip", "x")
 
     def flip_vertical(self):
-        self._log_action__("flip", "x")
+        self._log_action__("flip", "y")
 
     def __getattr__(self, name):
         try:
