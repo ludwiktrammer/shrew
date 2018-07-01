@@ -11,12 +11,12 @@ urlpatterns = [
         name='category-detail',
     ),
     path(
-        '<slug:category_slug>/<slug:slug>/',
+        'page/<slug:slug>/',
         PageDetailView.as_view(),
         name='page-detail',
     ),
     path(
-        'page/<slug:slug>/',
+        '<slug:category_slug>/<slug:slug>/',
         PageDetailView.as_view(),
         name='page-detail',
     ),
