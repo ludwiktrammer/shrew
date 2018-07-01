@@ -211,7 +211,7 @@ class Text(AbstractShape):
 
     _default_arguments__ = deepcopy(AbstractShape._default_arguments__)
     _default_arguments__.update({
-        'text': "Example text",
+        'text': "Hello World!",
         'font_size': 10,
     })
 
