@@ -154,6 +154,11 @@ class AbstractShapePoints(AbstractShape):
         'y': None,
     })
 
+    def __init__(self, points=None, **kwargs):
+        copy_from = kwargs.pop('copy_from', None)
+        kwargs['points'] = points
+        AbstractShape.__init__(self, copy_from=copy_from, **kwargs)
+
 
 class Rectangle(AbstractShapeWidthHeight):
     _shape_type__ = 'rect'
@@ -184,6 +189,11 @@ class Line(AbstractShapePoints):
 class Polygon(AbstractShapePoints):
     _shape_type__ = 'polygon'
     _svg_constructor_arguments = ['points']
+
+    _default_arguments__ = deepcopy(AbstractShapePoints._default_arguments__)
+    _default_arguments__.update({
+        'points': [(50,0), (0,100), (100,100)],
+    })
 
 
 class Path(AbstractShapeWidthHeight):
