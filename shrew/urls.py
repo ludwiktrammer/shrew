@@ -18,16 +18,17 @@ from django.urls import path, include
 from django.conf import settings
 from django.views.generic import TemplateView
 
-from shrew.apps.creations.views import EditorView
+from shrew.apps.creations.views import EditorView, HomePage
 
 admin.site.site_header = 'Code Shrew Admin'
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='home.html')),
+    path('', HomePage.as_view()),
     path('todo/', TemplateView.as_view(template_name='todo.html'), name='todo'),
     path('creations/', include('shrew.apps.creations.urls')),
     path('admin/', admin.site.urls),
     path('editor/', EditorView.as_view(), name='editor'),
+    path('editor/<slug:slug>', EditorView.as_view(), name='editor-sample'),
     path('', include('shrew.apps.pages.urls')),
 ]
 

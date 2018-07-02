@@ -1,0 +1,16 @@
+<div class="columns">
+  {% for sample in samples %}
+    <div class="column is-one-quarter">
+      <div class="card">
+        <div class="card-image">
+          <figure class="image is-square">
+            <a href="{{ sample.get_absolute_url }}">{{ sample.svg|safe }}</a>
+          </figure>
+        </div>
+        <div class="card-header">
+          <a class="card-header-title" href="{{ sample.get_absolute_url }}">{{ sample.name }}</a>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
