@@ -1,32 +1,38 @@
 {%  extends 'base.html' %}
 
 {% block content %}
-  <div class="columns">
-    <div class="column is-two-thirds">
-      <div class="field">
-        <textarea class="textarea" id="editor-code">from icons import Heart
-
-heart = Heart(width=60, height=60, color='violet')
-
-rainbow = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet']
-for color in rainbow:
-    with animation(duration=1.5):
-        heart.color = color
-        heart.width = 70
-        heart.height = 70
-
-    with animation(duration=0.3):
-        heart.width = 60
-        heart.height = 60</textarea>
-      </div>
-      <div id="code-output"></div>
+  <article class="message is-info">
+    <div class="message-header">
+      <p>Welcome to Code Shrew!</p>
     </div>
-    <div class="column">
-      <div class="sandbox-wrapper">
-        <iframe id="interpreter-sandbox" scrolling="no" src="{% url 'creations:interpreter-sandbox' %}"
-            sandbox="allow-scripts"></iframe>
-      </div>
-    </div>
-  </div>
+    <div class="message-body content">
+      <p>
+        Code Shrew is a platform for <strong>learning and practicing basic concepts of programming</strong>.
+        In its heart is a programming environment where you can <strong>play with code by creating drawings and animations</strong> using a simple Python-like syntax.
+        It will be accompanied by an <strong>interactive course</strong> presenting a variety of fundamental programming concepts using the environment.
+      </p>
 
+      <p>
+        The site will soon include much more features (including saving and sharing created drawings and animations).
+        For now, we would like you to take a look at <a href="{% url 'editor' %}">the interactive editor</a> and a preliminary version of the <a href="{% url 'pages:category-detail' slug='lessons' %}">lessons</a>.
+      </p>
+
+      <p>
+        Mostly we want you to have fun. Please, don't leave the site before creating at least couple of animations!
+        You may want to read through <a href="{% url 'pages:category-detail' slug='documentation' %}">the documentation</a> first, to see what's possible.
+        You might also get inspired by some of the samples that we included below.
+      </p>
+
+      <p>
+        We are very interested in your feedback! Please, share with us any suggestions or ideas about Code Shrew that you might have.
+        They might be about the interactive editor (i.e., the tool for drawing / animating with code), the lessons, or the general concept of the site.
+        Bug reports would also be very appreciated. The thing that we would especially like to see is your creations - source code of drawings and animations that you've made with the site.
+        Please share them with us!
+      </p>
+
+      <p>
+        But first and foremost let us know: was playing with the site any fun? :)
+      </p>
+    </div>
+  </article>
 {% endblock %}

@@ -1,0 +1,27 @@
+{%  extends 'base.html' %}
+
+{% block content %}
+  <div class="columns">
+    <div class="column is-two-thirds">
+      <div class="field">
+        <textarea class="textarea" id="editor-code">{{ code }}</textarea>
+      </div>
+    </div>
+    <div class="column">
+      <div class="sandbox-wrapper">
+        <iframe id="interpreter-sandbox" scrolling="no" src="{% url 'creations:interpreter-sandbox' %}"
+            sandbox="allow-scripts"></iframe>
+      </div>
+    </div>
+  </div>
+  <article class="message">
+    <div class="message-body">
+      <div id="code-output"></div>
+
+      Don't know what to do? Don't worry!
+      We prepared <a href="{% url 'pages:category-detail' slug='documentation' %}">detailed documentation</a>
+      and <a href="{% url 'pages:category-detail' slug='lessons' %}">coding lessons</a> for you.
+    </div>
+  </article>
+{% endblock %}
+

@@ -43,6 +43,12 @@ if (textarea) {
             runCode();
         } else if(event.data.type === "run-result") {
             output.innerHTML = ''; // clear output
+            if (event.data.out.length || event.data.error) {
+                output.classList.add("has-output");
+            } else {
+                output.classList.remove("has-output");
+            }
+
             for (let line of event.data.out) {
                 let pre = document.createElement('pre');
                 pre.innerText = line;

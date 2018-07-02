@@ -33,10 +33,17 @@
 }
 
 #code-output {
-  @extend pre;
+  display: none;
+  background-color: transparent !important;
+  padding-bottom: 1.25em;
+
+  &.has-output {
+    display: block;
+  }
 
   pre {
     padding: 0;
+    background-color: transparent !important;
 
     &.error {
       @extend .has-text-danger;
