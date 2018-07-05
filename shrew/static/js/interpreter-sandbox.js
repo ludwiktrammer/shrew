@@ -16,6 +16,14 @@ window.addEventListener("load", () => {
     window.parent.postMessage({type: "interpreter-ready"}, "*");
 });
 
+// run again when the tab is opened - sometimes background tab are slowed down by the browser
+// and the execution of the code times out
+document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) {
+        window.parent.postMessage({type: "interpreter-ready"}, "*");
+    }
+});
+
 let outLines = [];
 function output(message) {
     outLines.push(message);
