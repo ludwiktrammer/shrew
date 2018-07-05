@@ -10,7 +10,11 @@ Sk.configure({
     execLimit: 1500,
 });
 window.addEventListener("message", runCode);
-window.parent.postMessage({type: "interpreter-ready"}, "*");
+
+// wait till everything loads
+window.addEventListener("load", () => {
+    window.parent.postMessage({type: "interpreter-ready"}, "*");
+});
 
 let outLines = [];
 function output(message) {
