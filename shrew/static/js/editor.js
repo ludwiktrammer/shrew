@@ -37,6 +37,14 @@ if (textarea) {
         lintCallback = callback;
     }
 
+    // run again when the tab is opened - sometimes background tab are slowed down by the browser
+    // and the execution of the coee times out
+    document.addEventListener("visibilitychange", () => {
+        if (!document.hidden) {
+            runCode();
+        }
+    });
+
     window.addEventListener("message", (event) => {
         if (event.data.type === "interpreter-ready") {
             shrewInterpreterReady = true;
