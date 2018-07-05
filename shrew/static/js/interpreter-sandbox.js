@@ -7,6 +7,7 @@ Sk.configure({
     uncaughtException: output,
     read: builtinRead,
     python3: true,
+    execLimit: 2000,
 });
 window.addEventListener("message", runCode);
 window.parent.postMessage({type: "interpreter-ready"}, "*");
