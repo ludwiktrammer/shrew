@@ -56,6 +56,30 @@ let actionHandlers = {
         actionHandlers.attr(...args);
     },
 
+    "text": (shapeId, command, value, initial) => {
+        let isAnimated = (animation && !initial);
+        let shape = getShape(shapeId, (animation && !initial));
+        if(!isAnimated) {
+            shape[command](value);
+        } else {
+            // A pseudo-animation of text change
+            const morph_hide = new SVG.MorphObj(shape.target().opacity(), 0);
+            const morph_show = new SVG.MorphObj(0, shape.target().opacity());
+            let new_text_present = false;
+            shape.during(pos => {
+                if (pos < 0.5) {
+                    shape.target().opacity(morph_hide.at(pos * 2));
+                } else {
+                    if (!new_text_present) {
+                        shape.target().text(value);
+                        new_text_present = true;
+                    }
+                    shape.target().opacity(morph_show.at((pos - 0.5) * 2));
+                }
+            });
+        }
+    },
+
     "fill": (shapeId, command, value) => {
         let shape = getShape(shapeId);
         if (!Array.isArray(value)) {

@@ -91,9 +91,9 @@ class AbstractShape:
         _shrew_actions__.append((self.__id, command, value, initial))
 
         # Correct cx, cy
-        if command in ['width', 'font']:
+        if command in ['width', 'font', 'text']:
             self._log_action__('x', self.x, initial)
-        if command in ['height', 'font']:
+        if command in ['height', 'font', 'text']:
             self._log_action__('y', self.y, initial)
 
     def flip_horizontal(self):
