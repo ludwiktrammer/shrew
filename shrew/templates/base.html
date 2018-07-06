@@ -69,6 +69,14 @@
       {% block content %}{%  endblock %}
     </div>
   </section>
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <p>
+        <strong>Code Shrew</strong> was created by Ludwik Trammer (the software) and Jamie Nunez (the lessons).
+        See our <a href="{% url 'pages:page-detail' slug='terms' %}">Terms of Use</a> and <a href="{% url 'pages:page-detail' slug='privacy' %}">Privacy Policy</a>.
+      </p>
+    </div>
+  </footer>
 
   {% compress js %}
     <script type="module" src="{% static 'js/editor.js' %}"></script>
