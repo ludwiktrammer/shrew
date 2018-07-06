@@ -11,6 +11,8 @@ if (textarea) {
     const iframe = document.getElementById("interpreter-sandbox");
     const output = document.getElementById("code-output");
     const sandbox = iframe.contentWindow;
+    let showErrorsTimeout;
+
     let editor = CodeMirror.fromTextArea(textarea, {
         lineNumbers: true,
         theme: "shrew",
@@ -42,37 +44,54 @@ if (textarea) {
             shrewInterpreterReady = true;
             runCode();
         } else if(event.data.type === "run-result") {
-            output.innerHTML = ''; // clear output
-            if (event.data.out.length || event.data.error) {
-                output.classList.add("has-output");
+            clearTimeout(showErrorsTimeout);
+            if(!event.data.error) {
+                displayResults(event.data.out);
             } else {
-                output.classList.remove("has-output");
-            }
-
-            for (let line of event.data.out) {
-                let pre = document.createElement('pre');
-                pre.innerText = line;
-                output.appendChild(pre);
-            }
-            let errors = [];
-            if (event.data.error) {
-                let message = replaceError(event.data.error.message);
-                let lineNumber = event.data.error.lineNumber;
-
-                let pre = document.createElement('pre');
-                pre.innerText = `${message} (line ${lineNumber})`;
-                pre.classList.add("error");
-                output.appendChild(pre);
-
-                errors.push({
-                    from: CodeMirror.Pos(lineNumber - 1),
-                    to: CodeMirror.Pos(lineNumber - 1),
-                    message: message,
-                });
-            }
-            if (lintCallback) {
-                lintCallback(errors);
+                // errors during typing are annoying
+                // wait additional 2 seconds - maybe the error will be fixed by then
+                showErrorsTimeout = setTimeout(() => {
+                    displayResults(event.data.out, event.data.error);
+                }, 2000);
             }
         }
     });
+
+    /**
+     * Display results to the "console"
+     */
+    function displayResults(lines, error) {
+        output.innerHTML = ''; // clear output
+        if (lines.length || error) {
+            output.classList.add("has-output");
+        } else {
+            output.classList.remove("has-output");
+        }
+
+        for (let line of lines) {
+            let pre = document.createElement('pre');
+            pre.innerText = line;
+            output.appendChild(pre);
+        }
+        let errors = [];
+        if (error) {
+            let message = replaceError(error.message);
+            let lineNumber = error.lineNumber;
+
+            let pre = document.createElement('pre');
+            pre.innerText = `${message} (line ${lineNumber})`;
+            pre.classList.add("error");
+            output.appendChild(pre);
+
+            errors.push({
+                from: CodeMirror.Pos(lineNumber - 1),
+                to: CodeMirror.Pos(lineNumber - 1),
+                message: message,
+            });
+        }
+        if (lintCallback) {
+            lintCallback(errors);
+        }
+    }
 }
+
