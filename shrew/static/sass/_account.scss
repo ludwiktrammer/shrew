@@ -1,0 +1,34 @@
+$facebook-color: #4C69BA;
+$google-color: #DD4B39;
+
+form.login {
+  max-width: 20rem;
+  margin: 0 auto;
+}
+
+.socialaccount_providers .button-social-login {
+  display: block;
+  max-width: 20rem;
+  color: white;
+  margin: .75em auto;
+
+  &:hover, &:active, &:focus {
+    color: white;
+  }
+
+  &.button-social-login-facebook {
+    background-color: $facebook-color;
+
+    &:hover {
+      background-color: darken($facebook-color, 5%);
+    }
+  }
+
+  &.button-social-login-google {
+    background-color: $google-color;
+  }
+
+  &:hover {
+      background-color: darken($google-color, 5%);
+    }
+}

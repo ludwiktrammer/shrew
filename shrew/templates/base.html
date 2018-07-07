@@ -1,5 +1,6 @@
 {% load compress %}
 {% load static %}
+{% load bulma_tags %}
 
 <!DOCTYPE html>
 <html class="has-navbar-fixed-top">
@@ -24,6 +25,7 @@
     {% endcompress %}
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web:400,700&amp;subset=latin-ext" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/solid.css" integrity="sha384-TbilV5Lbhlwdyc4RuIV/JhD8NR+BfMrvz4BL5QFa2we1hQu6wvREr3v6XSRfCTRp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/brands.css" integrity="sha384-7xAnn7Zm3QC1jFjVc1A6v/toepoG3JXboQYzbM0jrPzou9OFXm/fY6Z/XiIebl/k" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/fontawesome.css" integrity="sha384-ozJwkrqb90Oa3ZNb+yKFW2lToAWYdTiF1vt8JiH5ptTGHTGcN7qdoR1F95e0kYyG" crossorigin="anonymous">
   </head>
   <body>
@@ -60,19 +62,81 @@
               <span>Create new</span>
             </a>
           </div>
+          {% if not request.user.is_authenticated %}
+            <div class="navbar-item">
+              <a class="button is-light is-medium" href="{% url 'account_login' %}?next={{request.path}}">
+                <span class="icon">
+                  <i class="fas fa-sign-in-alt"></i>
+                </span>
+                <span>Sign up or log in</span>
+              </a>
+            </div>
+          {% else %}
+            <div class="navbar-item">
+              <a href="{% url 'todo' %}" class="button is-light is-medium is-hidden-desktop">
+                <span class="icon">
+                  <i class="fas fa-user"></i>
+                </span>
+                <span>My profile</span>
+              </a>
+              <div class="dropdown is-hoverable is-hidden-touch">
+                <div class="dropdown-trigger">
+                  <button class="button is-medium is-light" aria-haspopup="true" aria-controls="account-menu">
+                    <span class="icon">
+                      <i class="fas fa-user-circle"></i>
+                    </span>
+                    <span>My account</span>
+                    <span class="icon">
+                      <i class="fas fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="dropdown-menu" id="account-menu" role="menu">
+                  <div class="dropdown-content">
+                    <a href="{% url 'todo' %}" class="dropdown-item">
+                      <span class="icon">
+                        <i class="fas fa-user" aria-hidden="true"></i>
+                      </span>
+                      <span>
+                        Public profile
+                      </span>
+                    </a>
+                    <form method="post" action="{% url 'account_logout' %}?next={{request.path}}">
+                      {% csrf_token %}
+                      <button type="submit" class="dropdown-item">
+                        <span class="icon">
+                          <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+                        </span>
+                        <span>
+                          Log out
+                        </span>
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
         </div>
       </div>
     </div>
   </nav>
   <section class="section">
     <div class="container">
+      {% for message in messages %}
+        <div class="notification {% if message.tags %}is-{{ message.tags|bulma_message_tag }}{% endif %}">
+          <button class="delete"></button>
+          {{ message }}
+        </div>
+      {% endfor %}
       {% block content %}{%  endblock %}
     </div>
   </section>
   <footer class="footer">
     <div class="content has-text-centered">
       <p>
-        <strong>Code Shrew</strong> was created by Ludwik Trammer (the software) and Jamie Nunez (the lessons).
+        Code Shrew 2018<br>
+        The site was created by <a href="https://ludwik.trammer.pl">Ludwik Trammer</a> and the lessons were designed by Jamie Nunez.<br>
         See our <a href="{% url 'pages:page-detail' slug='terms' %}">Terms of Use</a> and <a href="{% url 'pages:page-detail' slug='privacy' %}">Privacy Policy</a>.
       </p>
     </div>
@@ -81,6 +145,7 @@
   {% compress js %}
     <script type="module" src="{% static 'js/editor.js' %}"></script>
     <script type="module" src="{% static 'js/navbar.js' %}"></script>
+    <script type="module" src="{% static 'js/messages.js' %}"></script>
   {% endcompress %}
   </body>
 </html>

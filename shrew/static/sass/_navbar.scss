@@ -6,4 +6,12 @@
   .navbar-item {
     @extend .is-size-5;
   }
+
+  button.dropdown-item {
+    @extend a.dropdown-item;
+    width: 100%;
+    border: 0;
+    text-align: left;
+    cursor: pointer;
+  }
 }

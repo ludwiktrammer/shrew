@@ -1,0 +1,80 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load account socialaccount %}
+{% load widget_tweaks %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+
+{% get_providers as socialaccount_providers %}
+
+{% if socialaccount_providers %}
+<div class="socialaccount_ballot">
+
+  <ul class="socialaccount_providers">
+    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+  </ul>
+
+<div class="is-divider" data-content="OR"></div>
+</div>
+{% include "socialaccount/snippets/login_extra.html" %}
+{% endif %}
+
+  <form class="login" method="POST" action="{% url 'account_login' %}">
+      <h2 class="title is-5 has-text-centered">Log in with a Code Shrew account</h2>
+      <p class="subtitle is-6 has-text-centered has-text-grey">Don't have a Code Shrew account?<br>You can <a href="{% url 'account_signup' %}">create one</a>.</p>
+      {% if form.non_field_errors %}
+      <div class="message is-danger">
+        <div class="message-body">
+          {% for non_field_error in form.non_field_errors %}
+            {{ non_field_error }}
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
+    {% csrf_token %}
+    {% with WIDGET_ERROR_CLASS='is-danger' %}
+      <div class="field">
+        <p class="control has-icons-left has-icons-right">
+          {% render_field form.login class+="input" %}
+          <span class="icon is-small is-left">
+            <i class="fas fa-user"></i>
+          </span>
+          {% for error in form.login.errors %}
+            <span class="help is-danger">{{ error }}</span>
+          {% endfor %}
+        </p>
+      </div>
+      <div class="field">
+        <p class="control has-icons-left">
+          {% render_field form.password class+="input" %}
+          <span class="icon is-small is-left">
+            <i class="fas fa-lock"></i>
+          </span>
+          {% for error in form.password.errors %}
+            <span class="help is-danger">{{ error }}</span>
+          {% endfor %}
+        </p>
+      </div>
+      <div class="field">
+        <label class="checkbox">
+          {% render_field form.remember %} Remember me
+        </label>
+      </div>
+    {% endwith %}
+    <div class="field is-grouped">
+      <p class="control">
+        <button type="submit" class="button is-success">
+          Log in
+        </button>
+      </p>
+      <p class="control">
+        <a class="button is-text" href="{% url 'account_reset_password' %}">Forgot Password?</a>
+      </p>
+    </div>
+</form>
+
+{% endblock %}

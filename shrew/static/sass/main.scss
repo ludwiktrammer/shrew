@@ -5,9 +5,12 @@ $navbar-item-img-max-height: 5rem;
 $navbar-height: 7rem;
 
 @import "../../../node_modules/bulma/bulma";
+@import "../../../node_modules/bulma-divider/src/sass/index";
 
 @import "navbar";
+@import "hero-mascot";
 @import "hero-mascot";
 @import "editor";
 @import "embed";
 @import "home";
+@import "account";
