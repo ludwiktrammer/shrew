@@ -2,6 +2,8 @@
 {% load markup %}
 {% load micawber_tags %}
 
+{% block title %}{{ category.name }} - {{ block.super }}{%  endblock %}
+
 {% block content %}
   <nav class="breadcrumb" aria-label="breadcrumbs">
     <ul>
