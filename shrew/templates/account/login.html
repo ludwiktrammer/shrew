@@ -24,7 +24,10 @@
 
   <form class="login" method="POST" action="{% url 'account_login' %}">
       <h2 class="title is-5 has-text-centered">Log in with a Code Shrew account</h2>
-      <p class="subtitle is-6 has-text-centered has-text-grey">Don't have a Code Shrew account?<br>You can <a href="{% url 'account_signup' %}">create one</a>.</p>
+      <p class="subtitle is-6 has-text-centered has-text-grey">
+        Don't have a Code Shrew account?<br>
+        You can <a href="{% url 'account_signup' %}?{{ redirect_field_name }}={{ redirect_field_value|urlencode }}">create one</a>.
+      </p>
       {% if form.non_field_errors %}
       <div class="message is-danger">
         <div class="message-body">
@@ -37,6 +40,9 @@
 
     {% csrf_token %}
     {% with WIDGET_ERROR_CLASS='is-danger' %}
+      {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+      {% endif %}
       <div class="field">
         <p class="control has-icons-left has-icons-right">
           {% render_field form.login class+="input" %}
