@@ -85,7 +85,7 @@
                     <span class="icon">
                       <i class="fas fa-user-circle"></i>
                     </span>
-                    <span>My account</span>
+                    <span>{{ request.user }}</span>
                     <span class="icon">
                       <i class="fas fa-angle-down" aria-hidden="true"></i>
                     </span>
@@ -101,6 +101,16 @@
                         Public profile
                       </span>
                     </a>
+                    {% if request.user.is_staff %}
+                      <a href="/admin/" class="dropdown-item">
+                        <span class="icon">
+                          <i class="fas fa-cogs" aria-hidden="true"></i>
+                        </span>
+                        <span>
+                          Admin panel
+                        </span>
+                      </a>
+                    {% endif %}
                     <form method="post" action="{% url 'account_logout' %}?next={{request.path}}">
                       {% csrf_token %}
                       <button type="submit" class="dropdown-item">
