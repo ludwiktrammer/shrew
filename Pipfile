@@ -17,9 +17,14 @@ micawber = "*"
 django-allauth = "*"
 django-widget-tweaks = "*"
 django-bulma = "*"
+django-simple-history = "*"
+django-autoslug-iplweb = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"
 
 [requires]
 python_version = "3.6"
+
+[pipenv]
+allow_prereleases = true

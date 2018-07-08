@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'micawber.contrib.mcdjango',
     'widget_tweaks',
     'bulma',
+    'simple_history',
 
     'allauth',
     'allauth.account',
@@ -68,6 +69,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'shrew.urls'
