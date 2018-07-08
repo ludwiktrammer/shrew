@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.views.generic import TemplateView
+from django.conf.urls.static import static
 
 from shrew.apps.creations.views import EditorView, HomePage
 
@@ -31,7 +32,7 @@ urlpatterns = [
     path('editor/', EditorView.as_view(), name='editor'),
     path('editor/<slug:slug>', EditorView.as_view(), name='editor-sample'),
     path('', include('shrew.apps.pages.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     import debug_toolbar

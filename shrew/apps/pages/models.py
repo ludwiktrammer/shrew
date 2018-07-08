@@ -1,3 +1,5 @@
+import os
+
 from django.db import models
 from django.utils.safestring import mark_safe
 from django.urls import reverse
@@ -67,3 +69,24 @@ class Page(models.Model):
             'slug': self.slug,
             'category_slug': self.category.slug,
         })
+
+
+class Attachment(models.Model):
+    def upload_folder(self, filename):
+        return os.path.join('pages', self.page.slug, filename)
+
+    file = models.FileField(
+        upload_to=upload_folder,
+    )
+    page = models.ForeignKey(
+        Page,
+        related_name='attachments',
+        on_delete=models.CASCADE,
+    )
+
+    class Meta:
+        ordering = ('file',)
+
+    def __str__(self):
+        return self.file.url
+

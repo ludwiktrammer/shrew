@@ -4,7 +4,7 @@ from django.contrib import admin
 from django import forms
 from django.db import models
 
-from .models import Page, PageCategory
+from .models import Page, PageCategory, Attachment
 
 
 @admin.register(PageCategory)
@@ -12,6 +12,10 @@ class PageCategoryAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ('name', )
     prepopulated_fields = {'slug': ('name',)}
+
+
+class AttachmentInline(admin.TabularInline):
+    model = Attachment
 
 
 @admin.register(Page)
@@ -38,3 +42,6 @@ class PageAdmin(SortableAdminMixin, admin.ModelAdmin):
             'widget': forms.Textarea(attrs={'style': 'min-width: 80%', 'rows': 20}),
         },
     }
+    inlines = [
+        AttachmentInline,
+    ]

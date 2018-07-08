@@ -13,4 +13,5 @@ MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
 INSTALLED_APPS += ['debug_toolbar', ]
 INTERNAL_IPS = ['127.0.0.1', ]
 
-STATIC_ROOT = tempfile.gettempdir()
+STATIC_ROOT = os.path.join(tempfile.gettempdir(), 'shrew-static')
+MEDIA_ROOT = os.path.join(tempfile.gettempdir(), 'shrew-media')
