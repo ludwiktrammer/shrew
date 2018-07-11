@@ -27,14 +27,22 @@ class Creation(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
+    featured = models.BooleanField(
+        default=False,
+    )
     history = HistoricalRecords()
 
     class Meta:
         ordering = ('-created', )
 
-
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('creations:editor-creation', kwargs={
+            'slug': self.slug,
+        })
+
 
 class Sample(models.Model):
     name = models.CharField(

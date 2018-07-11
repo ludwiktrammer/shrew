@@ -9,8 +9,8 @@ from .models import Sample, Creation
 
 @admin.register(Creation)
 class CreationAdmin(SimpleHistoryAdmin):
-    list_display = ('name', 'author', 'is_animated')
-    list_filter = ('is_animated', )
+    list_display = ('name', 'author', 'featured', 'is_animated')
+    list_filter = ('featured', 'is_animated')
     search_fields = ('name', )
     date_hierarchy = 'created'
     formfield_overrides = {

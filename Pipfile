@@ -19,6 +19,8 @@ django-widget-tweaks = "*"
 django-bulma = "*"
 django-simple-history = "*"
 django-autoslug-iplweb = "*"
+django-rest-framework = "*"
+unidecode = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"

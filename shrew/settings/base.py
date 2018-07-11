@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'bulma',
     'simple_history',
+    'rest_framework',
 
     'allauth',
     'allauth.account',
