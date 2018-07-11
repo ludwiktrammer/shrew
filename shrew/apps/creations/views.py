@@ -1,13 +1,13 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
 
-from .models import Sample
+from .models import Creation
 
 
 class HomePage(View):
     def get(self, request):
-        drawings = Sample.objects.filter(kind='drawing')
-        animations = Sample.objects.filter(kind='animation')
+        drawings = Creation.objects.filter(is_animated=False, featured=True)
+        animations = Creation.objects.filter(is_animated=True, featured=True)
 
         context = {
             'drawings': drawings,
@@ -26,7 +26,7 @@ class EditorView(View):
 
     def get(self, request, slug=None):
         if slug is not None:
-            sample = get_object_or_404(Sample, slug=slug)
+            sample = get_object_or_404(Creation, slug=slug)
             code = sample.code
         else:
             code = EditorView.DEFAULT_CODE
