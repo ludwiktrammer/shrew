@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.http import HttpResponse
 
 from .models import Creation
 
@@ -39,7 +40,6 @@ class EditorView(View):
             owner = (request.user == creation.author)
             code = creation.code
 
-
         context = {
             'creation': creation,
             'code': code,
@@ -51,3 +51,14 @@ class EditorView(View):
 class BackToEditorView(View):
     def get(self, request):
         return render(request, 'creations/back-to-editor.html')
+
+
+class SvgPreviewView(View):
+    def get(self, request, slug=None):
+        creation = get_object_or_404(Creation, slug=slug)
+
+        response = HttpResponse(creation.svg, content_type="image/svg+xml")
+        response['Content-Security-Policy'] = 'sandbox'
+        response['Content-Disposition'] = 'attachment; filename="{}.svg"'.format(slug)
+
+        return response

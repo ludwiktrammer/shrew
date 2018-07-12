@@ -4,7 +4,7 @@
       <div class="card">
         <div class="card-image">
           <figure class="image is-square">
-            <a href="{{ sample.get_absolute_url }}">{{ sample.svg|safe }}</a>
+            <a href="{{ sample.get_absolute_url }}"><img src="{% url 'creations:svg-preview' slug=sample.slug %}"></a>
           </figure>
         </div>
         <div class="card-header">

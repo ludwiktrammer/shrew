@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import InterpreterSandboxView, EditorView
+from .views import InterpreterSandboxView, EditorView, SvgPreviewView
 from .api import CreationApiView
 
 app_name = 'creations'
@@ -18,4 +18,5 @@ urlpatterns = [
         name='api-save',
     ),
     path('<slug:slug>', EditorView.as_view(), name='editor-creation'),
+    path('preview/<slug:slug>.svg', SvgPreviewView.as_view(), name='svg-preview'),
 ]
