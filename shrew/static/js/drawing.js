@@ -104,14 +104,22 @@ let actionHandlers = {
     },
 };
 
-
-export function drawFromActions(actions) {
+/**
+ * The the actual drawing.
+ * `afterInitialDraw` is a callback fired just before the first animation.
+ */
+export function drawFromActions(actions, afterInitialDraw) {
     draw.clear();
     cancelAnimations();
     animation = undefined;
     hasAnimation = false;
 
     processAction(actions, 0);
+
+    if (afterInitialDraw) {
+        afterInitialDraw(draw.svg(), hasAnimation);
+    }
+
     function processAction(actions, index) {
         if (index >= actions.length) {
             if (hasAnimation) {

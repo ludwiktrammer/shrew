@@ -14,4 +14,4 @@ class CreationOutputSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Creation
-        fields = ('slug', 'url')
+        fields = ('slug', 'url', 'name')

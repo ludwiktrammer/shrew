@@ -14,8 +14,10 @@
     "bulma-divider": "^2.0.1",
     "codemirror-minified": "^5.37.0",
     "css-color-names": "0.0.4",
+    "js-cookie": "^2.2.0",
     "node-sass": "^4.9.0",
     "postcss-cli": "^5.0.1",
-    "svg.js": "^2.6.5"
+    "svg.js": "^2.6.5",
+    "timeago.js": "^3.0.2"
   }
 }

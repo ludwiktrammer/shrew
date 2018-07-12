@@ -44,8 +44,15 @@ function runCode(event) {
         return Sk.importMainWithBody("shrew-editor", false, code, true);
     }).then((result) => {
         let actions = skulptArrayToNativeArray(result.$d._shrew_actions__);
-        window.parent.postMessage({type: "run-result", out: outLines}, "*");
-        drawFromActions(actions);
+        drawFromActions(actions, (svg, hasAnimation) => {
+            window.parent.postMessage({
+                type: "run-result",
+                out: outLines,
+                svg: svg,
+                hasAnimation: hasAnimation,
+                code: event.data.code,
+            }, "*");
+        });
     }).catch((error) => {
         console.error(error);
         if (error.args) {

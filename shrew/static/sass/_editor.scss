@@ -32,6 +32,12 @@
   height: 23rem;
 }
 
+#name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 #code-output {
   display: none;
   background-color: transparent !important;
@@ -49,4 +55,47 @@
       @extend .has-text-danger;
     }
   }
+}
+
+#name {
+  cursor: pointer;
+  margin-bottom: 0rem;
+
+  .no-output & {
+    cursor: default;
+
+    .button {
+      @extend .button[disabled];
+    }
+  }
+
+  .unsaved & {
+    @extend .has-text-grey-light;
+  }
+}
+
+#saveButton {
+  #shrew-editor.unsaved & {
+    @extend .is-success;
+  }
+
+  #shrew-editor:not(.unsaved) & {
+    @extend .is-outlined;
+    @extend .is-grey-light;
+    @extend .has-text-grey-light;
+  }
+
+  .time {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.no-output .button {
+  @extend .button[disabled];
+}
+
+#shrew-editor {
+  margin-bottom: 0.75rem;
 }

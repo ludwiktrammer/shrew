@@ -30,6 +30,12 @@ class Creation(models.Model):
     featured = models.BooleanField(
         default=False,
     )
+    base = models.ForeignKey(
+        'self',
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+    )
     history = HistoricalRecords()
 
     class Meta:
