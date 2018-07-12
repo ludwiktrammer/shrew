@@ -13,11 +13,6 @@
       </p>
 
       <p>
-        The site will soon have much more features (including saving and sharing created drawings and animations).
-        For now, we would like you to take a look at <a href="{% url 'editor' %}">the interactive editor</a> and a preliminary version of the <a href="{% url 'pages:category-detail' slug='lessons' %}">lessons</a>.
-      </p>
-
-      <p>
         Mostly we want you to have fun. Please, don't leave the site before creating at least couple of animations!
         You may want to read through <a href="{% url 'pages:category-detail' slug='documentation' %}">the documentation</a> first, to see what's possible.
         You might also get inspired by some of <a href="#samples">the samples</a> that we included below.
@@ -36,6 +31,6 @@
     </div>
   </article>
 
-  <h1 class="title is-2" id="samples">Featured Drawings & Animations</h1>
+  <h1 class="title is-2" id="samples">Latest featured drawings & animations</h1>
     {% include 'creations/_creations_list.html' with creations=featured %}
 {% endblock %}

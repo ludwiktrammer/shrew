@@ -153,7 +153,7 @@ if ($editor) {
             svg: lastPositiveResult.svg,
             is_animated: lastPositiveResult.hasAnimation,
         };
-        fetch('/creations/api-save', {
+        fetch('/show/__api-save', {
             credentials: 'include',
             method: 'POST',
             body: JSON.stringify(data),

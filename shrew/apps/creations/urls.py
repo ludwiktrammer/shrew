@@ -13,10 +13,10 @@ urlpatterns = [
         name='interpreter-sandbox',
     ),
     path(
-        'api-save',
+        '__api-save',
         CreationApiView.as_view(),
         name='api-save',
     ),
-    path('<slug:slug>', EditorView.as_view(), name='editor-creation'),
     path('preview/<slug:slug>.svg', SvgPreviewView.as_view(), name='svg-preview'),
+    path('<slug:user>/<slug:slug>/edit', EditorView.as_view(), name='editor-creation'),
 ]

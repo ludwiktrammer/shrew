@@ -27,7 +27,7 @@ urlpatterns = [
     path('', HomePage.as_view()),
     path('accounts/', include('allauth.urls')),
     path('todo/', TemplateView.as_view(template_name='todo.html'), name='todo'),
-    path('creations/', include('shrew.apps.creations.urls')),
+    path('show/', include('shrew.apps.creations.urls')),
     path('admin/', admin.site.urls),
     path('editor/', EditorView.as_view(), name='editor'),
     path('back-to-editor/', BackToEditorView.as_view(), name='back-to-editor'),

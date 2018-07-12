@@ -12,7 +12,7 @@ class Creation(models.Model):
     )
     slug = AutoSlugField(
         populate_from='name',
-        unique=True,
+        unique_with='author',
     )
     code = models.TextField()
     svg = models.TextField()
@@ -40,6 +40,7 @@ class Creation(models.Model):
 
     class Meta:
         ordering = ('-pk', )
+        unique_together = ('slug', 'author')
 
     def __str__(self):
         return self.name
@@ -47,4 +48,5 @@ class Creation(models.Model):
     def get_absolute_url(self):
         return reverse('creations:editor-creation', kwargs={
             'slug': self.slug,
+            'user': self.author.username,
         })

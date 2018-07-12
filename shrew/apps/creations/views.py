@@ -28,13 +28,13 @@ class InterpreterSandboxView(View):
 class EditorView(View):
     DEFAULT_CODE = 'Circle()'
 
-    def get(self, request, slug=None):
+    def get(self, request, user=None, slug=None):
         creation = None
         owner = False
         code = EditorView.DEFAULT_CODE
 
         if slug is not None:
-            creation = get_object_or_404(Creation, slug=slug)
+            creation = get_object_or_404(Creation, author__username=user, slug=slug)
             owner = (request.user == creation.author)
             code = creation.code
 
