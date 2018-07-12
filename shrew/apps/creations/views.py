@@ -3,6 +3,7 @@ from django.views.generic import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import HttpResponse
+from django.contrib.auth import get_user_model
 
 from .models import Creation
 
@@ -44,6 +45,16 @@ class EditorView(View):
             'owner': owner,
         }
         return render(request, 'creations/editor.html', context)
+
+
+class ProfileView(View):
+    def get(self, request, user):
+        user = get_object_or_404(get_user_model(), username=user)
+
+        context = {
+            'user': user,
+        }
+        return render(request, 'creations/profile.html', context)
 
 
 class BackToEditorView(View):

@@ -73,7 +73,7 @@
             </div>
           {% else %}
             <div class="navbar-item">
-              <a href="{% url 'todo' %}" class="button is-light is-medium is-hidden-desktop">
+              <a href="{% url 'creations:user-profile' user=request.user.username %}" class="button is-light is-medium is-hidden-desktop">
                 <span class="icon">
                   <i class="fas fa-user"></i>
                 </span>
@@ -93,7 +93,7 @@
                 </div>
                 <div class="dropdown-menu" id="account-menu" role="menu">
                   <div class="dropdown-content">
-                    <a href="{% url 'todo' %}" class="dropdown-item">
+                    <a href="{% url 'creations:user-profile' user=request.user.username %}" class="dropdown-item">
                       <span class="icon">
                         <i class="fas fa-user" aria-hidden="true"></i>
                       </span>

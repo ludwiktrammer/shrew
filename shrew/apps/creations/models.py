@@ -25,6 +25,7 @@ class Creation(models.Model):
     )
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
+        related_name='creations',
         on_delete=models.CASCADE,
     )
     featured = models.BooleanField(
@@ -33,6 +34,7 @@ class Creation(models.Model):
     base = models.ForeignKey(
         'self',
         on_delete=models.SET_NULL,
+        related_name='children',
         blank=True,
         null=True,
     )

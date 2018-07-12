@@ -1,0 +1,8 @@
+{%  extends 'base.html' %}
+
+{% block content %}
+  <h1 class="title is-size-1">{{ user.username }}'s profile</h1>
+  <h2 class="title is-size-2">Drawings & animations</h2>
+  {% include 'creations/_creations_list.html' with creations=user.creations.all %}
+
+{% endblock %}
