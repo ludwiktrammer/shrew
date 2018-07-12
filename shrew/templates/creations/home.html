@@ -36,14 +36,6 @@
     </div>
   </article>
 
-  <h1 class="title is-2" id="samples">Interactive Samples</h1>
-  {% if drawings %}
-    <h2 class="title is-3">Drawings</h2>
-    {% include 'creations/_samples.html' with samples=drawings %}
-  {% endif %}
-
-  {% if animations %}
-    <h2 class="title is-3">Animations</h2>
-    {% include 'creations/_samples.html' with samples=animations %}
-  {% endif %}
+  <h1 class="title is-2" id="samples">Featured Drawings & Animations</h1>
+    {% include 'creations/_creations_list.html' with creations=featured %}
 {% endblock %}

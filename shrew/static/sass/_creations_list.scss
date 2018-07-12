@@ -1,0 +1,19 @@
+.card.creation-card {
+  .play-icon {
+    width: 50%;
+    height: 50%;
+    margin: auto;
+    opacity: 0.9;
+  }
+
+  &:hover .play-icon {
+    opacity: 1;
+  }
+
+  .card-header-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+  }
+}

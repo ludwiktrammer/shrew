@@ -9,12 +9,10 @@ from .models import Creation
 
 class HomePage(View):
     def get(self, request):
-        drawings = Creation.objects.filter(is_animated=False, featured=True)
-        animations = Creation.objects.filter(is_animated=True, featured=True)
+        featured = Creation.objects.filter(featured=True)
 
         context = {
-            'drawings': drawings,
-            'animations': animations,
+            'featured': featured,
         }
         return render(request, 'creations/home.html', context)
 
