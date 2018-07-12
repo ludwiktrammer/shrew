@@ -7,7 +7,7 @@
         <div class="card-image">
           <figure class="image is-square">
             <a href="{{ creation.get_absolute_url }}">
-              <img src="{% url 'creations:svg-preview' slug=creation.slug %}?v={{ creation.last_modified|urlencode }}">
+              <img src="{% url 'creations:svg-preview' slug=creation.slug user=creation.author.username %}?v={{ creation.last_modified|urlencode }}">
               {% if creation.is_animated %}
                 <img class="play-icon" src="{% static 'images/play.svg' %}">
               {% endif %}

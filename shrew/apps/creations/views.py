@@ -10,7 +10,7 @@ from .models import Creation
 
 class HomePage(View):
     def get(self, request):
-        featured = Creation.objects.filter(featured=True)
+        featured = Creation.objects.filter(featured=True).select_related('author')
 
         context = {
             'featured': featured,
@@ -63,8 +63,8 @@ class BackToEditorView(View):
 
 
 class SvgPreviewView(View):
-    def get(self, request, slug=None):
-        creation = get_object_or_404(Creation, slug=slug)
+    def get(self, request, user, slug):
+        creation = get_object_or_404(Creation, slug=slug, author__username=user)
 
         response = HttpResponse(creation.svg, content_type="image/svg+xml")
         response['Content-Security-Policy'] = 'sandbox'

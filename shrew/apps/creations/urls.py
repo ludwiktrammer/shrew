@@ -17,7 +17,7 @@ urlpatterns = [
         CreationApiView.as_view(),
         name='api-save',
     ),
-    path('preview/<slug:slug>.svg', SvgPreviewView.as_view(), name='svg-preview'),
+    path('preview/<slug:user>/<slug:slug>.svg', SvgPreviewView.as_view(), name='svg-preview'),
     path('<slug:user>/<slug:slug>/edit', EditorView.as_view(), name='editor-creation'),
     path('<slug:user>', ProfileView.as_view(), name='user-profile'),
 ]
