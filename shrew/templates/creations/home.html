@@ -1,36 +1,40 @@
 {%  extends 'base.html' %}
 
+{% block before_main_section %}
+<section class="hero hero-intro is-primary is-bold">
+  <div class="hero-body columns">
+    <div class="container column">
+      <p class="title">
+        With <strong>Code Shrew</strong> you will learn programming basics by creating fun <strong>drawings</strong> and <strong>animations</strong>.
+      </p>
+      <p class="title">
+        Start <strong>playing with code</strong> right now!
+      </p>
+      <div class="intro-buttons">
+        <div>
+          <a href="{% url 'pages:category-detail' slug='lessons' %}" class="button is-light is-medium">
+            <strong>Learn&nbsp;</strong> programming from our lessons
+          </a>
+        </div>
+        <div>or</div>
+        <div>
+          <a href="{% url 'editor' %}" class="button is-light is-medium is-outlined">
+            <strong>Create&nbsp;</strong> a new animation now!
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="column video-outer is-two-fifths">
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/Z7o9pbPHu0k" frameborder="0" allow="autoplay; encrypted-media"
+                allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
 {% block content %}
-  <article class="message is-info">
-    <div class="message-header">
-      <p>Welcome to Code Shrew!</p>
-    </div>
-    <div class="message-body content">
-      <p>
-        Code Shrew is a platform for <strong>learning and practicing basic concepts of programming</strong>.
-        In its heart is a programming environment where you can <strong>play with code by creating drawings and animations</strong> using a simple Python-like syntax.
-        It will be accompanied by an <strong>interactive course</strong> presenting a variety of fundamental programming concepts using the environment.
-      </p>
-
-      <p>
-        Mostly we want you to have fun. Please, don't leave the site before creating at least couple of animations!
-        You may want to read through <a href="{% url 'pages:category-detail' slug='documentation' %}">the documentation</a> first, to see what's possible.
-        You might also get inspired by some of <a href="#samples">the samples</a> that we included below.
-      </p>
-
-      <p>
-        We are very interested in your feedback! Please, share with us any suggestions or ideas about Code Shrew that you might have.
-        They might be about the interactive editor (i.e., the tool for drawing / animating with code), the lessons, or the general concept of the site.
-        Bug reports would also be very appreciated. The thing that we would especially like to see is your creations - source code of drawings and animations that you've made with the site.
-        Please share them with us!
-      </p>
-
-      <p>
-        But first and foremost let us know: was playing with the site any fun? :)
-      </p>
-    </div>
-  </article>
-
   <h1 class="title is-2" id="samples">Latest featured drawings & animations</h1>
     {% include 'creations/_creations_list.html' with creations=featured %}
 {% endblock %}
