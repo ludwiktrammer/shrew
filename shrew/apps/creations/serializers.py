@@ -11,7 +11,8 @@ class CreationSerializer(serializers.ModelSerializer):
 
 class CreationOutputSerializer(serializers.ModelSerializer):
     url = serializers.URLField(source='get_absolute_url')
+    user = serializers.SlugField(source='author.username')
 
     class Meta:
         model = Creation
-        fields = ('slug', 'url', 'name')
+        fields = ('slug', 'url', 'name', 'user')

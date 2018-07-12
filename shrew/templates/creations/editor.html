@@ -42,7 +42,9 @@
       <div class="column is-two-thirds">
         <div class="field">
           <textarea class="textarea" id="editor-code"
-                    data-slug="{{ creation.slug }}" data-name="{{ creation.name }}">{{ code }}</textarea>
+                    data-slug="{{ creation.slug }}"
+                    data-user="{{ creation.author.username }}"
+                    data-name="{{ creation.name }}">{{ code }}</textarea>
         </div>
       </div>
       <div class="column">

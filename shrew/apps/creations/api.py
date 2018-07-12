@@ -14,8 +14,12 @@ class CreationApiView(APIView):
     def post(self, request):
         creation = None
         base = None
-        if request.data.get('slug'):
-            creation = get_object_or_404(Creation, slug=request.data['slug'])
+        if request.data.get('slug') and request.data.get('user'):
+            creation = get_object_or_404(
+                Creation,
+                slug=request.data['slug'],
+                author__username=request.data['user'],
+            )
             if creation.author != request.user:
                 base = creation
                 creation = None

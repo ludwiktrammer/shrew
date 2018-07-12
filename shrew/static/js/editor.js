@@ -21,6 +21,7 @@ if ($editor) {
     let unsaved = $editor.classList.contains("unsaved");
     let unauthenticated = $editor.classList.contains("unauthenticated");
     let slug = $textarea.dataset.slug;
+    let user = $textarea.dataset.user;
     let name = $textarea.dataset.name;
     let timeago = Timeago();
     let isDirty = false; // did something changed
@@ -148,6 +149,7 @@ if ($editor) {
 
         let data = {
             slug: slug,
+            user: user,
             name: name,
             code: lastPositiveResult.code,
             svg: lastPositiveResult.svg,
@@ -173,6 +175,7 @@ if ($editor) {
                             $saveButton.classList.remove("is-loading");
                             slug = creationProperties.slug;
                             name = creationProperties.name;
+                            user = creationProperties.user;
                             unsaved = false;
                             $name.innerText = name;
                             $saveButtonCaption.innerText = "Saved";
@@ -182,7 +185,7 @@ if ($editor) {
                             timeago.doRender($saveButtonTime, new Date());
 
                             let title = `${name} - Code Shrew`;
-                            history.replaceState(slug, title, creationProperties.url);
+                            history.replaceState({slug, user}, title, creationProperties.url);
                             document.title = title;
                         }
                     }
