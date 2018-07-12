@@ -13,11 +13,13 @@ if ($editor) {
     const $iframe = document.getElementById("interpreter-sandbox");
     const $output = document.getElementById("code-output");
     const $name = document.getElementById("name");
-    const $saveButton = document.getElementById("saveButton");
-    const $saveButtonCaption = document.querySelector("#saveButton .caption");
-    const $saveButtonTime = document.querySelector("#saveButton .time");
+    const $saveButton = document.getElementById("save-button");
+    const $loginModal = document.getElementById("login-modal");
+    const $saveButtonCaption = document.querySelector("#save-button .caption");
+    const $saveButtonTime = document.querySelector("#save-button .time");
     const sandbox = $iframe.contentWindow;
     let unsaved = $editor.classList.contains("unsaved");
+    let unauthenticated = $editor.classList.contains("unauthenticated");
     let slug = $textarea.dataset.slug;
     let name = $textarea.dataset.name;
     let timeago = Timeago();
@@ -59,6 +61,8 @@ if ($editor) {
         if (event.data.type === "interpreter-ready") {
             shrewInterpreterReady = true;
             runCode();
+        } if (event.data.type === "logged-in") {
+            saveCreation();
         } else if(event.data.type === "run-result") {
             clearTimeout(showErrorsTimeout);
             if(!event.data.error) {
@@ -91,6 +95,23 @@ if ($editor) {
             if (!unsaved || newName) saveCreation();
         }
     });
+
+    document.querySelector("#login-modal .cancel").addEventListener("click", hideLoginModal);
+    document.querySelector("#login-modal .delete").addEventListener("click", hideLoginModal);
+    document.querySelector("#login-modal .is-success").addEventListener("click", openLoginWindow);
+
+    function hideLoginModal() {
+        $loginModal.classList.remove("is-active");
+    }
+
+    function showLoginModal() {
+        $loginModal.classList.add("is-active");
+    }
+
+    function openLoginWindow() {
+        window.open('/accounts/login/?next=/back-to-editor');
+        hideLoginModal();
+    }
 
     function askForName() {
         const adjectives = [
@@ -144,22 +165,32 @@ if ($editor) {
             if (response.status === 200) {
                 response.json().then(creationProperties => {
                     if (creationProperties.slug) { // ensure proper format
-                        $saveButton.classList.remove("is-loading");
-                        slug = creationProperties.slug;
-                        name = creationProperties.name;
-                        unsaved = false;
-                        $name.innerText = name;
-                        $saveButtonCaption.innerText = "Saved";
-                        $editor.classList.remove("unsaved");
+                        if (unauthenticated) {
+                            // the user logged in in the mean time.
+                            // We should reload the page to reflect that.
+                            document.location.href = creationProperties.url;
+                        } else {
+                            $saveButton.classList.remove("is-loading");
+                            slug = creationProperties.slug;
+                            name = creationProperties.name;
+                            unsaved = false;
+                            $name.innerText = name;
+                            $saveButtonCaption.innerText = "Saved";
+                            $editor.classList.remove("unsaved");
 
-                        Timeago.cancel();
-                        timeago.doRender($saveButtonTime, new Date());
+                            Timeago.cancel();
+                            timeago.doRender($saveButtonTime, new Date());
 
-                        let title = `${name} - Code Shrew`;
-                        history.replaceState(slug, title, creationProperties.url);
-                        document.title = title;
+                            let title = `${name} - Code Shrew`;
+                            history.replaceState(slug, title, creationProperties.url);
+                            document.title = title;
+                        }
                     }
                 });
+            } else if (response.status === 403) {
+                // the user needs to log in
+                showLoginModal();
+                $saveButton.classList.remove("is-loading");
             }
         })
     }

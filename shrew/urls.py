@@ -19,7 +19,7 @@ from django.conf import settings
 from django.views.generic import TemplateView
 from django.conf.urls.static import static
 
-from shrew.apps.creations.views import EditorView, HomePage
+from shrew.apps.creations.views import EditorView, HomePage, BackToEditorView
 
 admin.site.site_header = 'Code Shrew Admin'
 
@@ -30,6 +30,7 @@ urlpatterns = [
     path('creations/', include('shrew.apps.creations.urls')),
     path('admin/', admin.site.urls),
     path('editor/', EditorView.as_view(), name='editor'),
+    path('back-to-editor/', BackToEditorView.as_view(), name='back-to-editor'),
     path('', include('shrew.apps.pages.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

@@ -46,3 +46,8 @@ class EditorView(View):
             'owner': owner,
         }
         return render(request, 'creations/editor.html', context)
+
+
+class BackToEditorView(View):
+    def get(self, request):
+        return render(request, 'creations/back-to-editor.html')

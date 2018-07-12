@@ -74,7 +74,7 @@
   }
 }
 
-#saveButton {
+#save-button {
   #shrew-editor.unsaved & {
     @extend .is-success;
   }

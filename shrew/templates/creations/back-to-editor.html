@@ -1,0 +1,11 @@
+{%  extends 'base.html' %}
+{% load compress %}
+{% load static %}
+
+{% block content %}
+  <h1 class="title">You are now logged in!</h1>
+
+  {% compress js %}
+    <script type="module" src="{% static 'js/back-to-editor.js' %}"></script>
+  {% endcompress %}
+{% endblock %}
