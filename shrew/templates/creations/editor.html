@@ -25,7 +25,16 @@
     <div class="columns">
       <div class="column is-one-fifth-desktop is-3">
         <button id="save-button" class="button is-fullwidth">
-          <span class="caption">{% if owner %}Saved{% else %}Save to my profile{% endif %}</span>
+          <span class="caption">
+            {% if owner %}
+              Saved
+            {% else %}
+              <span class="icon">
+                <i class="fas fa-hdd"></i>
+              </span>
+              <span>Save to my profile</span>
+            {% endif %}
+          </span>
           &nbsp;
           <span class="time"></span>
         </button>
