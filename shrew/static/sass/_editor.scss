@@ -68,12 +68,8 @@
   cursor: pointer;
   margin-bottom: 0rem;
 
-  .no-output & {
+  .saving-disabled & {
     cursor: default;
-
-    .button {
-      @extend .button[disabled];
-    }
   }
 
   .unsaved & {
@@ -99,7 +95,7 @@
   }
 }
 
-.no-output .button {
+.saving-disabled .button {
   @extend .button[disabled];
 }
 

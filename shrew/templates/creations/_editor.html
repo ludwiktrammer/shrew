@@ -18,7 +18,7 @@
 </div>
 
 <div id="shrew-editor"
-     class="no-output {% if not owner %}unsaved{% endif %} {% if not request.user.is_authenticated %}unauthenticated{% endif %}">
+     class="saving-disabled {% if not owner %}unsaved{% endif %} {% if not request.user.is_authenticated %}unauthenticated{% endif %}">
   <div class="columns">
     <div class="column is-one-fifth-desktop is-3">
       <button id="save-button" class="button is-fullwidth">

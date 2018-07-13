@@ -79,12 +79,14 @@ if ($editor) {
         } else if(event.data.type === "run-result") {
             clearTimeout(showErrorsTimeout);
             if(!event.data.error) {
+                $editor.classList.remove("saving-disabled");
                 updateCreation(event.data);
                 displayResults(event.data.out);
             } else {
                 // errors during typing are annoying
                 // wait additional 2 seconds - maybe the error will be fixed by then
                 showErrorsTimeout = setTimeout(() => {
+                    $editor.classList.add("saving-disabled");
                     displayResults(event.data.out, event.data.error);
                 }, 2000);
             }
@@ -144,7 +146,6 @@ if ($editor) {
 
     function updateCreation(executionResults) {
         lastPositiveResult = executionResults;
-        $editor.classList.remove("no-output");
         if (unsaved) {  // don't send updates to the server if unsaved
             // Update the "Unsaved..." text to reflect the kind of creation
             let $kind = document.querySelector("#name .kind");
