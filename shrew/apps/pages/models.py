@@ -65,10 +65,10 @@ class Page(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('pages:page-detail', kwargs={
-            'slug': self.slug,
-            'category_slug': self.category.slug,
-        })
+        kwargs = {'slug': self.slug}
+        if self.category:
+            kwargs['category_slug'] = self.category.slug
+        return reverse('pages:page-detail', kwargs=kwargs)
 
 
 class Attachment(models.Model):
