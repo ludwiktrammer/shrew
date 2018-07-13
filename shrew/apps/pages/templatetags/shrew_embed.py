@@ -11,7 +11,7 @@ EMBED_TEMPLATE = """
 """
 EDITOR_PATTERN = re.compile(
     # matches /editor and show/*/*/edit
-    r"^\s*(https://shrew\.app/(editor|show/[-\w]+/[-\w]+/edit))\s*$",
+    r"^\s*(https://shrew\.app/(editor|show/[-\w]+/[-\w]+/edit)/?)\s*$",
     flags=re.MULTILINE | re.IGNORECASE,
 )
 
