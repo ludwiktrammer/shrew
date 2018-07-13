@@ -1,6 +1,7 @@
 {%  extends 'base.html' %}
 {% load markup %}
 {% load micawber_tags %}
+{% load shrew_embed %}
 
 {% block title %}{{ category.name }} - {{ block.super }}{%  endblock %}
 
@@ -17,7 +18,7 @@
   <div class="content">
     <h1>{{ category.name }}</h1>
 
-    {{ category.text|commonmark|oembed_html }}
+    {{ category.text|shrew_embed|commonmark|oembed_html }}
 
     <h2>Table of contents</h2>
     <ol>

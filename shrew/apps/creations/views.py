@@ -33,6 +33,7 @@ class EditorView(View):
         creation = None
         owner = False
         code = EditorView.DEFAULT_CODE
+        embedded = 'embedded' in request.GET
 
         if slug is not None:
             creation = get_object_or_404(Creation, author__username=user, slug=slug)
@@ -43,8 +44,10 @@ class EditorView(View):
             'creation': creation,
             'code': code,
             'owner': owner,
+            'embedded': embedded,
         }
-        return render(request, 'creations/editor.html', context)
+        template = 'creations/editor-embedded.html' if embedded else 'creations/editor.html'
+        return render(request, template, context)
 
 
 class ProfileView(View):

@@ -179,10 +179,11 @@ if ($editor) {
             if (response.status === 200) {
                 response.json().then(creationProperties => {
                     if (creationProperties.slug) { // ensure proper format
+                        let newUrl = creationProperties.url + document.location.search;
                         if (unauthenticated) {
                             // the user logged in in the mean time.
                             // We should reload the page to reflect that.
-                            document.location.href = creationProperties.url;
+                            document.location.href = newUrl
                         } else {
                             $saveButton.classList.remove("is-loading");
                             slug = creationProperties.slug;
@@ -197,7 +198,7 @@ if ($editor) {
                             timeago.doRender($saveButtonTime, new Date());
 
                             let title = `${name} - Code Shrew`;
-                            history.replaceState({slug, user}, title, creationProperties.url);
+                            history.replaceState({slug, user}, title, newUrl);
                             document.title = title;
                         }
                     }

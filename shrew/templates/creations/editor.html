@@ -1,67 +1,9 @@
 {%  extends 'base.html' %}
 
-{% block content %}
-  <div class="modal" id="login-modal">
-    <div class="modal-background"></div>
-    <div class="modal-card">
-      <header class="modal-card-head">
-        <p class="modal-card-title">Do you want to log in?</p>
-        <button class="delete" aria-label="close"></button>
-      </header>
-      <section class="modal-card-body">
-        <p>To save your creation, you need to be logged in. You can log in or quickly create a new account now.
-        The login/signup form will open in a new window.</p>
-        <p>Do you want to do this now?</p>
-      </section>
-      <footer class="modal-card-foot">
-        <button class="button is-success">Yes, log in or create account</button>
-        <button class="button cancel">Cancel</button>
-      </footer>
-    </div>
-  </div>
+{% block title %}{{ creation.name|default:"Unnamed" }} - {{ block.super }}{%  endblock %}
 
-  <div id="shrew-editor"
-       class="no-output {% if not owner %}unsaved{% endif %} {% if not request.user.is_authenticated %}unauthenticated{% endif %}">
-    <div class="columns">
-      <div class="column is-one-fifth-desktop is-3">
-        <button id="save-button" class="button is-fullwidth">
-          <span class="caption">
-            {% if owner %}
-              Saved
-            {% else %}
-              <span class="icon">
-                <i class="fas fa-hdd"></i>
-              </span>
-              <span>Save to my profile</span>
-            {% endif %}
-          </span>
-          &nbsp;
-          <span class="time"></span>
-        </button>
-      </div>
-      <div id="name" class="column title">
-        {% if creation is not None %}
-          {{ creation.name }}
-        {% else %}
-          Unnamed <span class="kind">drawing</span>
-        {% endif %}
-      </div>
-    </div>
-    <div class="columns">
-      <div class="column column-editor is-two-thirds">
-        <textarea class="textarea" id="editor-code"
-                  data-slug="{{ creation.slug }}"
-                  data-user="{{ creation.author.username }}"
-                  data-name="{{ creation.name }}">{{ code }}</textarea>
-      </div>
-      <div class="column">
-        <div class="sandbox-wrapper">
-          <iframe id="interpreter-sandbox" scrolling="no" src="{% url 'creations:interpreter-sandbox' %}"
-              sandbox="allow-scripts"></iframe>
-        </div>
-      </div>
-    </div>
-  </div>
+{% block content %}
+  {% include "creations/_editor.html" %}
   <article class="message">
     <div class="message-body">
       <div id="code-output"></div>

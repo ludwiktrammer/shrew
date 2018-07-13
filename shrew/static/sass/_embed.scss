@@ -1,13 +1,21 @@
-.video-outer {
+.embed-outer {
   max-width: 900px;
   margin: 0 auto;
 
-  .video-container {
+  .embed-container {
     position: relative;
     padding-bottom: 56.25%;
     height: 0;
     overflow: hidden;
     max-width: 100%;
+
+    &.editor-embed {
+      padding-bottom: 46%;
+
+      @include mobile {
+        padding-bottom: 250%;
+      }
+    }
 
     iframe, object, embed {
       position: absolute;

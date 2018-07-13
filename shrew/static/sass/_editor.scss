@@ -40,10 +40,17 @@
 #code-output {
   display: none;
   background-color: transparent !important;
-  padding-bottom: 1.25em;
+  margin-bottom: 1.25em;
 
   &.has-output {
     display: block;
+  }
+
+  &.embedded-code-output {
+    background-color: $light !important;
+    height: 2.5em;
+    overflow: scroll;
+    margin-bottom: 0;
   }
 
   pre {
