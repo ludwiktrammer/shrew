@@ -6,12 +6,12 @@ register = template.Library()
 
 EMBED_TEMPLATE = """
 <div class="embed-outer"><div class="embed-container editor-embed">
-<iframe src="\g<1>"></iframe>
+<iframe src="\g<1>?embedded"></iframe>
 </div></div>
 """
 EDITOR_PATTERN = re.compile(
     # matches /editor and show/*/*/edit
-    r"^\s*(https://shrew\.app/(editor|show/[-\w]+/[-\w]+/edit)[^\s]*)\s*$",
+    r"^\s*(https://shrew\.app/(editor|show/[-\w]+/[-\w]+/edit))\s*$",
     flags=re.MULTILINE | re.IGNORECASE,
 )
 
