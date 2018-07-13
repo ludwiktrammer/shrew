@@ -48,13 +48,11 @@
       </div>
     </div>
     <div class="columns">
-      <div class="column is-two-thirds">
-        <div class="field">
-          <textarea class="textarea" id="editor-code"
-                    data-slug="{{ creation.slug }}"
-                    data-user="{{ creation.author.username }}"
-                    data-name="{{ creation.name }}">{{ code }}</textarea>
-        </div>
+      <div class="column column-editor is-two-thirds">
+        <textarea class="textarea" id="editor-code"
+                  data-slug="{{ creation.slug }}"
+                  data-user="{{ creation.author.username }}"
+                  data-name="{{ creation.name }}">{{ code }}</textarea>
       </div>
       <div class="column">
         <div class="sandbox-wrapper">

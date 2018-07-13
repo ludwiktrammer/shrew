@@ -40,12 +40,24 @@ if ($editor) {
         },
         gutters: ["CodeMirror-lint-markers"],
     });
+    adjustEditorHeight();
     let lintCallback;
     let shrewInterpreterReady = false;
 
     editor.on("change", () => {
         isDirty = true;
     });
+    editor.on("refresh", () => {
+        adjustEditorHeight();
+    });
+
+    /**
+     * Make the editor the same height as the preview pane. Can't do this automatically by setting the height to 100%,
+     * because CodeMirror would automatically resize the height to fit all code then.
+     */
+    function adjustEditorHeight() {
+        editor.setSize("100%", $iframe.offsetHeight);
+    }
 
     function runCode() {
         sandbox.postMessage({code: editor.getValue()}, "*");
