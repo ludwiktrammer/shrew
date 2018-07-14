@@ -173,3 +173,5 @@ COMPRESS_PRECOMPILERS = (
     ('skulpt-module', 'shrew.precompilers.SkulptModuleFilter'),
     ('skulpt-module-es6', 'shrew.precompilers.SkulptModuleES6Filter'),
 )
+
+CLOUDCONVERT_KEY = env.str("DJANGO_CLOUDCONVERT_KEY")

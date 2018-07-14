@@ -1,10 +1,14 @@
+import cloudconvert
+
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import ensure_csrf_cookie
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import get_user_model
 from django.template.loader import render_to_string
+from django.urls import reverse
+from django.conf import settings
 
 from .models import Creation
 
@@ -84,3 +88,22 @@ class SvgPreviewView(View):
         return response
 
 
+class PngSocialPreviewView(View):
+    def get(self, request, user, slug):
+        svg_path = reverse('creations:svg-preview', kwargs={'user': user, 'slug': slug})
+        url = '{}?facebook'.format(request.build_absolute_uri(svg_path))
+
+        api = cloudconvert.Api(settings.CLOUDCONVERT_KEY)
+
+        process = api.convert({
+            "inputformat": "svg",
+            "outputformat": "png",
+            "input": "download",
+            "file": url,
+            "converteroptions": {
+                "resize": "1200x630"
+            },
+            "save": True,
+        })
+
+        return HttpResponseRedirect(process['output']['url'])

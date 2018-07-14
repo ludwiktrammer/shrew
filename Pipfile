@@ -21,6 +21,7 @@ django-simple-history = "*"
 django-autoslug-iplweb = "*"
 django-rest-framework = "*"
 unidecode = "*"
+cloudconvert = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"
