@@ -48,7 +48,7 @@ class Creation(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('creations:editor-creation', kwargs={
+        return reverse('creations:creation-detail', kwargs={
             'slug': self.slug,
             'user': self.author.username,
         })

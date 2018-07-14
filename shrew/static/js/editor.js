@@ -14,6 +14,7 @@ if ($editor) {
     const $output = document.getElementById("code-output");
     const $name = document.getElementById("name");
     const $saveButton = document.getElementById("save-button");
+    const $previewButton = document.getElementById("preview-button");
     const $loginModal = document.getElementById("login-modal");
     const $saveButtonCaption = document.querySelector("#save-button .caption");
     const $saveButtonTime = document.querySelector("#save-button .time");
@@ -111,6 +112,19 @@ if ($editor) {
         }
     });
 
+    $previewButton.addEventListener("click", () => {
+        if (lastPositiveResult !== undefined) {
+            let newName;
+            if (unsaved) {
+                newName = askForName();
+            }
+            if (!unsaved || newName) {
+                let previewWindow = window.open();
+                saveCreation(previewWindow);
+            }
+        }
+    });
+
     document.querySelector("#login-modal .cancel").addEventListener("click", hideLoginModal);
     document.querySelector("#login-modal .delete").addEventListener("click", hideLoginModal);
     document.querySelector("#login-modal .is-success").addEventListener("click", openLoginWindow);
@@ -157,7 +171,7 @@ if ($editor) {
         }
     }
 
-    function saveCreation() {
+    function saveCreation(previewWindow) {
         $saveButton.classList.add("is-loading");
 
         let data = {
@@ -180,7 +194,12 @@ if ($editor) {
             if (response.status === 200) {
                 response.json().then(creationProperties => {
                     if (creationProperties.slug) { // ensure proper format
-                        let newUrl = creationProperties.url + document.location.search;
+                        if (previewWindow) {
+                            previewWindow.location.href = creationProperties.url;
+                        }
+
+                        let newUrl = `${creationProperties.url}/edit${document.location.search}`;
+
                         if (unauthenticated) {
                             // the user logged in in the mean time.
                             // We should reload the page to reflect that.

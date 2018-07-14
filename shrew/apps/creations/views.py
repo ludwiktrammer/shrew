@@ -57,6 +57,14 @@ class EditorView(View):
         return render(request, template, context)
 
 
+class CreationView(View):
+    def get(self, request, user, slug):
+        creation = get_object_or_404(Creation, author__username=user, slug=slug)
+        context = {
+            'creation': creation,
+        }
+        return render(request, 'creations/creation.html', context)
+
 class ProfileView(View):
     def get(self, request, user):
         user = get_object_or_404(get_user_model(), username=user)

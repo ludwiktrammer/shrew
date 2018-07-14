@@ -1,0 +1,22 @@
+body.preview {
+  .preview-pane {
+    max-width: 70vh;
+    margin: 0 auto;
+  }
+
+  .title.creation-title {
+    margin-top: 0.25rem;
+  }
+
+  .subtitle {
+    margin-bottom: 0.50rem;
+  }
+
+  #preview-code {
+    display: none;
+  }
+
+  .button-edit {
+    margin-top: 1.5rem;
+  }
+}

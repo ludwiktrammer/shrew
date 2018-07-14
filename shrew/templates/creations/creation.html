@@ -1,0 +1,60 @@
+{%  extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}{{ creation.name }} - {{ block.super }}{%  endblock %}
+
+{% block extrahead %}
+  <meta property="og:url" content="{% url 'creations:creation-detail' slug=creation.slug user=creation.author.username %}">
+  <meta property="og:image" content="{% url 'creations:png-preview' slug=creation.slug user=creation.author.username %}">
+  <meta property="og:title" content="{{ content.name }}">
+  <script type="text/javascript" src="//platform-api.sharethis.com/js/sharethis.js#property=5b49f4a84a104f0011ca67f3&product=sticky-share-buttons"></script>
+{% endblock %}
+
+{% block bodyclass %}preview{% endblock %}
+
+{% block content %}
+    <div class="preview-pane">
+        <div class="sandbox-wrapper">
+          <iframe id="interpreter-sandbox" scrolling="no" src="{% url 'creations:interpreter-sandbox' %}"
+              sandbox="allow-scripts"></iframe>
+        </div>
+    </div>
+    <pre id="preview-code">{{ creation.code }}</pre>
+
+    <div class="description has-text-centered">
+      <h1 class="title creation-title is-1 ">{{ creation.name }}</h1>
+      <p class="subtitle is-4">
+        by <a href="{% url 'creations:user-profile' user=creation.author.username %}">{{ creation.author.username }}</a>
+      </p>
+
+      <p class="has-text-grey">
+        Created <span title="{{ creation.created|date:"DATETIME_FORMAT" }}">{{ creation.created|naturaltime }}</span>.
+        {% if creation.base %}
+          <br>Based on <a href="{{ creation.base.get_absolute_url }}">{{ creation.base.name }}</a>
+          by <a href="{% url 'creations:user-profile' user=creation.base.author.username %}">{{ creation.base.author.username }}</a>.
+        {% endif %}
+      </p>
+
+      <a class="button button-edit is-primary is-medium" href="{% url 'creations:editor-creation' slug=creation.slug user=creation.author.username %}">
+        <span class="icon is-small">
+          <i class="fas fa-edit"></i>
+        </span>
+        <span>
+          {% if request.user == creation.author %}
+            Edit
+          {% else %}
+            View Code and Remix
+          {% endif %}
+        </span>
+      </a>
+
+      <button data-network="sharethis" class="st-custom-button button button-edit is-light is-medium">
+        <span class="icon is-small">
+          <i class="fas fa-share-alt"></i>
+        </span>
+        <span>
+          Share
+        </span>
+      </button>
+    </div>
+{% endblock %}
