@@ -5,10 +5,10 @@
 
 {% block extrahead %}
   <meta property="og:url" content="{{ request.build_absolute_uri }}">
-  <meta property="og:image" content="{% url 'creations:png-preview' slug=creation.slug user=creation.author.username %}">
+  <meta property="og:image" content="{{ request.get_host }}{% url 'creations:png-preview' slug=creation.slug user=creation.author.username %}">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:title" content="{{ content.name }}">
+  <meta property="og:title" content="{{ creation.name }}">
   <meta property="og:type" content="website">
   <meta property="og:description" content="An awesome {% if creation.is_animated %}animation{% else %}drawing{% endif %} created by {{ creation.author.username }}">
   <script type="text/javascript" src="//platform-api.sharethis.com/js/sharethis.js#property=5b49f4a84a104f0011ca67f3&product=sticky-share-buttons"></script>
