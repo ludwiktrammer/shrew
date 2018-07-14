@@ -9,6 +9,7 @@ from django.contrib.auth import get_user_model
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.conf import settings
+from django.core.cache import cache
 
 from .models import Creation
 
@@ -90,20 +91,34 @@ class SvgPreviewView(View):
 
 class PngSocialPreviewView(View):
     def get(self, request, user, slug):
-        svg_path = reverse('creations:svg-preview', kwargs={'user': user, 'slug': slug})
-        url = '{}?facebook'.format(request.build_absolute_uri(svg_path))
+        creation = get_object_or_404(Creation, slug=slug, author__username=user)
 
-        api = cloudconvert.Api(settings.CLOUDCONVERT_KEY)
+        cache_key = 'png_url;{};{};{}'.format(
+            creation.author,
+            creation.slug,
+            creation.last_modified,
+        )
 
-        process = api.convert({
-            "inputformat": "svg",
-            "outputformat": "png",
-            "input": "download",
-            "file": url,
-            "converteroptions": {
-                "resize": "1200x630"
-            },
-            "save": True,
-        })
+        output_url = cache.get(cache_key)
+        if output_url is None:
+            svg_path = reverse(
+                'creations:svg-preview',
+                kwargs={'user': creation.author, 'slug': creation.slug},
+            )
+            api = cloudconvert.Api(settings.CLOUDCONVERT_KEY)
 
-        return HttpResponseRedirect(process['output']['url'])
+            input_url = '{}?facebook'.format(request.build_absolute_uri(svg_path))
+            process = api.convert({
+                "inputformat": "svg",
+                "outputformat": "png",
+                "input": "download",
+                "file": input_url,
+                "converteroptions": {
+                    "resize": "1200x630"
+                },
+                "save": True,
+            })
+            output_url = process['output']['url']
+            cache.set(cache_key, output_url, 60 * 60 * 23.5)  # keep for 23.5 hours
+
+        return HttpResponseRedirect(output_url)

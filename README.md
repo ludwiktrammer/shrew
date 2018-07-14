@@ -27,10 +27,14 @@
 
         pipenv run ./manage.py migrate
         
-5. Create the admin account:
+5. Create database table for keeping caches:
+
+        pipenv run ./manage.py createcachetable
+        
+6. Create the admin account:
 
         pipenv run ./manage.py createsuperuser
 
-6. Start the development server:
+7. Start the development server:
 
         pipenv run ./manage.py runserver

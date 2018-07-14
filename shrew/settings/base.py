@@ -175,3 +175,10 @@ COMPRESS_PRECOMPILERS = (
 )
 
 CLOUDCONVERT_KEY = env.str("DJANGO_CLOUDCONVERT_KEY")
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'django_caches',
+    }
+}
