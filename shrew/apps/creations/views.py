@@ -1,7 +1,6 @@
 import cloudconvert
 
 from django.shortcuts import render, get_object_or_404
-from django.utils.http import urlencode
 from django.views.generic import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -11,6 +10,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from django.conf import settings
 from django.core.cache import cache
+from django.utils.dateformat import format
 
 from .models import Creation
 
@@ -97,7 +97,7 @@ class PngSocialPreviewView(View):
         cache_key = 'png_url;{};{};{}'.format(
             creation.author,
             creation.slug,
-            creation.last_modified,
+            format(creation.last_modified, 'U'),
         )
         print(cache_key)
 
@@ -109,10 +109,7 @@ class PngSocialPreviewView(View):
             )
             api = cloudconvert.Api(settings.CLOUDCONVERT_KEY)
 
-            input_url = '{}?facebook&v={}'.format(
-                request.build_absolute_uri(svg_path),
-                urlencode(creation.last_modified),
-            )
+            input_url = '{}?facebook'.format(request.build_absolute_uri(svg_path))
             process = api.convert({
                 "inputformat": "svg",
                 "outputformat": "png",
