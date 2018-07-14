@@ -95,6 +95,10 @@
   }
 }
 
+.view-buton-wrapper {
+  flex-grow: 0 !important;
+}
+
 .saving-disabled .button {
   @extend .button[disabled];
 }

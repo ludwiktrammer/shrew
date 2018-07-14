@@ -12,6 +12,7 @@
     "browserify": "^16.2.2",
     "bulma": "^0.7.1",
     "bulma-divider": "^2.0.1",
+    "bulma-tooltip": "^2.0.1",
     "codemirror-minified": "^5.37.0",
     "css-color-names": "0.0.4",
     "js-cookie": "^2.2.0",
