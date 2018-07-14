@@ -107,7 +107,6 @@ class PngSocialPreviewView(View):
             creation.slug,
             format(creation.last_modified, 'U'),
         )
-        print(cache_key)
 
         output_url = cache.get(cache_key)
         if output_url is None:
