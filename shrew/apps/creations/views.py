@@ -4,6 +4,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
+from django.template.loader import render_to_string
 
 from .models import Creation
 
@@ -68,9 +69,18 @@ class BackToEditorView(View):
 class SvgPreviewView(View):
     def get(self, request, user, slug):
         creation = get_object_or_404(Creation, slug=slug, author__username=user)
+        svg = creation.svg
 
-        response = HttpResponse(creation.svg, content_type="image/svg+xml")
+        if 'facebook' in request.GET:
+            svg = svg.replace('viewBox="0 0 100 100"', 'viewBox="-45.25 0 190.5 100"', 1)  # make it wider
+            if creation.is_animated:
+                play_svg = render_to_string('creations/_play.svg')
+                svg = svg.replace('</svg>', play_svg + '\n</svg>')
+
+        response = HttpResponse(svg, content_type="image/svg+xml")
         response['Content-Security-Policy'] = 'sandbox'
         response['Content-Disposition'] = 'attachment; filename="{}.svg"'.format(slug)
 
         return response
+
+
