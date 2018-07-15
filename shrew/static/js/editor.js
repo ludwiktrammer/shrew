@@ -21,7 +21,7 @@ if ($editor) {
     const sandbox = $iframe.contentWindow;
     let unsaved = $editor.classList.contains("unsaved");
     let unauthenticated = $editor.classList.contains("unauthenticated");
-    let embeddedMode = "embedded" in document.location.search.replace("?","").split("&");
+    let embeddedMode = document.location.search.replace("?","").split("&").includes("embedded");
     let slug = $textarea.dataset.slug;
     let user = $textarea.dataset.user;
     let name = $textarea.dataset.name;
