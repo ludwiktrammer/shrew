@@ -11,11 +11,14 @@ if ($placeholder) {
 
     for (let [name, color] of Object.entries(cssColors)) {
         let $column = document.createElement("div");
-        $column.classList.add("column", "is-2-desktop", "is-3-tablet", "is-6-mobile");
-        $column.style.backgroundColor = color;
-        $column.classList.add(`has-text-${contrast(color)}`);
-        $column.textContent = name;
+        $column.classList.add("column", "is-2-widescreen", "is-3-desktop", "is-4-tablet", "is-6-mobile");
+
+        let $content = document.createElement("div");
+        $content.style.backgroundColor = color;
+        $content.classList.add("notification", `has-text-${contrast(color)}`);
+        $content.textContent = name;
         $columns.appendChild($column);
+        $column.appendChild($content);
     }
 
     /**
