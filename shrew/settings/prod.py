@@ -16,6 +16,7 @@ COMPRESS_OFFLINE = True
 ADMINS = [
     ('Ludwik', 'ludwik@gmail.com'),
 ]
+MANAGERS = ADMINS
 
 # Email
 DEFAULT_FROM_EMAIL = SERVER_EMAIL = 'noreply@shrew.app'
