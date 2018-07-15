@@ -25,70 +25,72 @@ if ($code) {
 
 
 const $love = document.getElementById("love");
-const $loveLabel = document.querySelector("#love .love-label");
-$love.addEventListener("click", () => {
-    if ($love.dataset.isAuthenticated !== "1") {
-        redirectToLogin();
-        return;
-    }
-    if ($love.dataset.active === "1") {
-        buttonUnlove();
-        apiSendLove("unlove").catch(buttonLove);
-    } else {
-        buttonLove();
-        apiSendLove("love").catch(buttonUnlove);
-    }
-});
-
-function redirectToLogin() {
-    document.location.href = `/accounts/login/?next=${document.location.pathname}`
-}
-
-/**
- * Set the button state to loving.
- */
-function buttonLove() {
-    $love.classList.remove("is-outlined");
-    $love.dataset.badge++;
-    $love.classList.add("badge");
-    $love.dataset.active = 1;
-    $loveLabel.textContent = "Unlove";
-    $love.blur();
-}
-
-/**
- * Set the button state to not loving.
- */
-function buttonUnlove() {
-    $love.classList.add("is-outlined");
-    $love.dataset.badge--;
-    if ($love.dataset.badge <= 0) {
-        $love.classList.remove("badge");
-    }
-    $love.dataset.active = 0;
-    $loveLabel.textContent = "Love";
-    $love.blur();
-}
-
-function apiSendLove(action) {
-    return fetch('/show/__api-love', {
-        credentials: 'include',
-        method: 'POST',
-        body: JSON.stringify({
-            'slug': $love.dataset.slug,
-            'author': $love.dataset.author,
-            'action': action,
-        }),
-        headers:{
-            'Content-Type': 'application/json',
-            'X-CSRFToken': Cookies.get('csrftoken'),
-        }
-    }).then(response => {
-        if (response.status === 403) {
+if ($love) {
+    const $loveLabel = document.querySelector("#love .love-label");
+    $love.addEventListener("click", () => {
+        if ($love.dataset.isAuthenticated !== "1") {
             redirectToLogin();
+            return;
         }
-        if (response.status !== 200) {
-            throw "Server responded with an error!";
+        if ($love.dataset.active === "1") {
+            buttonUnlove();
+            apiSendLove("unlove").catch(buttonLove);
+        } else {
+            buttonLove();
+            apiSendLove("love").catch(buttonUnlove);
         }
     });
+
+    function redirectToLogin() {
+        document.location.href = `/accounts/login/?next=${document.location.pathname}`
+    }
+
+    /**
+     * Set the button state to loving.
+     */
+    function buttonLove() {
+        $love.classList.remove("is-outlined");
+        $love.dataset.badge++;
+        $love.classList.add("badge");
+        $love.dataset.active = 1;
+        $loveLabel.textContent = "Unlove";
+        $love.blur();
+    }
+
+    /**
+     * Set the button state to not loving.
+     */
+    function buttonUnlove() {
+        $love.classList.add("is-outlined");
+        $love.dataset.badge--;
+        if ($love.dataset.badge <= 0) {
+            $love.classList.remove("badge");
+        }
+        $love.dataset.active = 0;
+        $loveLabel.textContent = "Love";
+        $love.blur();
+    }
+
+    function apiSendLove(action) {
+        return fetch('/show/__api-love', {
+            credentials: 'include',
+            method: 'POST',
+            body: JSON.stringify({
+                'slug': $love.dataset.slug,
+                'author': $love.dataset.author,
+                'action': action,
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': Cookies.get('csrftoken'),
+            }
+        }).then(response => {
+            if (response.status === 403) {
+                redirectToLogin();
+            }
+            if (response.status !== 200) {
+                throw "Server responded with an error!";
+            }
+        });
+    }
 }
