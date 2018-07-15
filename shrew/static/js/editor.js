@@ -228,7 +228,7 @@ if ($editor) {
                 showLoginModal();
                 $saveButton.classList.remove("is-loading");
             }
-        })
+        });
     }
 
     /**

@@ -1,9 +1,9 @@
 from django.urls import path
 
 from .views import (
-    InterpreterSandboxView, EditorView, CreationView, SvgPreviewView, PngSocialPreviewView, ProfileView,
+    InterpreterSandboxView, EditorView, CreationView, SvgPreviewView, PngSocialPreviewView, ProfileView
 )
-from .api import CreationApiView
+from .api import CreationApiView, LoveApiView
 
 app_name = 'creations'
 
@@ -18,6 +18,11 @@ urlpatterns = [
         '__api-save',
         CreationApiView.as_view(),
         name='api-save',
+    ),
+    path(
+        '__api-love',
+        LoveApiView.as_view(),
+        name='api-love',
     ),
     path('preview/<slug:user>/<slug:slug>.svg', SvgPreviewView.as_view(), name='svg-preview'),
     path('preview/<slug:user>/<slug:slug>.png', PngSocialPreviewView.as_view(), name='png-preview'),

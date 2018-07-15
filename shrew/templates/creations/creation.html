@@ -39,26 +39,40 @@
         {% endif %}
       </p>
 
-      <a class="button button-edit is-primary is-medium" href="{% url 'creations:editor-creation' slug=creation.slug user=creation.author.username %}">
-        <span class="icon is-small">
-          <i class="fas fa-edit"></i>
-        </span>
-        <span>
-          {% if request.user == creation.author %}
-            Edit
-          {% else %}
-            View Code and Remix
-          {% endif %}
-        </span>
-      </a>
+      <div class="buttons is-centered preview-actions">
+        <a class="button button-edit is-primary is-medium" href="{% url 'creations:editor-creation' slug=creation.slug user=creation.author.username %}">
+          <span class="icon is-small">
+            <i class="fas fa-edit"></i>
+          </span>
+          <span>
+            {% if request.user == creation.author %}
+              Edit
+            {% else %}
+              View Code and Remix
+            {% endif %}
+          </span>
+        </a>
 
-      <button data-network="sharethis" class="st-custom-button button button-edit is-light is-medium">
-        <span class="icon is-small">
-          <i class="fas fa-share-alt"></i>
-        </span>
-        <span>
-          Share
-        </span>
-      </button>
+        <button data-network="sharethis" class="st-custom-button button button-edit is-light is-medium">
+          <span class="icon is-small">
+            <i class="fas fa-share-alt"></i>
+          </span>
+          <span>
+            Share
+          </span>
+        </button>
+
+        <button class="button is-danger is-medium {% if not user_loves %}is-outlined{% endif %} {% if loving_count %}badge{% endif %} is-badge-danger"
+                id="love" data-is-authenticated="{{ request.user.is_authenticated|yesno:"1,0" }}"
+                data-slug="{{ creation.slug }}" data-author="{{ creation.author.username }}"
+                data-active="{{ user_loves|yesno:"1,0" }}" data-badge="{{ loving_count }}">
+          <span class="icon is-small">
+            <i class="fas fa-heart"></i>
+          </span>
+          <span class="love-label">
+            {{ user_loves|yesno:"Unlove,Love" }}
+          </span>
+        </button>
+      </div>
     </div>
 {% endblock %}

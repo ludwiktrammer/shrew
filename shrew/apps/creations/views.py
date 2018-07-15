@@ -57,13 +57,17 @@ class EditorView(View):
         return render(request, template, context)
 
 
+@method_decorator(ensure_csrf_cookie, name='dispatch')
 class CreationView(View):
     def get(self, request, user, slug):
         creation = get_object_or_404(Creation, author__username=user, slug=slug)
         context = {
             'creation': creation,
+            'loving_count': creation.loving.count(),
+            'user_loves': creation.loving.filter(pk=request.user.pk).exists(),
         }
         return render(request, 'creations/creation.html', context)
+
 
 class ProfileView(View):
     def get(self, request, user):

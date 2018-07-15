@@ -39,6 +39,11 @@ class Creation(models.Model):
         null=True,
     )
     history = HistoricalRecords()
+    loving = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        blank=True,
+        related_name='loved',
+    )
 
     class Meta:
         ordering = ('-pk', )

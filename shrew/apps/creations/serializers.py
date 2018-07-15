@@ -16,3 +16,14 @@ class CreationOutputSerializer(serializers.ModelSerializer):
     class Meta:
         model = Creation
         fields = ('slug', 'url', 'name', 'user')
+
+
+class LoveSerializer(serializers.Serializer):
+    slug = serializers.SlugField()
+    author = serializers.SlugField()
+    action = serializers.SlugField()
+
+    def validate_action(self, value):
+        if value not in ['love', 'unlove']:
+            raise serializers.ValidationError("Allowed actions: love, unlove")
+        return value
