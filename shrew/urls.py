@@ -25,6 +25,7 @@ admin.site.site_header = 'Code Shrew Admin'
 
 urlpatterns = [
     path('', HomePage.as_view()),
+    path('contact/', include('contact_form.recaptcha_urls')),
     path('accounts/', include('allauth.urls')),
     path('todo/', TemplateView.as_view(template_name='todo.html'), name='todo'),
     path('show/', include('shrew.apps.creations.urls')),

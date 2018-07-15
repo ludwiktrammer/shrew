@@ -22,6 +22,8 @@ django-autoslug-iplweb = "*"
 django-rest-framework = "*"
 unidecode = "*"
 cloudconvert = "*"
+django-contact-form-recaptcha = "*"
+django-recaptcha = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"

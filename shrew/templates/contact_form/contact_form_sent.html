@@ -1,0 +1,18 @@
+{%  extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact - {{ block.super }}{%  endblock %}
+
+{% block content %}
+  <article class="message is-primary">
+    <div class="message-header">
+      <p>The message has been sent!</p>
+    </div>
+    <div class="message-body">
+      Thank you for contacting us. We will try to reply as soon as possible.
+      <div class="has-text-centered">
+        <a href="/" class="button is-primary is-outlined">Return to the homepage</a>
+      </div>
+    </div>
+  </article>
+{% endblock %}

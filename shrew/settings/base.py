@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'bulma',
     'simple_history',
     'rest_framework',
+    'captcha',
 
     'allauth',
     'allauth.account',
@@ -183,3 +184,5 @@ CACHES = {
         'LOCATION': 'django_caches',
     }
 }
+
+NOCAPTCHA = True

@@ -1,0 +1,14 @@
+{%  extends 'base.html' %}
+{% load static %}
+{% load bulma_tags %}
+
+{% block title %}Contact - {{ block.super }}{%  endblock %}
+
+{% block content %}
+  <h1 class="title is-1">Contact us</h1>
+  <form method="post" action="">
+    {% csrf_token %}
+    {{ form|bulma }}
+    <button method="submit" class="button is-primary">Send message</button>
+  </form>
+{% endblock %}

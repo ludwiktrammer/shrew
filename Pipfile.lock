@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "375bb14fe4d6acfed044f39cb41b19aa0af57c0ef46be3f6a766ce6ecf0a0dbc"
+            "sha256": "8e43727948719da84f7cea4de9f2a9ceebe5c5362c30920d66a57b37d8b73a35"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -119,6 +119,14 @@
             "index": "pypi",
             "version": "==0.6.0"
         },
+        "django-contact-form-recaptcha": {
+            "hashes": [
+                "sha256:19cb281c4ecb7e5bc2a069c18c70cc70c6311cea99a4ce91a1fe673f7354db72",
+                "sha256:3f9495980c91ec6a54367ce18439d19d9f73f09271cdf7702e8bf190bc89971b"
+            ],
+            "index": "pypi",
+            "version": "==1.6.0"
+        },
         "django-environ": {
             "hashes": [
                 "sha256:6c9d87660142608f63ec7d5ce5564c49b603ea8ff25da595fd6098f6dc82afde",
@@ -134,6 +142,14 @@
             ],
             "index": "pypi",
             "version": "==1.6.0"
+        },
+        "django-recaptcha": {
+            "hashes": [
+                "sha256:88d477a24a87b2f4dbc5102df8b1d123ab027dc1f401e9055e2576fafa2984b2",
+                "sha256:8dccdfd4fd4c765b786a69685b14175ef9cd8676a18d0d58c38debcaadc4daee"
+            ],
+            "index": "pypi",
+            "version": "==1.4.0"
         },
         "django-rest-framework": {
             "hashes": [
