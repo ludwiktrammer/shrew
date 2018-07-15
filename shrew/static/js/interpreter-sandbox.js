@@ -2,6 +2,9 @@ import Sk from "@microduino/skulpt";
 
 import { drawFromActions } from "./drawing.js"
 
+// Indicates whether there've been at least one successful run
+let sucesfullRun = false;
+
 Sk.configure({
     output: output,
     uncaughtException: output,
@@ -19,7 +22,7 @@ window.addEventListener("load", () => {
 // run again when the tab is opened - sometimes background tab are slowed down by the browser
 // and the execution of the code times out
 document.addEventListener("visibilitychange", () => {
-    if (!document.hidden) {
+    if (!document.hidden && !sucesfullRun) {
         window.parent.postMessage({type: "interpreter-ready"}, "*");
     }
 });
@@ -53,6 +56,7 @@ function runCode(event) {
                 code: event.data.code,
             }, "*");
         });
+        sucesfullRun = true;
     }).catch((error) => {
         console.error(error);
         if (error.args) {
