@@ -19,7 +19,7 @@ from .models import Creation
 class HomePage(View):
     def get(self, request):
         featured_list = Creation.objects.filter(featured=True).select_related('author')
-        paginator = Paginator(featured_list, 20)
+        paginator = Paginator(featured_list, 15)
         page = request.GET.get('page')
 
         context = {
