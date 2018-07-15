@@ -76,8 +76,13 @@ class ProfileView(View):
     def get(self, request, user):
         user = get_object_or_404(get_user_model(), username=user)
 
+        created_paginator = Paginator(user.creations.all(), 15)
+        loved_paginator = Paginator(user.loved.all(), 15)
+
         context = {
             'user': user,
+            'created': created_paginator.get_page(request.GET.get('page_created')),
+            'loved': loved_paginator.get_page(request.GET.get('page_loved')),
         }
         return render(request, 'creations/profile.html', context)
 

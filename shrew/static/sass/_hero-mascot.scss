@@ -8,4 +8,10 @@
   img {
     max-height: 20rem;
   }
+
+  &.is-small {
+    img {
+      max-height: 10rem;
+    }
+  }
 }

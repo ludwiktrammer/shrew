@@ -23,18 +23,20 @@
 </div>
 
 {% if creations.paginator and creations.paginator.num_pages > 1 %}
-  <nav class="pagination" role="navigation" aria-label="pagination">
-  <a {% if creations.has_previous %}href="?page={{ creations.previous_page_number }}"{% endif %} class="pagination-previous"
-      {% if not creations.has_previous %}disabled{% endif %}>Previous</a>
-  <a {% if creations.has_next %}href="?page={{ creations.next_page_number }}"{% endif %} class="pagination-next"
-    {% if not creations.has_next %}disabled{% endif %}>Next page</a>
-  <ul class="pagination-list">
-    {% for page in creations.paginator.page_range %}
-      <li>
-        <a href="?page={{ page }}" class="{% if page == creations.number %}is-current{% endif %} pagination-link"
-           aria-label="Goto page {{ page }}">{{ page }}</a>
-      </li>
-    {% endfor %}
-  </ul>
-  </nav>
+  {% with page_name=page_name|default:"page" %}
+    <nav class="pagination" role="navigation" aria-label="pagination">
+    <a {% if creations.has_previous %}href="?{{ page_name }}={{ creations.previous_page_number }}{{ anchor }}"{% endif %} class="pagination-previous"
+        {% if not creations.has_previous %}disabled{% endif %}>Previous</a>
+    <a {% if creations.has_next %}href="?{{ page_name }}={{ creations.next_page_number }}{{ anchor }}"{% endif %} class="pagination-next"
+      {% if not creations.has_next %}disabled{% endif %}>Next page</a>
+    <ul class="pagination-list">
+      {% for page in creations.paginator.page_range %}
+        <li>
+          <a href="?{{ page_name }}={{ page }}{{ anchor }}" class="{% if page == creations.number %}is-current{% endif %} pagination-link"
+             aria-label="Goto page {{ page }}">{{ page }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+    </nav>
+  {% endwith %}
 {% endif %}

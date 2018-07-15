@@ -1,10 +1,49 @@
 {%  extends 'base.html' %}
+{% load static %}
 
 {% block title %}{{ user.username }} - {{ block.super }}{%  endblock %}
 
-{% block content %}
-  <h1 class="title is-size-1">{{ user.username }}'s profile</h1>
-  <h2 class="title is-size-2">Drawings & animations</h2>
-  {% include 'creations/_creations_list.html' with creations=user.creations.all %}
+{% block bodyclass %}profile{% endblock %}
 
+{% block content %}
+  <h1 class="title is-size-1" id="created">{{ user.username }}'s profile</h1>
+  <h2 class="title is-size-2">Created by {{ user.username }}</h2>
+    {% if created %}
+      {% include 'creations/_creations_list.html' with creations=created page_name='page_created' anchor='#created' %}
+    {% else %}
+      <section class="hero-mascot is-small">
+        <div class="hero-body">
+          <div class="container">
+            <img src="{% static 'images/mascot.svg' %}" alt="">
+
+            <h1 class="title">
+              {{ user.username }} hasn't created any drawings or animations yet
+            </h1>
+            <h2 class="subtitle">
+              To create one, go to <a href="{% url 'editor' %}">the editor</a>
+            </h2>
+          </div>
+        </div>
+      </section>
+    {% endif %}
+
+  <h2 class="title is-size-2" id="loved"><i class="fas fa-heart has-text-danger"></i> by {{ user.username }}</h2>
+    {% if loved %}
+      {% include 'creations/_creations_list.html' with creations=loved page_name='page_loved' anchor='#loved' %}
+    {% else %}
+      <section class="hero-mascot is-small">
+        <div class="hero-body">
+          <div class="container">
+            <img src="{% static 'images/mascot.svg' %}" alt="">
+
+            <h1 class="title">
+              {{ user.username }} hasn't mark anything as loved yet
+            </h1>
+            <h2 class="subtitle">
+              To love a drawing or an animation, open its page and click the "Love" button
+            </h2>
+          </div>
+        </div>
+      </section>
+    {% endif %}
 {% endblock %}
