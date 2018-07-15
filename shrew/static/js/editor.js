@@ -21,6 +21,7 @@ if ($editor) {
     const sandbox = $iframe.contentWindow;
     let unsaved = $editor.classList.contains("unsaved");
     let unauthenticated = $editor.classList.contains("unauthenticated");
+    let embeddedMode = "embedded" in document.location.search.replace("?","").split("&");
     let slug = $textarea.dataset.slug;
     let user = $textarea.dataset.user;
     let name = $textarea.dataset.name;
@@ -33,7 +34,7 @@ if ($editor) {
         lineNumbers: true,
         theme: "shrew",
         indentUnit: 4,
-        autofocus: true,
+        autofocus: !embeddedMode,
         autoCloseBrackets: true,
         lint: {
             getAnnotations: runLint,
