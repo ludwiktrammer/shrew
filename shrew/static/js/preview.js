@@ -1,4 +1,5 @@
 import * as Cookies from "js-cookie";
+import Timeago from 'timeago.js';
 
 
 const $code = document.getElementById("preview-code");
@@ -6,6 +7,10 @@ const $code = document.getElementById("preview-code");
 if ($code) {
     const $iframe = document.getElementById("interpreter-sandbox");
     const sandbox = $iframe.contentWindow;
+    const $creationTime = document.getElementById("creation-time");
+
+    let timeago = new Timeago();
+    timeago.render($creationTime);
 
     window.addEventListener("message", (event) => {
         if (event.data.type === "interpreter-ready") {

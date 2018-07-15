@@ -32,7 +32,8 @@
       </p>
 
       <p class="has-text-grey">
-        Created <span title="{{ creation.created|date:"DATETIME_FORMAT" }}">{{ creation.created|naturaltime }}</span>.
+        Created <span id="creation-time" title="{{ creation.created|date:"DATETIME_FORMAT" }}"
+                      datetime="{{ creation.created|date:'c' }}">{{ creation.created|naturaltime }}</span>.
         {% if creation.base %}
           <br>Based on <a href="{{ creation.base.get_absolute_url }}">{{ creation.base.name }}</a>
           by <a href="{% url 'creations:user-profile' user=creation.base.author.username %}">{{ creation.base.author.username }}</a>.
