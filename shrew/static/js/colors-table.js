@@ -6,6 +6,7 @@ const $placeholder = document.getElementById("colors-table");
 if ($placeholder) {
     let $columns = document.createElement("div");
     $columns.classList.add("columns", "is-multiline", "is-mobile", "has-text-centered", "has-text-weight-bold");
+    $columns.style.marginTop = "0.75rem";
     $placeholder.appendChild($columns);
 
     for (let [name, color] of Object.entries(cssColors)) {
