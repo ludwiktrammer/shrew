@@ -11,16 +11,19 @@ from django.urls import reverse
 from django.conf import settings
 from django.core.cache import cache
 from django.utils.dateformat import format
+from django.core.paginator import Paginator
 
 from .models import Creation
 
 
 class HomePage(View):
     def get(self, request):
-        featured = Creation.objects.filter(featured=True).select_related('author')
+        featured_list = Creation.objects.filter(featured=True).select_related('author')
+        paginator = Paginator(featured_list, 20)
+        page = request.GET.get('page')
 
         context = {
-            'featured': featured,
+            'featured': paginator.get_page(page),
         }
         return render(request, 'creations/home.html', context)
 

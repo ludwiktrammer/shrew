@@ -13,6 +13,7 @@ class CreationAdmin(SimpleHistoryAdmin):
     list_filter = ('featured', 'is_animated')
     search_fields = ('name', )
     date_hierarchy = 'created'
+    list_editable = ('featured', )
     formfield_overrides = {
         models.CharField: {
             'widget': forms.TextInput(attrs={'style': 'min-width: 50%'}),
