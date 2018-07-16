@@ -51,11 +51,11 @@
           <a class="navbar-item" href="{% url 'pages:category-detail' slug='documentation' %}">
             Documentation
           </a>
-          <a class="navbar-item" href="{% url 'pages:page-detail' slug='about' %}">
-            About
+          <a class="navbar-item" href="{% url 'pages:category-detail' slug='challenges' %}">
+            Challenges
           </a>
-          <a class="navbar-item" href="{% url 'contact_form' %}">
-            Contact
+          <a class="navbar-item" href="{% url 'about' %}">
+            About
           </a>
         </div>
         <div class="navbar-end">
@@ -154,7 +154,7 @@
         <i class="fas fa-copyright"></i> Code Shrew 2018<br>
         The site was created by <a href="https://ludwik.trammer.pl">Ludwik Trammer</a> and the lessons were designed by Jamie Nunez.<br>
         See our <a href="{% url 'pages:page-detail' slug='terms' %}">Terms of Use</a> and <a href="{% url 'pages:page-detail' slug='privacy' %}">Privacy Policy</a>.
-        We <a href="{% url 'pages:page-detail' slug='cookies' %}">use cookies</a>. We <i class="fas fa-heart"></i> <a href="{% url 'contact_form' %}">feedback</a>.
+        We <a href="{% url 'pages:page-detail' slug='cookies' %}">use cookies</a>. We <i class="fas fa-heart"></i> <a href="{% url 'about' %}">feedback</a>.
       </p>
     </div>
   </footer>

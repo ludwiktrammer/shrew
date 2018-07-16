@@ -20,7 +20,6 @@ class PageDetailView(View):
         return render(request, 'pages/page-detail.html', context)
 
 
-
 class PageCategoryDetailView(View):
     def get(self, request, slug):
         category = get_object_or_404(

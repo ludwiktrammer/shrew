@@ -1,0 +1,48 @@
+{%  extends 'base.html' %}
+{% load static %}
+{% load bulma_tags %}
+
+{% block title %}About us - {{ block.super }}{%  endblock %}
+
+{% block bodyclass %}about{% endblock %}
+
+{% block content %}
+  <div class="columns">
+    <div class="column is-half">
+      <div class="content">
+        <h1>About Code Shrew</h1>
+
+        <p>
+          Code Shrew is a platform for <strong>learning and practicing basic concepts of programming</strong>.
+          In its heart is a programming environment where you can <strong>play with code by creating drawings and animations</strong> using a simple Python-like syntax.
+          It is accompanied by an <strong>interactive course</strong> presenting a variety of fundamental programming concepts using the environment.
+        </p>
+        <p>
+          The tool and the site were built by <strong>Ludwik Trammer</strong> and all the lessons were created by <strong>Jamie Nunez</strong>.
+        </p>
+
+        <h2>Technology</h2>
+        <p>We proudly use the following technologies (and many others):</p>
+        <ul>
+          <li><a href="https://www.djangoproject.com/">Django</a> (<a href="https://www.python.org/">Python 3</a>) - the server-side framework,</li>
+          <li><a href="https://www.postgresql.org/">PostgreSQL</a> - the database,</li>
+          <li><a href="https://bulma.io/">Bulma</a> - the CSS framework,</li>
+          <li><a href="http://www.skulpt.org/">Skulpt</a> - the in-browser Python interpreter,</li>
+          <li><a href="http://svgjs.com/">svg.js</a> - the graphics library,</li>
+          <li><a href="https://fontawesome.com/">Font Awesome</a> - the icons (both on the site and in the <a href="{% url 'pages:page-detail' slug='icons' category_slug='documentation' %}">icons module</a>),</li>
+          <li><a href="https://codemirror.net/">Code Mirror</a> - the code editor widget,</li>
+          <li><a href="https://www.cloudflare.com/">Cloud Flare</a> - the CDN and caching provider,</li>
+        </ul>
+      </div>
+    </div>
+    <div class="is-divider-vertical"></div>
+    <div class="column is-half">
+      <h2 class="title is-size-3">Contact Us</h2>
+      <form method="post" action="{% url 'contact_form' %}">
+        {% csrf_token %}
+        {{ contact_form|bulma }}
+        <button type="submit" class="button is-primary">Send message</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

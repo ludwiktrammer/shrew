@@ -9,6 +9,6 @@
   <form method="post" action="">
     {% csrf_token %}
     {{ form|bulma }}
-    <button method="submit" class="button is-primary">Send message</button>
+    <button type="submit" class="button is-primary">Send message</button>
   </form>
 {% endblock %}
