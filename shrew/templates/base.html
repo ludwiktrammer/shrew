@@ -164,6 +164,7 @@
     <script type="module" src="{% static 'js/outdated-browser.js' %}"></script>
   {% endcompress %}
   {% compress js %}
+    <script type="module" src="{% static 'js/polyfill.js' %}"></script>
     <script type="module" src="{% static 'js/editor.js' %}"></script>
     <script type="module" src="{% static 'js/preview.js' %}"></script>
     <script type="module" src="{% static 'js/navbar.js' %}"></script>
