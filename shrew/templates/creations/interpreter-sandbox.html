@@ -13,8 +13,8 @@
   <body>
     <div id="drawing"></div>
 
-    <script src="https://polyfill.io/v2/polyfill.js=features=default,es5,es6"></script>
     {% compress js %}
+      <script type="module" src="{% static 'js/polyfill.js' %}"></script>
       <script type="skulpt-module" src="{% static 'skulpt-modules/shrew.py' %}"></script>
       <script type="skulpt-module-es6" src="{% static 'skulpt-modules/icons.js' %}"></script>
       <script type="module" src="{% static 'js/interpreter-sandbox.js' %}"></script>

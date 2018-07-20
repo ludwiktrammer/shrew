@@ -159,9 +159,8 @@
     </div>
   </footer>
 
-  {# Mostly because IE 11 doesn't know about Symbol #}
-  <script src="https://polyfill.io/v2/polyfill.js=features=default,es5,es6"></script>
   {% compress js %}
+    <script type="module" src="{% static 'js/polyfill.js' %}"></script>
     <script type="module" src="{% static 'js/editor.js' %}"></script>
     <script type="module" src="{% static 'js/preview.js' %}"></script>
     <script type="module" src="{% static 'js/navbar.js' %}"></script>
