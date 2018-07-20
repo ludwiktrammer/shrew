@@ -6,7 +6,7 @@ register = template.Library()
 
 EMBED_TEMPLATE = """
 <div class="embed-outer"><div class="embed-container editor-embed">
-<iframe src="\g<1>?embedded"></iframe>
+<iframe scrolling="no" src="\g<1>?embedded"></iframe>
 </div></div>
 """
 EDITOR_PATTERN = re.compile(
