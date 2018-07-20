@@ -20,6 +20,7 @@
     "hex-to-rgb": "^1.0.1",
     "js-cookie": "^2.2.0",
     "node-sass": "^4.9.0",
+    "outdated-browser-rework": "^2.5.4",
     "postcss-cli": "^5.0.1",
     "svg.js": "^2.6.5",
     "timeago.js": "^3.0.2",

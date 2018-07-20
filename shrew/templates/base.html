@@ -158,7 +158,11 @@
       </p>
     </div>
   </footer>
-
+  <div id="outdated"></div>
+  {% compress js %}
+    {# needs to be compressed into a separate file, so that errors in other JS doesn't affect it #}
+    <script type="module" src="{% static 'js/outdated-browser.js' %}"></script>
+  {% endcompress %}
   {% compress js %}
     <script type="module" src="{% static 'js/polyfill.js' %}"></script>
     <script type="module" src="{% static 'js/editor.js' %}"></script>
