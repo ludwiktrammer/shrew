@@ -9,7 +9,7 @@ outdatedBrowserRework({
 		'Firefox': 28,
 		'Opera': 15,
 		'Vivaldi': 1,
-		'IE': false,
+		'IE': 12,
 	},
 	isUnknownBrowserOK: true,
 });
