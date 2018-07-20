@@ -17,7 +17,7 @@
   {% include "creations/_editor.html" %}
   <div id="code-output" class="embedded-code-output"></div>
 
-  <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+  <script src="https://polyfill.io/v2/polyfill.js=features=default,es5,es6"></script>
   {% compress js %}
     <script type="module" src="{% static 'js/editor.js' %}"></script>
   {% endcompress %}
