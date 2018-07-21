@@ -18,6 +18,9 @@ let actionHandlers = {
     },
 
     "created": (shapeId, command, value) => {
+        if (value[0] === "line" || value[0] === "polyline") {
+            value[1] = straightLineWorkAround(value[1]);
+        }
         let shape = draw[value[0]](...value.slice(1)).id(shapeId);
         if (animation) {
             shape.opacity(0);
@@ -105,6 +108,11 @@ let actionHandlers = {
     "opacity": (shapeId, command, value) => {
         let shape = getShape(shapeId, !!animation);
         shape[command](value);
+    },
+
+    "plot": (shapeId, command, value, initial) => {
+        value = straightLineWorkAround(value);
+        actionHandlers.default(shapeId, command, value, initial);
     },
 };
 
@@ -240,4 +248,39 @@ function getGradientOffset(colors, index) {
 
 function getColorFromName(color) {
     return cssColors[color] || color;
+}
+
+/**
+ * Works around this problem: https://stackoverflow.com/q/21638169/262618
+ * (where SVG gradient doesn't work if a line is strictly vertical/horizontal)
+ */
+function straightLineWorkAround(points) {
+    if (!Array.isArray(points) || points.length < 1 || !Array.isArray(points[0]) || points[0].length !== 2) {
+        return points; // unsupported format, abort
+    }
+    let [firstX, firstY] = points[0];
+    let differentX = false;
+    let differentY = false;
+
+    for (let point of points) {
+        if (!Array.isArray(point) || point.length !== 2) {
+            return points; // unsupported format, abort
+        }
+        let [x, y] = point;
+        if (x !== firstX) {
+            differentX = true;
+        }
+        if (y !== firstY) {
+            differentY = true;
+        }
+    }
+
+    if (!differentX) { // all points horizontal
+        points[0][0] += 0.001;
+    }
+    if (!differentY) { // all points vertical
+        points[0][1] += 0.001;
+    }
+
+    return points;
 }
