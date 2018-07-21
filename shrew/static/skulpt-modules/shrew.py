@@ -178,8 +178,12 @@ Circle = Ellipse
 
 
 class Line(AbstractShapePoints):
-    _shape_type__ = 'line'
+    _shape_type__ = 'polyline'
     _svg_constructor_arguments = ['points']
+    _default_arguments__ = deepcopy(AbstractShapePoints._default_arguments__)
+    _default_arguments__.update({
+        'fill': 'none',
+    })
 
     def _log_action__(self, command, value, initial=False):
         if command == 'color':

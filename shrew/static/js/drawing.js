@@ -82,6 +82,10 @@ let actionHandlers = {
 
     "fill": (shapeId, command, value) => {
         let shape = getShape(shapeId);
+        if (value === 'none') {
+            shape[command](value);
+            return;
+        }
         if (!Array.isArray(value)) {
             value = [value];
         }
