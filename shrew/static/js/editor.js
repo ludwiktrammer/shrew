@@ -228,6 +228,9 @@ if ($editor) {
                 // the user needs to log in
                 showLoginModal();
                 $saveButton.classList.remove("is-loading");
+                if (previewWindow) {
+                    previewWindow.close();
+                }
             }
         });
     }
