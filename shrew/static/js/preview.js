@@ -3,7 +3,6 @@ import Timeago from 'timeago.js';
 
 
 const $code = document.getElementById("preview-code");
-
 if ($code) {
     const $iframe = document.getElementById("interpreter-sandbox");
     const sandbox = $iframe.contentWindow;
@@ -21,6 +20,19 @@ if ($code) {
     function runCode() {
         sandbox.postMessage({code: $code.textContent}, "*");
     }
+}
+
+const $deleteButton = document.getElementById("delete-button");
+if ($deleteButton) {
+    const $deleteModal = document.getElementById("delete-modal");
+    $deleteButton.addEventListener("click", () => {
+        $deleteModal.classList.add("is-active");
+    });
+    function hideModal() {
+        $deleteModal.classList.remove("is-active");
+    }
+    document.querySelector("#delete-modal .cancel").addEventListener("click", hideModal);
+    document.querySelector("#delete-modal .delete").addEventListener("click", hideModal);
 }
 
 

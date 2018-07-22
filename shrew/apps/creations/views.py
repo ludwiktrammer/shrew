@@ -13,6 +13,7 @@ from django.conf import settings
 from django.core.cache import cache
 from django.utils.dateformat import format
 from django.core.paginator import Paginator
+from django.contrib import messages
 
 from .models import Creation
 
@@ -71,6 +72,21 @@ class CreationView(View):
             'user_loves': creation.loving.filter(pk=request.user.pk).exists(),
         }
         return render(request, 'creations/creation.html', context)
+
+
+class RemoveCreationView(View):
+    def post(self, request, user, slug):
+        creation = get_object_or_404(Creation, author__username=user, slug=slug)
+
+        if creation.author != request.user:
+            messages.error(request, "You don't have necessary permissions to delete '{}'".format(creation.name))
+            redirect_url = creation.get_absolute_url()
+        else:
+            creation.delete()
+            messages.success(request, "'{}' has been successfully deleted!".format(creation.name))
+            redirect_url = reverse('creations:user-profile', kwargs={'user': request.user.username})
+
+        return HttpResponseRedirect(redirect_url)
 
 
 class ProfileView(View):
