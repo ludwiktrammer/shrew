@@ -1,0 +1,8 @@
+// Account for fixed navbar when scrolling to #anchors
+:target:before {
+  content: "";
+  display: block;
+  height: 7rem;
+  margin: -7rem 0 0;
+  visibility: hidden;
+}

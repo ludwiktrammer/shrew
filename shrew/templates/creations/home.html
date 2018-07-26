@@ -42,6 +42,6 @@
 {% endblock %}
 
 {% block content %}
-  <h1 class="title is-2" id="samples">Latest featured drawings & animations</h1>
-    {% include 'creations/_creations_list.html' with creations=featured %}
+  <h1 class="title is-2" id="featured">Latest featured drawings & animations</h1>
+    {% include 'creations/_creations_list.html' with creations=featured anchor='#featured' %}
 {% endblock %}

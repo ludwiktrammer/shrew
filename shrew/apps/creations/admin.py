@@ -9,7 +9,7 @@ from .models import Creation
 
 @admin.register(Creation)
 class CreationAdmin(SimpleHistoryAdmin):
-    list_display = ('name', 'author', 'featured', 'is_animated')
+    list_display = ('name', 'author', 'created', 'is_animated', 'featured')
     list_filter = ('featured', 'is_animated')
     search_fields = ('name', )
     date_hierarchy = 'created'
