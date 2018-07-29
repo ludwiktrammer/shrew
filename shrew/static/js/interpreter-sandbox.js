@@ -10,7 +10,7 @@ Sk.configure({
     uncaughtException: output,
     read: builtinRead,
     python3: true,
-    execLimit: 1500,
+    execLimit: 2500,
 });
 window.addEventListener("message", runCode);
 
