@@ -4,13 +4,15 @@ import { drawFromActions } from "./drawing.js"
 
 // Indicates whether there've been at least one successful run
 let sucesfullRun = false;
+let previewMode = document.location.search.replace("?","").split("&").includes("preview");
+console.log(previewMode);
 
 Sk.configure({
     output: output,
     uncaughtException: output,
     read: builtinRead,
     python3: true,
-    execLimit: 2500,
+    execLimit: previewMode ? 30000 : 2000,
 });
 window.addEventListener("message", runCode);
 
