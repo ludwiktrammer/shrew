@@ -30,7 +30,11 @@ class CreationApiView(APIView):
             creation_serializer = CreationSerializer(data=request.data)
 
         creation_serializer.is_valid(raise_exception=True)
-        creation = creation_serializer.save(author=request.user, base=base)
+
+        if base:
+            creation = creation_serializer.save(author=request.user, base=base)
+        else:
+            creation = creation_serializer.save(author=request.user)
 
         creation_output = CreationOutputSerializer(creation)
 
