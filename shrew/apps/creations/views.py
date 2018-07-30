@@ -21,11 +21,14 @@ from .models import Creation
 class HomePage(View):
     def get(self, request):
         featured_list = Creation.objects.filter(featured=True).select_related('author')
-        paginator = Paginator(featured_list, 15)
-        page = request.GET.get('page')
+        featured_basic = featured_list.filter(advanced=False)
+        featured_advanced = featured_list.filter(advanced=True)
+        paginator_basic = Paginator(featured_basic, 15)
+        paginator_advanced = Paginator(featured_advanced, 15)
 
         context = {
-            'featured': paginator.get_page(page),
+            'featured_basic': paginator_basic.get_page(request.GET.get('page_basic')),
+            'featured_advanced': paginator_advanced.get_page(request.GET.get('page_advanced')),
         }
         return render(request, 'creations/home.html', context)
 

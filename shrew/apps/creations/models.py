@@ -31,6 +31,9 @@ class Creation(models.Model):
     featured = models.BooleanField(
         default=False,
     )
+    advanced = models.BooleanField(
+        default=False,
+    )
     base = models.ForeignKey(
         'self',
         on_delete=models.SET_NULL,

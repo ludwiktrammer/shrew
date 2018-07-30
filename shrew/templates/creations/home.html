@@ -43,5 +43,9 @@
 
 {% block content %}
   <h1 class="title is-2" id="featured">Latest featured drawings & animations</h1>
-    {% include 'creations/_creations_list.html' with creations=featured anchor='#featured' %}
+  <h2 class="title is-3" id="basic">Basic</h2>
+    {% include 'creations/_creations_list.html' with creations=featured_basic anchor='#basic' %}
+
+  <h2 class="title is-3" id="advanced">Advanced</h2>
+    {% include 'creations/_creations_list.html' with creations=featured_advanced anchor='#advanced' %}
 {% endblock %}
