@@ -135,6 +135,7 @@ SOCIALACCOUNT_FORMS = {
     'signup': 'shrew.apps.users.forms.ShrewSocialSignupForm',
 }
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_USERNAME_VALIDATORS = 'shrew.apps.users.validators.username_validators'
 LOGIN_REDIRECT_URL = '/'
 
 
