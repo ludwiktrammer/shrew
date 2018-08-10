@@ -1,0 +1,11 @@
+{%  extends 'base.html' %}
+{% load static %}
+
+{% block title %}All drawings & animations - {{ block.super }}{%  endblock %}
+
+{% block bodyclass %}creations-list{% endblock %}
+
+{% block content %}
+  <h1 class="title is-size-1">All drawings & animations</h1>
+  {% include 'creations/_creations_list.html' with creations=creations page_name='page' %}
+{% endblock %}

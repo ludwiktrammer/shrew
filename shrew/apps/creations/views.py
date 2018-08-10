@@ -33,6 +33,17 @@ class HomePage(View):
         return render(request, 'creations/home.html', context)
 
 
+class CreationsListView(View):
+    def get(self, request):
+        creations = Creation.objects.all()
+        paginator_creations = Paginator(creations, 15)
+
+        context = {
+            'creations': paginator_creations.get_page(request.GET.get('page')),
+        }
+        return render(request, 'creations/list.html', context)
+
+
 class InterpreterSandboxView(View):
     def get(self, request):
         response = render(request, 'creations/interpreter-sandbox.html')
