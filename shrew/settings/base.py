@@ -62,6 +62,7 @@ INSTALLED_APPS = [
 
     'shrew.apps.creations',
     'shrew.apps.pages',
+    'shrew.apps.teachers',
 ]
 
 MIDDLEWARE = [

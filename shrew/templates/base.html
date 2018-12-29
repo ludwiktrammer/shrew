@@ -116,6 +116,25 @@
                         </span>
                       </a>
                     {% endif %}
+                    {% if request.user.student %}
+                      <a href="{% url 'creations:user-profile' user=request.user.student.teacher.username %}" class="dropdown-item">
+                        <span class="icon">
+                          <i class="fas fa-chalkboard-teacher" aria-hidden="true"></i>
+                        </span>
+                        <span>
+                          My teacher
+                        </span>
+                      </a>
+                    {% else %}
+                      <a href="{% url 'teachers:teacher' %}" class="dropdown-item">
+                        <span class="icon">
+                          <i class="fas fa-user-graduate" aria-hidden="true"></i>
+                        </span>
+                        <span>
+                          My students
+                        </span>
+                      </a>
+                    {% endif %}
                     <form method="post" action="{% url 'account_logout' %}?next={{request.path}}">
                       {% csrf_token %}
                       <button type="submit" class="dropdown-item">
@@ -145,6 +164,7 @@
           {{ message }}
         </div>
       {% endfor %}
+      {% block content_title %}{%  endblock %}
       {% block content %}{%  endblock %}
     </div>
   </section>

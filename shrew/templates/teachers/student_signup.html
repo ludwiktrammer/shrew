@@ -1,0 +1,35 @@
+{% extends "account/base.html" %}
+
+{% load bulma_tags %}
+
+{% block title %}Student Signup{% endblock %}
+{% block extrahead %}<meta name="robots" content="noindex">{% endblock %}
+
+{% block content_title %}
+  <h1 class="title">
+    Registration for <a href="{% url 'creations:user-profile' user=teacher.username %}">{{ teacher }}</a>'s students
+  </h1>
+{% endblock %}
+
+{% block content %}
+  <article class="message is-warning">
+  <div class="message-header">
+    <p>You are signing up for a student account associated with <a href="{% url 'creations:user-profile' user=teacher.username %}">{{ teacher }}</a></p>
+  </div>
+  <div class="message-body">
+    <p>Your teacher will be able to see your public profile and reset your password.</p>
+
+    <p>If you are not a student of <a href="{% url 'creations:user-profile' user=teacher.username %}">{{ teacher }}</a>, go through <a href="{% url 'account_login' %}">the standard registration process</a>.</p>
+  </div>
+</article>
+
+  <form class="signup" id="signup_form" method="post" action="">
+    {% csrf_token %}
+    {{ form|bulma }}
+    {% if redirect_field_value %}
+      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+    {% endif %}
+    <button type="submit" class="button is-primary">Sign Up</button>
+  </form>
+
+{% endblock %}

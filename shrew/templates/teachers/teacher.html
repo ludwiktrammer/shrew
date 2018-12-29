@@ -1,0 +1,63 @@
+{%  extends 'base.html' %}
+{% load static %}
+
+{% block title %}For Teachers - {{ block.super }}{%  endblock %}
+
+{% block bodyclass %}teachers{% endblock %}
+
+{% block content %}
+  <div class="content">
+    <h1>For Teachers</h1>
+
+    <p>
+      If you are a teacher who wants to use Code Shrew in your classroom, you can invite your students to sign up for special student accounts (using <a href="#registration-link">a registration link</a> that is unique to you).
+      Those accounts work just like the regular Code Shrew accounts except:
+    </p>
+    <ul>
+      <li>We won't ask the students for their e-mail address during registration. An arbitrary username and password are enough. That way the students won't be required to give out their personal information.</li>
+      <li>You will be able to see a list of all your students that created an account.  You will also be able to see their public profiles (i.e., their drawings and animations).</li>
+      <li>If a student loses her or his password, you will be able to provide them with a password reset link.</li>
+      <li>Your students will see a link to your public profile in their user menu (labeled "My teacher"). You can use your public profile to create project templates for your students to expand.</li>
+    </ul>
+
+    <p>By the way, we would love to hear from you - <a href="{% url 'about' %}">let us know</a> how you use Code Shrew in your classroom!</p>
+
+  </div>
+
+    <h2 class="title is-4" id="registration-link">Student registration link</h2>
+    {% if not request.user.is_authenticated %}
+      <p><a href="{% url 'account_login' %}?next={{request.path}}">Log in</a> to see the address your students can use to register.</p>
+    {% else %}
+      <p>Ask your students to register using the following address. It leads to a registration form that is unique to your students:</p>
+
+      <a href="{% url 'teachers:student-signup' teacher=request.user.username %}" class="student-registration-url">shrew.app/edu/{{ request.user.username }}</a>
+
+      <h2 class="title is-4" id="my-students">Your students</h2>
+      {% if students %}
+        <table class="table is-striped">
+          <tbody>
+            <tr><th>User profile</th><th>Password reset</th></tr>
+            {% for student in students %}
+              <tr>
+                <td>
+                  <a href="{% url 'creations:user-profile' user=student.user.username %}">
+                    {{ student.user }}
+                  </a>
+                </td>
+                <td>
+                  <form method="post" action="{% url 'teachers:password-reset' student=student.user.username %}">
+                    {% csrf_token %}
+                    <button type="submit" class="button is-small is-danger is-outlined">reset password</button>
+                  </form>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+      {% else %}
+        <p>You don't have any registered students yet. Ask your students to sign up using the unique registration link above.</p>
+      {% endif %}
+    {% endif %}
+  </div>
+{% endblock %}

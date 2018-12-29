@@ -1,0 +1,8 @@
+.student-registration-url {
+  @extend .is-size-3;
+  @extend .has-text-weight-bold;
+
+  display: block;
+  font-family: $family-code;
+  margin-bottom: 1rem;
+}
