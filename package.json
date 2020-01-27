@@ -2,7 +2,7 @@
   "name": "shrew",
   "private": true,
   "dependencies": {
-    "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "@fortawesome/free-solid-svg-icons": "^5.12.0",
     "@microduino/skulpt": "^1.1.4",
     "autoprefixer": "^8.6.2",
     "babel": "^6.23.0",
