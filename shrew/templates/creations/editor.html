@@ -8,9 +8,14 @@
     <div class="message-body">
       <div id="code-output"></div>
 
-      Don't know what to do? Don't worry!
-      We prepared <a href="{% url 'pages:category-detail' slug='documentation' %}">detailed documentation</a>
-      and <a href="{% url 'pages:category-detail' slug='lessons' %}">coding lessons</a> for you.
+      <strong>Don't know what to do?</strong> Don't worry, we can help!<br>
+
+        Learn about:
+        <a href="/documentation/shapes/" target="_blank">shapes</a>,
+        <a href="/documentation/icons/" target="_blank">icons</a>,
+        <a href="/documentation/icons/" target="_blank">colors</a>,
+        <a href="/documentation/animations/" target="_blank">animations</a>, and
+        <a href="{% url 'pages:category-detail' slug='lessons' %}" target="_blank">learning Python</a>.
     </div>
   </article>
 {% endblock %}
