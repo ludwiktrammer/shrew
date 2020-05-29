@@ -258,7 +258,7 @@ if ($editor) {
             pre.innerText = line;
             $output.appendChild(pre);
         }
-        
+
         if(errorLineWidget) {
             errorLineWidget.clear();
         }
@@ -269,7 +269,10 @@ if ($editor) {
             let lineNumber = error.lineNumber;
 
             let pre = document.createElement('pre');
-            pre.innerText = `${message} (line ${lineNumber})`;
+            pre.innerText = message;
+            if (!Number.isNaN(lineNumber)) {
+                pre.innerText += ` (line ${lineNumber})`;
+            }
             pre.classList.add("error");
             $output.appendChild(pre);
 
@@ -279,7 +282,9 @@ if ($editor) {
                 message: message,
             });
 
-            addErrorLineWidget(message, lineNumber);
+            if (!Number.isNaN(lineNumber)) {
+                addErrorLineWidget(message, lineNumber);
+            }
         }
         if (lintCallback) {
             lintCallback(errors);
