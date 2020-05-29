@@ -3,6 +3,8 @@
 {% load micawber_tags %}
 {% load shrew_embed %}
 
+{% block bodyclass %}category{% endblock %}
+
 {% block title %}{{ category.name }} - {{ block.super }}{%  endblock %}
 
 {% block content %}
@@ -23,7 +25,12 @@
     <h2>Table of contents</h2>
     <ol>
       {% for page in pages %}
-        <li><a href="{{ page.get_absolute_url }}">{{ page }}</a></li>
+        <li>
+          <a href="{{ page.get_absolute_url }}">{{ page }}</a>
+          {% if page.description %}
+            <br><span class="page-description">{{ page.description }}</span>
+          {% endif %}
+        </li>
       {% endfor %}
     </ol>
   </div>

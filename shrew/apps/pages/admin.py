@@ -22,7 +22,7 @@ class AttachmentInline(admin.TabularInline):
 class PageAdmin(SortableAdminMixin, admin.ModelAdmin):
     fieldsets = (
         (None, {
-            'fields': ('name', 'category', 'text')
+            'fields': ('name', 'category', 'description', 'text')
         }),
         ('Advanced', {
             'classes': ('collapse',),

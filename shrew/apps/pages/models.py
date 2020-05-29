@@ -56,6 +56,11 @@ class Page(models.Model):
     order = models.PositiveIntegerField(
         default=0,
     )
+    description = models.CharField(
+        help_text="short description of the page's contents",
+        max_length=255,
+        blank=True,
+    )
 
     class Meta:
         ordering = ('order', 'id')
