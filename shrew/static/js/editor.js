@@ -246,6 +246,12 @@ if ($editor) {
             $output.classList.remove("has-output");
         }
 
+        if (error) {
+            $editor.classList.add('has-errors');
+        } else {
+            $editor.classList.remove('has-errors');
+        }
+
         for (let line of lines) {
             let pre = document.createElement('pre');
             pre.innerText = line;
