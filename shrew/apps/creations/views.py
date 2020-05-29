@@ -1,5 +1,4 @@
 import cloudconvert
-from contact_form.forms import ReCaptchaContactForm
 
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
@@ -174,12 +173,3 @@ class PngSocialPreviewView(View):
             cache.set(cache_key, output_url, 60 * 60 * 23.5)  # keep for 23.5 hours
 
         return HttpResponseRedirect(output_url)
-
-
-class AboutView(View):
-    def get(self, request):
-        context = {
-            'contact_form': ReCaptchaContactForm(request=request),
-        }
-
-        return render(request, 'about.html', context)

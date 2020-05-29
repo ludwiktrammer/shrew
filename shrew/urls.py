@@ -19,13 +19,18 @@ from django.conf import settings
 from django.views.generic import TemplateView
 from django.conf.urls.static import static
 
-from shrew.apps.creations.views import EditorView, HomePage, BackToEditorView, AboutView
+from contact_form.views import ContactFormView
+
+from shrew.apps.creations.views import EditorView, HomePage, BackToEditorView
+from shrew.apps.about.forms import ShrewContactForm
+from shrew.apps.about.views import AboutView
 
 admin.site.site_header = 'Code Shrew Admin'
 
 urlpatterns = [
     path('', HomePage.as_view()),
-    path('contact/', include('contact_form.recaptcha_urls')),
+    path('contact/', ContactFormView.as_view(form_class=ShrewContactForm), name='contact_form'),
+    path('contact/sent/', TemplateView.as_view(template_name='contact_form/contact_form_sent.html'), name='contact_form_sent'),
     path('about/', AboutView.as_view(), name='about'),
     path('accounts/', include('allauth.urls')),
     path('todo/', TemplateView.as_view(template_name='todo.html'), name='todo'),
