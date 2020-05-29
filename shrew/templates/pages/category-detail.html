@@ -28,7 +28,7 @@
         <li>
           <a href="{{ page.get_absolute_url }}">{{ page }}</a>
           {% if page.description %}
-            <br><span class="page-description">{{ page.description }}</span>
+            <div class="page-description">{{ page.description }}</div>
           {% endif %}
         </li>
       {% endfor %}
