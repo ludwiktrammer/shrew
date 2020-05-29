@@ -40,6 +40,11 @@ function runCode(event) {
         // ignore it for security reasons.
         return;
     }
+    if(!('code' in event.data)) {
+        // Some other stray message, not our message
+        // with code
+        return;
+    }
     outLines = []; // clear previous output
 
     // Add the implicit import of shrew functions
