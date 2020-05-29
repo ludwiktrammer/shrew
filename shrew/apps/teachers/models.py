@@ -14,3 +14,6 @@ class Student(models.Model):
         on_delete=models.CASCADE,
         related_name='students',
     )
+
+    def __str__(self):
+        return str(self.user)
