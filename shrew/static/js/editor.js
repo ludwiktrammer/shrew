@@ -258,6 +258,11 @@ if ($editor) {
             pre.innerText = line;
             $output.appendChild(pre);
         }
+        
+        if(errorLineWidget) {
+            errorLineWidget.clear();
+        }
+
         let errors = [];
         if (error) {
             let message = replaceError(error.message);
@@ -288,10 +293,6 @@ if ($editor) {
         errorDivChild.classList.add('message-body');
         errorDivChild.innerText = message;
         errorDiv.appendChild(errorDivChild);
-
-        if(errorLineWidget) {
-            errorLineWidget.clear();
-        }
 
         errorLineWidget = editor.addLineWidget(Math.min(lineNumber - 1, editor.lastLine()), errorDiv);
     }
