@@ -123,3 +123,10 @@
 #shrew-editor {
   margin-bottom: 0.75rem;
 }
+
+.editor-error-message {
+  @extend .message;
+  @extend .is-danger;
+  margin: 5px;
+  margin-bottom: 20px;
+}

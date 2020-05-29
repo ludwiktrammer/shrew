@@ -29,6 +29,7 @@ if ($editor) {
     let isDirty = false; // did something changed
     let showErrorsTimeout;
     let lastPositiveResult;
+    let errorLineWidget;
 
     let editor = CodeMirror.fromTextArea($textarea, {
         lineNumbers: true,
@@ -272,10 +273,27 @@ if ($editor) {
                 to: CodeMirror.Pos(lineNumber - 1),
                 message: message,
             });
+
+            addErrorLineWidget(message, lineNumber);
         }
         if (lintCallback) {
             lintCallback(errors);
         }
+    }
+
+    function addErrorLineWidget(message, lineNumber) {
+        let errorDiv = document.createElement('div');
+        errorDiv.classList.add('editor-error-message');
+        let errorDivChild = document.createElement('div');
+        errorDivChild.classList.add('message-body');
+        errorDivChild.innerText = message;
+        errorDiv.appendChild(errorDivChild);
+
+        if(errorLineWidget) {
+            errorLineWidget.clear();
+        }
+
+        errorLineWidget = editor.addLineWidget(Math.min(lineNumber - 1, editor.lastLine()), errorDiv);
     }
 }
 
