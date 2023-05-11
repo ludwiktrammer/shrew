@@ -147,7 +147,7 @@ class PngSocialPreviewView(View):
     def get(self, request, user, slug):
         creation = get_object_or_404(Creation, slug=slug, author__username=user)
 
-        cache_key = 'png_url2;{};{};{}'.format(
+        cache_key = 'png_url-2;{};{};{}'.format(
             creation.author,
             creation.slug,
             format(creation.last_modified, 'U'),
@@ -173,8 +173,8 @@ class PngSocialPreviewView(View):
                         'input': 'import-my-file',
                         "input_format": "svg",
                         'output_format': 'png',
-                        "width": 640,
-                        "height": 640,
+                        "width": 1200,
+                        "height": 630,
                     },
                     'export-my-file': {
                         'operation': 'export/url',
