@@ -17,6 +17,9 @@ from django.contrib import messages
 from .models import Creation
 
 
+cloudconvert.configure(api_key=settings.CLOUDCONVERT_KEY)
+
+
 class HomePage(View):
     def get(self, request):
         featured_list = Creation.objects.filter(featured=True).select_related('author')
@@ -144,7 +147,7 @@ class PngSocialPreviewView(View):
     def get(self, request, user, slug):
         creation = get_object_or_404(Creation, slug=slug, author__username=user)
 
-        cache_key = 'png_url;{};{};{}'.format(
+        cache_key = 'png_url2;{};{};{}'.format(
             creation.author,
             creation.slug,
             format(creation.last_modified, 'U'),
@@ -156,20 +159,32 @@ class PngSocialPreviewView(View):
                 'creations:svg-preview',
                 kwargs={'user': creation.author, 'slug': creation.slug},
             )
-            api = cloudconvert.Api(settings.CLOUDCONVERT_KEY)
-
+    
             input_url = '{}?facebook'.format(request.build_absolute_uri(svg_path))
-            process = api.convert({
-                "inputformat": "svg",
-                "outputformat": "png",
-                "input": "download",
-                "file": input_url,
-                "converteroptions": {
-                    "resize": "1200x630"
-                },
-                "save": True,
+            
+            job = cloudconvert.Job.create(payload={
+                "tasks": {
+                    'import-my-file': {
+                        'operation': 'import/url',
+                        'url': input_url,
+                    },
+                    'convert-my-file': {
+                        'operation': 'convert',
+                        'input': 'import-my-file',
+                        "input_format": "svg",
+                        'output_format': 'png',
+                        "width": 640,
+                        "height": 640,
+                    },
+                    'export-my-file': {
+                        'operation': 'export/url',
+                        'input': 'convert-my-file'
+                    }
+                }
             })
-            output_url = process['output']['url']
+            result = cloudconvert.Task.wait(id=job['tasks'][-1]['id'])
+            output_url = result.get("result").get("files")[0]['url']
+            
             cache.set(cache_key, output_url, 60 * 60 * 23.5)  # keep for 23.5 hours
 
         return HttpResponseRedirect(output_url)
