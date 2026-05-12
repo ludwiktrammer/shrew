@@ -117,7 +117,11 @@
 }
 
 .saving-disabled .button {
-  @extend .button[disabled];
+  // Dart Sass disallows extending compound selectors (``.button[disabled]``).
+  // Replicate Bulma's disabled-button visual state directly.
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 #shrew-editor {
