@@ -3,6 +3,7 @@ import cloudconvert
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
 from django.utils.decorators import method_decorator
+from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import get_user_model
@@ -46,6 +47,7 @@ class CreationsListView(View):
         return render(request, 'creations/list.html', context)
 
 
+@method_decorator(xframe_options_sameorigin, name='dispatch')
 class InterpreterSandboxView(View):
     def get(self, request):
         response = render(request, 'creations/interpreter-sandbox.html')
