@@ -103,7 +103,7 @@ class StudentPasswordResetView(View):
             'password_reset_url': build_absolute_uri(request, path),
             'request': request,
             'username': user_username(user),
-            'timeout_days': settings.PASSWORD_RESET_TIMEOUT_DAYS,
+            'timeout_days': settings.PASSWORD_RESET_TIMEOUT // 86400,
         }
         get_adapter(request).send_mail(
             'teachers/email/password_reset_key',

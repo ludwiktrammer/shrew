@@ -4,16 +4,16 @@
 
 ### Prerequisites
 
-- [Python 3.6+](https://www.python.org/)
+- [Python 3.12](https://www.python.org/) (uv can install this for you)
 - [PostgreSQL](https://www.postgresql.org/)
-- [Pipenv](https://pipenv.org/)
+- [uv](https://docs.astral.sh/uv/)
 
 ### Installation instructions
 
-1. Create a Pipenv environment and install Python dependencies:
+1. Install Python dependencies (this also creates a virtual environment in `.venv`):
 
-        pipenv install --dev
-        
+        uv sync
+
 2. Install JavaScript dependencies:
 
         npm install
@@ -25,16 +25,22 @@
 
 4. Run database migrations:
 
-        pipenv run ./manage.py migrate
-        
+        uv run ./manage.py migrate
+
 5. Create database table for keeping caches:
 
-        pipenv run ./manage.py createcachetable
-        
+        uv run ./manage.py createcachetable
+
 6. Create the admin account:
 
-        pipenv run ./manage.py createsuperuser
+        uv run ./manage.py createsuperuser
 
 7. Start the development server:
 
-        pipenv run ./manage.py runserver
+        uv run ./manage.py runserver
+
+### Running tests
+
+Tests use `shrew/settings/test.py` automatically (SQLite, in-memory cache; no `.env`, PostgreSQL or other setup required):
+
+        uv run ./manage.py test tests

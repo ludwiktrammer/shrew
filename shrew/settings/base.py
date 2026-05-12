@@ -24,7 +24,11 @@ env.read_env(os.path.join(BASE_DIR, '..', '.env'))
 SITE_ID = 1
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('DJANGO_SECRET_KEY')
+# A default is provided so tests and ``manage.py`` introspection commands
+# work without a .env file. ``prod.py`` overrides this with a hard
+# requirement so a misconfigured deploy fails loudly rather than silently
+# falling back to an insecure key.
+SECRET_KEY = env('DJANGO_SECRET_KEY', default='insecure-default-secret-key-do-not-use-in-production')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -101,7 +105,7 @@ WSGI_APPLICATION = 'shrew.wsgi.application'
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db('DJANGO_DATABASE_URL'),
+    'default': env.db('DJANGO_DATABASE_URL', default='sqlite:///db.sqlite3'),
 }
 
 
@@ -150,9 +154,13 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_L10N = True
-
 USE_TZ = True
+
+# New ``startproject`` boilerplate includes this, but Django keeps the
+# pre-3.2 default of ``AutoField`` for projects that never set it (with a
+# W042 warning) to preserve existing schemas. We opt in explicitly; the
+# 0012/0006 migrations widen the existing PK/FK columns accordingly.
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Static files (CSS, JavaScript, Images)
@@ -171,14 +179,29 @@ STATICFILES_FINDERS = (
 )
 
 # Django Compressor
+#
+# We use Dart Sass (``sass`` npm package) instead of the deprecated
+# ``node-sass``; ``shrew.precompilers.DartSCSSCompiler`` adapts the SCSS
+# compiler flags accordingly.
 COMPRESS_PRECOMPILERS = (
-    ('text/x-scss', 'compressor_toolkit.precompilers.SCSSCompiler'),
+    ('text/x-scss', 'shrew.precompilers.DartSCSSCompiler'),
     ('module', 'compressor_toolkit.precompilers.ES6Compiler'),
     ('skulpt-module', 'shrew.precompilers.SkulptModuleFilter'),
     ('skulpt-module-es6', 'shrew.precompilers.SkulptModuleES6Filter'),
 )
 
-CLOUDCONVERT_KEY = env.str("DJANGO_CLOUDCONVERT_KEY")
+# Override the SCSS compiler command template:
+#  - Dart Sass takes the output path as a positional argument and uses
+#    ``--style=expanded`` instead of ``--output-style expanded``.
+#  - postcss-cli 5 resolves plugin modules from ``node_modules`` automatically,
+#    so we pass the bare package name (``autoprefixer``) rather than a path.
+COMPRESS_SCSS_COMPILER_CMD = (
+    '{node_sass_bin} --style=expanded {paths} "{infile}" "{outfile}" && '
+    '{postcss_bin} --use autoprefixer '
+    '--autoprefixer.browsers "{autoprefixer_browsers}" -r "{outfile}"'
+)
+
+CLOUDCONVERT_KEY = env.str("DJANGO_CLOUDCONVERT_KEY", default="")
 
 CACHES = {
     'default': {
@@ -187,7 +210,8 @@ CACHES = {
     }
 }
 
-NOCAPTCHA = True
-CLOUDCONVERT_KEY = env.str("DJANGO_CLOUDCONVERT_KEY")
-RECAPTCHA_PUBLIC_KEY = env.str("DJANGO_RECAPTCHA_PUBLIC_KEY")
-RECAPTCHA_PRIVATE_KEY = env.str("DJANGO_RECAPTCHA_PRIVATE_KEY")
+# django-recaptcha ships built-in test keys that always validate as a fallback
+# when no real key is configured (it emits a system check warning that we
+# silence in test settings).
+RECAPTCHA_PUBLIC_KEY = env.str("DJANGO_RECAPTCHA_PUBLIC_KEY", default="")
+RECAPTCHA_PRIVATE_KEY = env.str("DJANGO_RECAPTCHA_PRIVATE_KEY", default="")
