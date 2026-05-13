@@ -55,6 +55,7 @@ class InterpreterSandboxView(View):
         return response
 
 
+@method_decorator(xframe_options_sameorigin, name='dispatch')
 @method_decorator(ensure_csrf_cookie, name='dispatch')
 class EditorView(View):
     DEFAULT_CODE = 'Circle()'

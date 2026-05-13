@@ -167,3 +167,15 @@ class DeprecatedSettingsTests(TestCase):
         from django.conf import settings
         # We removed NOCAPTCHA = True; django-recaptcha 3.x removed support for it.
         self.assertFalse(hasattr(settings, 'NOCAPTCHA'))
+
+
+class IframeEmbedTests(TestCase):
+    """The editor must be embeddable on shrew.app via the playground tag."""
+
+    def test_editor_allows_same_origin_framing(self):
+        # Django 3.0+ defaults X_FRAME_OPTIONS to 'DENY'. The editor must
+        # opt back in to SAMEORIGIN so the {{ value|shrew_embed }} iframe
+        # works on shrew.app itself.
+        response = self.client.get(reverse('editor'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.get('X-Frame-Options'), 'SAMEORIGIN')
