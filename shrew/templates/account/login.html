@@ -10,17 +10,25 @@
 
 {% get_providers as socialaccount_providers %}
 
-{% if socialaccount_providers %}
-<div class="socialaccount_ballot">
-
-  <ul class="socialaccount_providers">
-    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
-  </ul>
-
-<div class="is-divider" data-content="OR"></div>
-</div>
-{% include "socialaccount/snippets/login_extra.html" %}
-{% endif %}
+{% for provider in socialaccount_providers %}
+  {% if provider.id == "google" %}
+    <div class="socialaccount_ballot">
+      <div class="socialaccount_providers">
+        <div class="control">
+          <a title="{{ provider.name }}" class="is-medium button is-light button-social-login button-social-login-{{ provider.id }}"
+              href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
+            <span class="icon">
+              <i class="fab fa-{{ provider.id }}"></i>
+            </span>
+            <span>Log in with <strong>{{ provider.name }}</strong></span>
+          </a>
+        </div>
+      </div>
+      <div class="is-divider" data-content="OR"></div>
+    </div>
+    {% include "socialaccount/snippets/login_extra.html" %}
+  {% endif %}
+{% endfor %}
 
   <form class="login" method="POST" action="{% url 'account_login' %}">
       <h2 class="title is-5 has-text-centered">Log in with a Code Shrew account</h2>
