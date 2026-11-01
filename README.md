@@ -48,27 +48,6 @@ Tests use `shrew/settings/test.py` automatically (SQLite, in-memory cache; no `.
 
         uv run ./manage.py test tests
 
-### Social preview images
-
-Facebook/Open Graph previews are rendered locally using `rsvg-convert`, at
-1200 x 630 pixels. The wider framing and play overlay for animations are shared
-with the SVG preview's `?facebook` variant. No external conversion API or key
-is needed. Set `DJANGO_RSVG_CONVERT_BIN` if the executable is not on `PATH`.
-
-The first request to `/show/preview/<user>/<slug>.png` generates a PNG and
-redirects to a file under `MEDIA_ROOT/social-previews/`, served by the web
-server at `MEDIA_URL`. Ensure `MEDIA_ROOT` is writable and the server serves
-that directory (the existing MyDevil media setup already does this).
-Files are named by a hash of the prepared SVG and renderer settings; unchanged
-images are reused indefinitely, independently of Django's cache. Changing the
-SVG or animation overlay creates a new URL, also versioned in `og:image`.
-Old PNGs are retained so previously shared URLs keep working. Concurrent
-requests share a filesystem lock, and PNGs are published with an atomic rename.
-A failed or timed-out conversion returns an uncached 503 and can be retried.
-
-The test suite mocks the renderer for error/concurrency checks and also runs
-a real render when `rsvg-convert` is installed.
-
 ## Deployment
 
 The project is deployed to a MyDevil (FreeBSD) shared host. Astral does
