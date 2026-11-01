@@ -22,10 +22,11 @@ SECURE_HSTS_SECONDS = 60 * 60 * 24 * 365 * 5  # 5 years
 STATIC_ROOT = env.str("DJANGO_STATIC_ROOT")
 MEDIA_ROOT = env.str("DJANGO_MEDIA_ROOT")
 COMPRESS_OFFLINE = True
+# Passenger's PATH can differ from an interactive SSH session on MyDevil.
+RSVG_CONVERT_BIN = env.str('DJANGO_RSVG_CONVERT_BIN', default='/usr/local/bin/rsvg-convert')
 
 # These have safe empty defaults in base.py for tests/local dev; production
 # must supply real values.
-CLOUDCONVERT_KEY = env.str("DJANGO_CLOUDCONVERT_KEY")
 RECAPTCHA_PUBLIC_KEY = env.str("DJANGO_RECAPTCHA_PUBLIC_KEY")
 RECAPTCHA_PRIVATE_KEY = env.str("DJANGO_RECAPTCHA_PRIVATE_KEY")
 

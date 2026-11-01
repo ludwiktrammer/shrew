@@ -1,8 +1,8 @@
 """
 Basic smoke tests covering the Python 3.12 / Django 4.2 upgrade.
 
-These tests intentionally avoid touching external services (CloudConvert,
-reCAPTCHA, email SMTP). They verify the project boots and that the
+These tests intentionally avoid touching external services (reCAPTCHA,
+email SMTP). They verify the project boots and that the
 critical-path code we touched during the upgrade still imports/works.
 """
 from io import StringIO

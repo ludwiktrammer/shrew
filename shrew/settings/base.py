@@ -201,7 +201,7 @@ COMPRESS_SCSS_COMPILER_CMD = (
     '--autoprefixer.browsers "{autoprefixer_browsers}" -r "{outfile}"'
 )
 
-CLOUDCONVERT_KEY = env.str("DJANGO_CLOUDCONVERT_KEY", default="")
+RSVG_CONVERT_BIN = env.str('DJANGO_RSVG_CONVERT_BIN', default='rsvg-convert')
 
 CACHES = {
     'default': {

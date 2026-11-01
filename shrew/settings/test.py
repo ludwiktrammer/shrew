@@ -8,6 +8,10 @@ for ``SECRET_KEY``, ``DJANGO_DATABASE_URL``, etc. - no env vars required.
 from .base import *  # noqa: F401,F403
 
 DEBUG = False
+# Import smoke tests also load dev.py, which extends the base lists in place.
+# Keep tests independent of optional development packages on production hosts.
+INSTALLED_APPS = list(INSTALLED_APPS)
+MIDDLEWARE = list(MIDDLEWARE)
 
 # Force SQLite in-memory for tests regardless of any DATABASE_URL the user
 # happens to have in their .env (base.py picks that up via django-environ).
@@ -30,6 +34,10 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
     }
 }
+
+# Template tests should not invoke Node/Sass or write compiled assets.
+COMPRESS_ENABLED = False
+COMPRESS_PRECOMPILERS = ()
 
 # django-compressor needs STATIC_ROOT defined; tests don't actually write here.
 import tempfile  # noqa: E402

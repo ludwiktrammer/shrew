@@ -1,4 +1,4 @@
-import cloudconvert
+import logging
 
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
@@ -7,18 +7,18 @@ from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import get_user_model
-from django.template.loader import render_to_string
 from django.urls import reverse
-from django.conf import settings
-from django.core.cache import cache
-from django.utils.dateformat import format
+from django.utils.cache import patch_cache_control
 from django.core.paginator import Paginator
 from django.contrib import messages
 
 from .models import Creation
+from .previews import (
+    PreviewRenderError, get_social_preview_url, social_preview_key, social_preview_svg,
+)
 
 
-cloudconvert.configure(api_key=settings.CLOUDCONVERT_KEY)
+logger = logging.getLogger(__name__)
 
 
 class HomePage(View):
@@ -87,6 +87,7 @@ class CreationView(View):
         creation = get_object_or_404(Creation, author__username=user, slug=slug)
         context = {
             'creation': creation,
+            'social_preview_key': social_preview_key(creation),
             'loving_count': creation.loving.count(),
             'user_loves': creation.loving.filter(pk=request.user.pk).exists(),
         }
@@ -134,10 +135,7 @@ class SvgPreviewView(View):
         svg = creation.svg
 
         if 'facebook' in request.GET:
-            svg = svg.replace('viewBox="0 0 100 100"', 'viewBox="-45.25 0 190.5 100"', 1)  # make it wider
-            if creation.is_animated:
-                play_svg = render_to_string('creations/_play.svg')
-                svg = svg.replace('</svg>', play_svg + '\n</svg>')
+            svg = social_preview_svg(creation)
 
         response = HttpResponse(svg, content_type="image/svg+xml")
         response['Content-Security-Policy'] = 'sandbox'
@@ -150,44 +148,15 @@ class PngSocialPreviewView(View):
     def get(self, request, user, slug):
         creation = get_object_or_404(Creation, slug=slug, author__username=user)
 
-        cache_key = 'png_url-2;{};{};{}'.format(
-            creation.author,
-            creation.slug,
-            format(creation.last_modified, 'U'),
-        )
+        try:
+            output_url = get_social_preview_url(creation)
+        except (PreviewRenderError, OSError):
+            logger.exception('Could not render social preview for creation %s', creation.pk)
+            response = HttpResponse('Preview temporarily unavailable.', status=503)
+            response['Retry-After'] = '60'
+            response['Cache-Control'] = 'no-store'
+            return response
 
-        output_url = cache.get(cache_key)
-        if output_url is None:
-            svg_path = reverse(
-                'creations:svg-preview',
-                kwargs={'user': creation.author, 'slug': creation.slug},
-            )
-    
-            input_url = '{}?facebook'.format(request.build_absolute_uri(svg_path))
-            
-            job = cloudconvert.Job.create(payload={
-                "tasks": {
-                    'import-my-file': {
-                        'operation': 'import/url',
-                        'url': input_url,
-                    },
-                    'convert-my-file': {
-                        'operation': 'convert',
-                        'input': 'import-my-file',
-                        "input_format": "svg",
-                        'output_format': 'png',
-                        "width": 1200,
-                        "height": 630,
-                    },
-                    'export-my-file': {
-                        'operation': 'export/url',
-                        'input': 'convert-my-file'
-                    }
-                }
-            })
-            result = cloudconvert.Task.wait(id=job['tasks'][-1]['id'])
-            output_url = result.get("result").get("files")[0]['url']
-            
-            cache.set(cache_key, output_url, 60 * 60 * 23.5)  # keep for 23.5 hours
-
-        return HttpResponseRedirect(output_url)
+        response = HttpResponseRedirect(output_url)
+        patch_cache_control(response, public=True, max_age=300)
+        return response

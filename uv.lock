@@ -82,19 +82,6 @@ wheels = [
 ]
 
 [[package]]
-name = "cloudconvert"
-version = "2.1.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "requests" },
-    { name = "urllib3" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/9f/d2/2e979509ccfe079ecef6c8ee9f9a4b2dedfac766bb6508dcb9d0d898dc8e/cloudconvert-2.1.0.tar.gz", hash = "sha256:2de51626baebb7a6096475795c6e2f188a3733e4aca110ff3c51355e9a0953af", size = 16158, upload-time = "2022-03-30T11:23:07.208Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/92/1f/707afd29b28898ed1bf415cb80fa64d08d55b0b92402ac53a279b79a824d/cloudconvert-2.1.0-py3-none-any.whl", hash = "sha256:70736187f3e05eb233971428d1c423581967ef855e0a9e37a5e2b7eea14c3b3b", size = 21017, upload-time = "2022-03-30T11:23:05.213Z" },
-]
-
-[[package]]
 name = "commonmark"
 version = "0.9.1"
 source = { registry = "https://pypi.org/simple" }
@@ -502,7 +489,6 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "beautifulsoup4" },
-    { name = "cloudconvert" },
     { name = "commonmark" },
     { name = "django" },
     { name = "django-admin-sortable2" },
@@ -530,7 +516,6 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "beautifulsoup4", specifier = ">=4.12,<5.0" },
-    { name = "cloudconvert", specifier = "==2.1.0" },
     { name = "commonmark", specifier = ">=0.9.1,<1.0" },
     { name = "django", specifier = ">=4.2,<5.0" },
     { name = "django-admin-sortable2", specifier = ">=2.2,<3.0" },
